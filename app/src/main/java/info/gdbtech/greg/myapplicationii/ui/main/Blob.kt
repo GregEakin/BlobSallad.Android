@@ -65,9 +65,12 @@ open class Blob(private val x1: Double, private val y1: Double, var radius: Doub
 
     var selected: Boolean = false
 
-    val x = middle.xPos
-    val y = middle.yPos
-    val mass = middle.mass
+    val x: Double
+        get() = middle.xPos
+    val y: Double
+        get() = middle.yPos
+    val mass: Double
+        get() = middle.mass
 
     fun PointMassIndex(x: Int): Int {
         val m = numPoints
@@ -134,13 +137,13 @@ open class Blob(private val x1: Double, private val y1: Double, var radius: Doub
         get() {
             return middle.force
         }
-        set(value: Vector) {
+        set(value) {
             for (point in points)
                 point.force = value
             middle.force = value
         }
 
-    fun AddForce(force: Vector) {
+    fun addForce(force: Vector) {
         middle.addForce(force);
         for (point in points)
             point.addForce(force);
@@ -156,7 +159,7 @@ open class Blob(private val x1: Double, private val y1: Double, var radius: Doub
         pointMass.addForce(force);
     }
 
-    fun MoveTo(x2: Double, y2: Double) {
+    fun moveTo(x2: Double, y2: Double) {
         val blobPos1 = middle.pos;
         val x4 = x2 - blobPos1.x;
         val y4 = y2 - blobPos1.y;
