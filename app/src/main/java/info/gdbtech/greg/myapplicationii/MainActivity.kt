@@ -5,28 +5,29 @@ import android.os.Handler
 import android.os.Message
 import android.support.v7.app.AppCompatActivity
 import android.view.Window
+import java.lang.reflect.Modifier
 
 class MainActivity : AppCompatActivity() {
 
     private val runner: Thread by lazy { Thread(RefreshRunner())}
 
-    val view: MainView by lazy { MainView(this) }
+    private val view: MainView by lazy { MainView(this) }
 
     val myGUIUpdateHandler: Handler = object : Handler() {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
-                MainActivity.GuiUpdateIdentifier -> this@MainActivity.view!!.invalidate()
+                MainActivity.GuiUpdateIdentifier -> this@MainActivity.view.invalidate()
             }
             super.handleMessage(msg)
         }
     }
 
-//    val handler = UpdateHandler(this)
+//    val myGUIUpdateHandler = UpdateHandler(this)
 //
 //    class UpdateHandler(val main:MainActivity) : Handler() {
 //        override fun handleMessage(msg: Message) {
 //            when (msg.what) {
-//                MainActivity.GuiUpdateIdentifier -> main.view!!.invalidate()
+//                MainActivity.GuiUpdateIdentifier -> main.view.invalidate()
 //            }
 //            super.handleMessage(msg)
 //        }
@@ -38,6 +39,15 @@ class MainActivity : AppCompatActivity() {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(view)
         runner.start()
+
+//        val clazz = myGUIUpdateHandler.javaClass
+//        val anonymous = clazz.isAnonymousClass
+//        val member = clazz.isMemberClass
+//        val local = clazz.isLocalClass
+//        val static = clazz.modifiers and Modifier.STATIC
+//
+//        if ((anonymous || member || local) && (static == 0))
+//            var x = 0;
     }
 
     inner class RefreshRunner : Runnable {
