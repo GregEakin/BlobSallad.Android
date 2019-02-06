@@ -11,7 +11,10 @@ import android.view.View
 class MainView(context: Context) : View(context) {
 
     private val drawable = ShapeDrawable(RectShape())
-    private val point = Point(0, 0)
+    private val point = Point(10, 10)
+    private val boxWidth = 300
+    private val boxHeight = 50
+    // private val start = System.currentTimeMillis()
 
     enum class HorizontalDirection {
         LEFT, RIGHT
@@ -24,20 +27,21 @@ class MainView(context: Context) : View(context) {
     private var xDirection = HorizontalDirection.RIGHT
     private var yDirection = VerticalDirection.UP
 
+    //private var xVelocity = 10
+    //private var yVelocity = 10
+
     init {
         isFocusable = true
 
-        val x = 10
-        val y = 10
-        val width = 300
-        val height = 50
-        this.drawable.setBounds(x, y, x + width, y + height)
+        val left = point.x
+        val top = point.y
+        val right = left + boxWidth
+        val bottom = top + boxHeight
+        this.drawable.setBounds(left, top, right, bottom)
         this.drawable.paint.color = Color.RED
     }
 
     override fun onDraw(canvas: Canvas?) {
-        val x = point.x
-        val y = point.y
 
         point.x += if (xDirection == HorizontalDirection.RIGHT)
             10
@@ -49,17 +53,21 @@ class MainView(context: Context) : View(context) {
         else
             -10
 
-        if (x >= width - 300)
+        if (point.x >= width - boxWidth)
             xDirection = HorizontalDirection.LEFT
-        else if (x < 10)
+        else if (point.x < 10)
             xDirection = HorizontalDirection.RIGHT
 
-        if (y >= height - 50)
+        if (point.y >= height - boxHeight)
             yDirection = VerticalDirection.UP
-        else if (y < 10)
+        else if (point.y < 10)
             yDirection = VerticalDirection.DOWN
 
-        this.drawable.setBounds(x, y, x + 50, y + 50)
+        val left = point.x
+        val top = point.y
+        val right = point.x + boxWidth
+        val bottom = point.y + boxHeight
+        this.drawable.setBounds(left, top, right, bottom)
         this.drawable.draw(canvas)
     }
 }
