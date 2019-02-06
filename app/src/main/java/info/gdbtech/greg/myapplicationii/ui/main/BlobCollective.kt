@@ -24,10 +24,7 @@ class BlobCollective(val x: Double, val y: Double, val maxNum: Int) {
         if (numActive >= maxNum)
             return
 
-        val motherBlob = findLargest(null)
-        if (motherBlob == null)
-            return;
-
+        val motherBlob = findLargest(null) ?: return
         motherBlob.scale(0.75)
         val newBlob = Blob(motherBlob)
         for (blob in blobs) {
@@ -42,12 +39,8 @@ class BlobCollective(val x: Double, val y: Double, val maxNum: Int) {
         if (numActive <= 1)
             return
 
-        val smallest = findSmallest(null)
-        if (smallest == null)
-            return
-        val closest = findClosest(smallest)
-        if (closest == null)
-            return
+        val smallest = findSmallest(null) ?: return
+        val closest = findClosest(smallest) ?: return
 
         val length = Math.sqrt(smallest.radius * smallest.radius + closest.radius * closest.radius)
         closest.scale(0.945 * length / closest.radius)
