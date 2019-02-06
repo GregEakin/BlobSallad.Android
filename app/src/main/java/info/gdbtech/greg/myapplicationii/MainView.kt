@@ -14,21 +14,10 @@ class MainView(context: Context) : View(context) {
     private val point = Point(10, 10)
     private val boxWidth = 300
     private val boxHeight = 50
-    // private val start = System.currentTimeMillis()
+    private var start = System.currentTimeMillis()
 
-    enum class HorizontalDirection {
-        LEFT, RIGHT
-    }
-
-    enum class VerticalDirection {
-        UP, DOWN
-    }
-
-    private var xDirection = HorizontalDirection.RIGHT
-    private var yDirection = VerticalDirection.UP
-
-    //private var xVelocity = 10
-    //private var yVelocity = 10
+    private var xVelocity = 0.1
+    private var yVelocity = 0.1
 
     init {
         isFocusable = true
@@ -43,25 +32,23 @@ class MainView(context: Context) : View(context) {
 
     override fun onDraw(canvas: Canvas?) {
 
-        point.x += if (xDirection == HorizontalDirection.RIGHT)
-            10
-        else
-            -10
+        val now = System.currentTimeMillis()
+        val delta = now - start
+        if (delta > 50) {
+            start = now
+            point.x += (xVelocity * delta).toInt()
+            point.y += (yVelocity * delta).toInt()
 
-        point.y += if (yDirection == VerticalDirection.DOWN)
-            10
-        else
-            -10
+            if (point.x >= width - boxWidth && xVelocity > 0)
+                xVelocity *= -1.01
+            else if (point.x < 0 && xVelocity < 0)
+                xVelocity *= -0.99
 
-        if (point.x >= width - boxWidth)
-            xDirection = HorizontalDirection.LEFT
-        else if (point.x < 10)
-            xDirection = HorizontalDirection.RIGHT
-
-        if (point.y >= height - boxHeight)
-            yDirection = VerticalDirection.UP
-        else if (point.y < 10)
-            yDirection = VerticalDirection.DOWN
+            if (point.y >= height - boxHeight && yVelocity > 0)
+                yVelocity *= -1.02
+            else if (point.y < 0 && yVelocity < 0)
+                yVelocity *= -0.98
+        }
 
         val left = point.x
         val top = point.y
