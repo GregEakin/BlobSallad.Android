@@ -40,14 +40,14 @@ class MainView(context: Context) : View(context) {
             position.y += (yVelocity * delta).toInt()
 
             if (position.x >= width - boxWidth && xVelocity > 0)
-                xVelocity = -1.0 * Random.nextDouble() - 0.25
+                xVelocity = -(0.5 * Random.nextDouble() + 0.5)
             else if (position.x < 0 && xVelocity < 0)
-                xVelocity = Random.nextDouble() + 0.25
+                xVelocity = 0.5 * Random.nextDouble() + 0.5
 
             if (position.y >= height - boxHeight && yVelocity > 0)
-                yVelocity = -1.0 * Random.nextDouble() - 0.25
+                yVelocity = -(0.5 * Random.nextDouble() + 0.5)
             else if (position.y < 0 && yVelocity < 0)
-                yVelocity = Random.nextDouble() + 0.25
+                yVelocity = 0.5 * Random.nextDouble() + 0.5
         }
 
         val left = position.x
