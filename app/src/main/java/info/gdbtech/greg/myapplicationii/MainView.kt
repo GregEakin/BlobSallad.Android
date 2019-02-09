@@ -1,9 +1,7 @@
 package info.gdbtech.greg.myapplicationii
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Point
+import android.graphics.*
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RectShape
 import android.view.View
@@ -11,7 +9,7 @@ import kotlin.random.Random
 
 class MainView(context: Context) : View(context) {
 
-    private val drawable = ShapeDrawable(RectShape())
+    private val drawable = ShapeDrawable(RectShape()) // MyDrawable()
     private val boxWidth = 300
     private val boxHeight = 50
 
@@ -28,7 +26,7 @@ class MainView(context: Context) : View(context) {
         val right = left + boxWidth
         val bottom = top + boxHeight
         this.drawable.setBounds(left, top, right, bottom)
-        this.drawable.paint.color = Color.RED
+        // this.drawable.paint.color = Color.RED
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -58,3 +56,4 @@ class MainView(context: Context) : View(context) {
         this.drawable.draw(canvas!!)
     }
 }
+
