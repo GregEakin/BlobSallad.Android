@@ -8,10 +8,10 @@ class Skin(pointMassA: PointMass, pointMassB: PointMass) :
 
     private val aXbX = pointMassA.xPos - pointMassB.xPos
     private val aYbY = pointMassA.yPos - pointMassB.yPos
-    var lengthSquared: Double = aXbX * aXbX + aYbY * aYbY
-    var length: Double = Math.sqrt(lengthSquared)
+    var lengthSquared: Float = aXbX * aXbX + aYbY * aYbY
+    var length: Float = Math.sqrt(lengthSquared.toDouble()).toFloat()
 
-    override fun scale(scaleFactor: Double) {
+    override fun scale(scaleFactor: Float) {
         length += scaleFactor
         lengthSquared = length * length
     }
@@ -19,7 +19,7 @@ class Skin(pointMassA: PointMass, pointMassB: PointMass) :
     override fun sc(env: Environment) {
         val delta = pointMassB.pos - pointMassA.pos
         val dotProd = delta.dotProd(delta)
-        val scaleFactor = lengthSquared / (dotProd + lengthSquared) - 0.5
+        val scaleFactor = lengthSquared / (dotProd + lengthSquared) - 0.5f
         delta.scale(scaleFactor)
         pointMassA.pos.sub(delta)
         pointMassB.pos.sub(delta)

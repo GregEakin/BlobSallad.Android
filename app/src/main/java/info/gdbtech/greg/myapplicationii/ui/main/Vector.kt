@@ -2,13 +2,13 @@ package info.gdbtech.greg.myapplicationii.ui.main
 
 import java.lang.Math.sqrt
 
-class Vector(var x: Double, var y: Double) {
-    val length: Double = sqrt(this.x * this.x + this.y * this.y)
-    fun addX(x: Double) {
+class Vector(var x: Float, var y: Float) {
+    val length: Float = sqrt(this.x.toDouble() * this.x + this.y * this.y).toFloat()
+    fun addX(x: Float) {
         this.x += x
     }
 
-    fun addY(y: Double) {
+    fun addY(y: Float) {
         this.y += y
     }
 
@@ -27,12 +27,12 @@ class Vector(var x: Double, var y: Double) {
         this.y -= that.y
     }
 
-    fun scale(factor: Double) {
+    fun scale(factor: Float) {
         this.x *= factor
         this.y *= factor
     }
 
-    fun dotProd(that: Vector): Double = this.x * that.x + this.y * that.y
+    fun dotProd(that: Vector): Float = this.x * that.x + this.y * that.y
 
     override fun toString(): String = "(X: $x, Y: $y)"
 

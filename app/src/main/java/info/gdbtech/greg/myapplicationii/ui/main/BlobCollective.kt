@@ -3,9 +3,9 @@ package info.gdbtech.greg.myapplicationii.ui.main
 import android.graphics.Point
 import kotlin.random.Random
 
-class BlobCollective(val x: Double, val y: Double, val maxNum: Int) {
+class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
     private val blobPointMass = 8
-    private val blobInitialRadius = 0.4
+    private val blobInitialRadius = 0.4f
 
     val blobs = createBlobs()
     fun createBlobs(): MutableList<Blob> {
@@ -25,7 +25,7 @@ class BlobCollective(val x: Double, val y: Double, val maxNum: Int) {
             return
 
         val motherBlob = findLargest(null) ?: return
-        motherBlob.scale(0.75)
+        motherBlob.scale(0.75f)
         val newBlob = Blob(motherBlob)
         for (blob in blobs) {
             blob.linkBlob(newBlob)
@@ -42,8 +42,8 @@ class BlobCollective(val x: Double, val y: Double, val maxNum: Int) {
         val smallest = findSmallest(null) ?: return
         val closest = findClosest(smallest) ?: return
 
-        val length = Math.sqrt(smallest.radius * smallest.radius + closest.radius * closest.radius)
-        closest.scale(0.945 * length / closest.radius)
+        val length = Math.sqrt((smallest.radius * smallest.radius + closest.radius * closest.radius).toDouble())
+        closest.scale((0.945 * length / closest.radius).toFloat())
 
         blobs.remove(smallest)
         for (blob in blobs)
@@ -51,7 +51,7 @@ class BlobCollective(val x: Double, val y: Double, val maxNum: Int) {
     }
 
     fun findLargest(exclude: Blob?): Blob? {
-        var maxRadius = Double.MIN_VALUE
+        var maxRadius = Float.MIN_VALUE
         var largest: Blob? = null
         for (blob in blobs) {
             if (blob === exclude)
@@ -68,7 +68,7 @@ class BlobCollective(val x: Double, val y: Double, val maxNum: Int) {
     }
 
     fun findSmallest(exclude: Blob?): Blob? {
-        var minRadius = Double.MAX_VALUE
+        var minRadius = Float.MAX_VALUE
         var smallest: Blob? = null
         for (blob in blobs) {
             if (blob === exclude)
@@ -85,7 +85,7 @@ class BlobCollective(val x: Double, val y: Double, val maxNum: Int) {
     }
 
     fun findClosest(neighbor: Blob): Blob? {
-        var minDistance = Double.MAX_VALUE
+        var minDistance = Float.MAX_VALUE
         var closest: Blob? = null
         for (blob in blobs) {
             if (blob === neighbor)
@@ -140,11 +140,11 @@ class BlobCollective(val x: Double, val y: Double, val maxNum: Int) {
         selectedBlob = null
     }
 
-    fun selectedBlobMoveTo(x: Double, y: Double) {
+    fun selectedBlobMoveTo(x: Float, y: Float) {
         selectedBlob!!.moveTo(x, y)
     }
 
-    fun move(dt: Double) {
+    fun move(dt: Float) {
         for (blob in blobs)
             blob.move(dt)
     }
@@ -156,11 +156,11 @@ class BlobCollective(val x: Double, val y: Double, val maxNum: Int) {
 
     var force: Vector
         get() {
-            return Vector(0.0, 0.0)
+            return Vector(0.0f, 0.0f)
         }
         set(value) {
             for (blob in blobs) {
-                val force = if (blob === selectedBlob) Vector(0.0, 0.0) else value
+                val force = if (blob === selectedBlob) Vector(0.0f, 0.0f) else value
                 blob.force = force
             }
         }
@@ -170,8 +170,8 @@ class BlobCollective(val x: Double, val y: Double, val maxNum: Int) {
             if (blob === selectedBlob)
                 continue
 
-            val x = force.x * (Random.nextDouble() * 0.75 + 0.25)
-            val y = force.y * (Random.nextDouble() * 0.75 + 0.25)
+            val x = force.x * (Random.nextFloat() * 0.75f + 0.25f)
+            val y = force.y * (Random.nextFloat() * 0.75f + 0.25f)
             val newForce = Vector(x, y)
             blob.addForce(newForce)
         }

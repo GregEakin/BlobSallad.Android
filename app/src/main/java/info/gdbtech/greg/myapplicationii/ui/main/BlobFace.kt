@@ -1,6 +1,6 @@
 package info.gdbtech.greg.myapplicationii.ui.main
 
-class BlobFace(x: Double, y: Double, radius: Double, numPoints: Int) : Blob(x, y, radius, numPoints) {
+class BlobFace(x: Float, y: Float, radius: Float, numPoints: Int) : Blob(x, y, radius, numPoints) {
 
     constructor(mother: BlobFace) : this(mother.x, mother.y, mother.radius, mother.numPoints) {
     }

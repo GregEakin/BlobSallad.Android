@@ -3,11 +3,12 @@ package info.gdbtech.greg.myapplicationii.ui.main
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.RectF
 
 
-open class Blob(private val x1: Double, private val y1: Double, var radius: Double, val numPoints: Int) {
+open class Blob(private val x1: Float, private val y1: Float, var radius: Float, val numPoints: Int) {
     init {
-        if (radius <= 0.0)
+        if (radius <= 0.0f)
             throw Exception("Can't have a negative radius.")
 
         if (numPoints < 0)
@@ -17,16 +18,16 @@ open class Blob(private val x1: Double, private val y1: Double, var radius: Doub
     constructor(mother: Blob) : this(mother.x1, mother.y1, mother.radius, mother.numPoints) {
     }
 
-    val middle: PointMass = PointMass(x1, y1, 1.0)
+    val middle: PointMass = PointMass(x1, y1, 1.0f)
 
     val points: List<PointMass> = pointsInit()
     private fun pointsInit(): List<PointMass> {
         val list = mutableListOf<PointMass>()
         for (i in 0 until numPoints) {
             val theta = i * 2.0 * Math.PI / numPoints
-            val cx = Math.cos(theta) * radius + x1
-            val cy = Math.sin(theta) * radius + y1
-            val mass = if (i < 2) 4.0 else 1.0
+            val cx = (Math.cos(theta) * radius + x1).toFloat()
+            val cy = (Math.sin(theta) * radius + y1).toFloat()
+            val mass = if (i < 2) 4.0f else 1.0f
             val pt = PointMass(cx, cy, mass)
             list.add(pt)
         }
@@ -50,10 +51,10 @@ open class Blob(private val x1: Double, private val y1: Double, var radius: Doub
     private fun bonesInit(): List<Bones> {
         val list = mutableListOf<Bones>()
         for (i in 0 until numPoints) {
-            val crossShort = 0.95
-            val crossLong = 1.05
-            val middleShort = crossLong * 0.9
-            val middleLong = crossShort * 1.1
+            val crossShort = 0.95f
+            val crossLong = 1.05f
+            val middleShort = crossLong * 0.9f
+            val middleLong = crossShort * 1.1f
             val pointMassA = points[i]
 
             val index = PointMassIndex(i + numPoints / 2 + 1)
@@ -69,11 +70,11 @@ open class Blob(private val x1: Double, private val y1: Double, var radius: Doub
 
     var selected: Boolean = false
 
-    val x: Double
+    val x: Float
         get() = middle.xPos
-    val y: Double
+    val y: Float
         get() = middle.yPos
-    val mass: Double
+    val mass: Float
         get() = middle.mass
 
     fun PointMassIndex(x: Int): Int {
@@ -85,7 +86,7 @@ open class Blob(private val x1: Double, private val y1: Double, var radius: Doub
 
     fun linkBlob(blob: Blob) {
         val dist = radius + blob.radius
-        val collision = Collision(middle, blob.middle, dist * 0.95)
+        val collision = Collision(middle, blob.middle, dist * 0.95f)
         collisions.add(collision)
     }
 
@@ -99,7 +100,7 @@ open class Blob(private val x1: Double, private val y1: Double, var radius: Doub
         }
     }
 
-    fun scale(scaleFactor: Double) {
+    fun scale(scaleFactor: Float) {
         for (skin in skins)
             skin.scale(scaleFactor)
 
@@ -112,7 +113,7 @@ open class Blob(private val x1: Double, private val y1: Double, var radius: Doub
         radius *= scaleFactor
     }
 
-    fun move(dt: Double) {
+    fun move(dt: Float) {
         for (point in points)
             point.move(dt)
 
@@ -123,7 +124,7 @@ open class Blob(private val x1: Double, private val y1: Double, var radius: Doub
         for (j in 0 until 4) {
             for (point in points) {
                 val collision = env.Collision(point.pos, point.prev)
-                point.friction = if (collision) 0.75 else 0.01
+                point.friction = if (collision) 0.75f else 0.01f
             }
 
             for (skin in skins)
@@ -163,7 +164,7 @@ open class Blob(private val x1: Double, private val y1: Double, var radius: Doub
         pointMass.addForce(force)
     }
 
-    fun moveTo(x2: Double, y2: Double) {
+    fun moveTo(x2: Float, y2: Float) {
         val blobPos1 = middle.pos
         val x4 = x2 - blobPos1.x
         val y4 = y2 - blobPos1.y
@@ -181,21 +182,81 @@ open class Blob(private val x1: Double, private val y1: Double, var radius: Doub
 
     private val paint = Paint()
 
-    init {
-        //paint.style = Paint.Style.FILL
-        //paint.color = Color.GREEN
+    fun drawEars(canvas: Canvas, scaleFactor: Float) {}
+
+    fun drawEyesOpen(canvas: Canvas, scaleFactor: Float) {
+        run {
+            val r = 0.12f * radius * scaleFactor
+            val x = 0.35f * radius * scaleFactor
+            val y = 0.30f * radius * scaleFactor
+
+            paint.style = Paint.Style.STROKE
+            paint.strokeWidth = 1.0f
+            canvas.drawCircle(x, y, r, paint)
+        }
+
+        run {
+            val r = 0.12f * radius * scaleFactor
+            val x = 0.65f * radius * scaleFactor
+            val y = 0.30f * radius * scaleFactor
+
+            paint.style = Paint.Style.STROKE
+            paint.strokeWidth = 1.0f
+            canvas.drawCircle(x, y, r, paint)
+        }
+
+        run {
+            val r = 0.06f * radius * scaleFactor
+            val x = 0.35f * radius * scaleFactor
+            val y = 0.33f * radius * scaleFactor
+
+            paint.style = Paint.Style.FILL
+            paint.strokeWidth = 1.0f
+            canvas.drawCircle(x, y, r, paint)
+        }
+
+        run {
+            val r = 0.06f * radius * scaleFactor
+            val x = 0.65f * radius * scaleFactor
+            val y = 0.33f * radius * scaleFactor
+
+            paint.style = Paint.Style.FILL
+            paint.strokeWidth = 1.0f
+            canvas.drawCircle(x, y, r, paint)
+        }
     }
 
-    fun drawEars(canvas: Canvas, scaleFactor: Double) {}
+    fun drawEyesClosed(canvas: Canvas, scaleFactor: Float) {
+        paint.style = Paint.Style.STROKE
+        paint.color = Color.BLACK
+        paint.strokeWidth = 1.0f
 
-    fun drawEyesOpen(canvas: Canvas, scaleFactor: Double)  // , translateTransform: TransformGroup
-    {
-//        {
-//            val radius = 0.12 * this.radius * scaleFactor
-//            val x = -0.15 * this.radius * scaleFactor
-//            val y = -0.20 * this.radius * scaleFactor
-//            canvas!!.drawCircle(x.toFloat(), y.toFloat(), radius.toFloat(), paint);
-//        }
+        run {
+            val r = 0.12f * radius * scaleFactor
+            val x = 0.35f * radius * scaleFactor
+            val y = 0.30f * radius * scaleFactor
+
+            canvas.drawCircle(x, y, r, paint)
+            canvas.drawLine(x - r, y, x + r, y, paint)
+        }
+
+        run {
+            val r = 0.12f * radius * scaleFactor
+            val x = 0.65f * radius * scaleFactor
+            val y = 0.30f * radius * scaleFactor
+
+            canvas.drawCircle(x, y, r, paint)
+            canvas.drawLine(x - r, y, x + r, y, paint)
+        }
     }
 
+    fun drawSmile(canvas: Canvas, scaleFactor: Float, paint: Paint) {
+        val left = 0.25f * radius * scaleFactor
+        val top = 0.40f * radius * scaleFactor
+        val right = 0.50f * radius * scaleFactor + left
+        val bottom = 0.50f * radius * scaleFactor + top
+
+        val oval = RectF(left, top, right, bottom)
+        canvas.drawArc(oval, 0f, 180f, false, paint)
+    }
 }

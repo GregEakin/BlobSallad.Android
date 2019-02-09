@@ -1,17 +1,17 @@
 package info.gdbtech.greg.myapplicationii.ui.main
 
-class Environment(val x: Double, val y: Double, val w: Double, val h: Double) {
-    val left: Double = x
-    var right: Double = x + w
-    val top: Double = y
-    var bottom: Double = y + h
-    var width: Double = w
-        set(value: Double) {
+class Environment(val x: Float, val y: Float, val w: Float, val h: Float) {
+    val left: Float = x
+    var right: Float = x + w
+    val top: Float = y
+    var bottom: Float = y + h
+    var width: Float = w
+        set(value: Float) {
             right = left + value
             field = value
         }
-    var height: Double = h
-        set(value: Double) {
+    var height: Float = h
+        set(value: Float) {
             bottom = top + value
             field = value
         }
