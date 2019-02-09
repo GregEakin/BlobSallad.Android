@@ -1,5 +1,9 @@
 package info.gdbtech.greg.myapplicationii.ui.main
 
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+
 
 open class Blob(private val x1: Double, private val y1: Double, var radius: Double, val numPoints: Int) {
     init {
@@ -23,7 +27,7 @@ open class Blob(private val x1: Double, private val y1: Double, var radius: Doub
             val cx = Math.cos(theta) * radius + x1
             val cy = Math.sin(theta) * radius + y1
             val mass = if (i < 2) 4.0 else 1.0
-            val pt = PointMass(cx.toDouble(), cy.toDouble(), mass)
+            val pt = PointMass(cx, cy, mass)
             list.add(pt)
         }
         return list
@@ -46,19 +50,19 @@ open class Blob(private val x1: Double, private val y1: Double, var radius: Doub
     private fun bonesInit(): List<Bones> {
         val list = mutableListOf<Bones>()
         for (i in 0 until numPoints) {
-            val crossShort = 0.95;
-            val crossLong = 1.05;
-            val middleShort = crossLong * 0.9;
-            val middleLong = crossShort * 1.1;
-            val pointMassA = points[i];
+            val crossShort = 0.95
+            val crossLong = 1.05
+            val middleShort = crossLong * 0.9
+            val middleLong = crossShort * 1.1
+            val pointMassA = points[i]
 
-            val index = PointMassIndex(i + numPoints / 2 + 1);
-            val pointMassB = points[index];
-            val bone1 = Bones(pointMassA, pointMassB, crossShort, crossLong);
-            list.add(bone1);
+            val index = PointMassIndex(i + numPoints / 2 + 1)
+            val pointMassB = points[index]
+            val bone1 = Bones(pointMassA, pointMassB, crossShort, crossLong)
+            list.add(bone1)
 
-            val bone2 = Bones(pointMassA, middle, middleShort, middleLong);
-            list.add(bone2);
+            val bone2 = Bones(pointMassA, middle, middleShort, middleLong)
+            list.add(bone2)
         }
         return list
     }
@@ -144,34 +148,54 @@ open class Blob(private val x1: Double, private val y1: Double, var radius: Doub
         }
 
     fun addForce(force: Vector) {
-        middle.addForce(force);
+        middle.addForce(force)
         for (point in points)
-            point.addForce(force);
+            point.addForce(force)
 
         if (!points.any())
-            return;
+            return
 
         // put a spin on the blob
-        var pointMass = points[0];
-        pointMass.addForce(force);
-        pointMass.addForce(force);
-        pointMass.addForce(force);
-        pointMass.addForce(force);
+        val pointMass = points[0]
+        pointMass.addForce(force)
+        pointMass.addForce(force)
+        pointMass.addForce(force)
+        pointMass.addForce(force)
     }
 
     fun moveTo(x2: Double, y2: Double) {
-        val blobPos1 = middle.pos;
-        val x4 = x2 - blobPos1.x;
-        val y4 = y2 - blobPos1.y;
+        val blobPos1 = middle.pos
+        val x4 = x2 - blobPos1.x
+        val y4 = y2 - blobPos1.y
 
         for (point in points) {
-            val blobPos = point.pos;
-            blobPos.addX(x4);
-            blobPos.addY(y4);
+            val blobPos = point.pos
+            blobPos.addX(x4)
+            blobPos.addY(y4)
         }
 
-        val blobPos = middle.pos;
-        blobPos.addX(x4);
-        blobPos.addY(y4);
+        val blobPos = middle.pos
+        blobPos.addX(x4)
+        blobPos.addY(y4)
     }
+
+    private val paint = Paint()
+
+    init {
+        //paint.style = Paint.Style.FILL
+        //paint.color = Color.GREEN
+    }
+
+    fun drawEars(canvas: Canvas, scaleFactor: Double) {}
+
+    fun drawEyesOpen(canvas: Canvas, scaleFactor: Double)  // , translateTransform: TransformGroup
+    {
+//        {
+//            val radius = 0.12 * this.radius * scaleFactor
+//            val x = -0.15 * this.radius * scaleFactor
+//            val y = -0.20 * this.radius * scaleFactor
+//            canvas!!.drawCircle(x.toFloat(), y.toFloat(), radius.toFloat(), paint);
+//        }
+    }
+
 }

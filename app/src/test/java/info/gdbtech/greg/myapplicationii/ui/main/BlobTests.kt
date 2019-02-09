@@ -3,7 +3,7 @@ package info.gdbtech.greg.myapplicationii.ui.main
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-public class BlobTests {
+class BlobTests {
     @Test
     fun ctorTest() {
         val blob = Blob(71.0, 67.0, 11.0, 5)
@@ -37,11 +37,11 @@ public class BlobTests {
         val blob2 = Blob(59.0, 61.0, 13.0, 0)
         blob1.linkBlob(blob2)
 
-        assertEquals(0, blob2.collisions.size);
-        assertEquals(1, blob1.collisions.size);
-        val collision = blob1.collisions[0];
-        assertEquals(22.800, collision.shortLimit, 0.01);
-        assertEquals(Double.POSITIVE_INFINITY, collision.longLimit, 0.001);
+        assertEquals(0, blob2.collisions.size)
+        assertEquals(1, blob1.collisions.size)
+        val collision = blob1.collisions[0]
+        assertEquals(22.800, collision.shortLimit, 0.01)
+        assertEquals(Double.POSITIVE_INFINITY, collision.longLimit, 0.001)
     }
 
     @Test
