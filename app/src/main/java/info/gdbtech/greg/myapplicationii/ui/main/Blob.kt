@@ -1,9 +1,7 @@
 package info.gdbtech.greg.myapplicationii.ui.main
 
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.RectF
+import android.graphics.*
+import kotlin.random.Random
 
 
 open class Blob(private val x1: Float, private val y1: Float, var radius: Float, val numPoints: Int) {
@@ -18,6 +16,14 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
     constructor(mother: Blob) : this(mother.x1, mother.y1, mother.radius, mother.numPoints) {
     }
 
+    enum class Eye {
+        OPEN, CLOSED, CROSSED
+    }
+
+    enum class Face {
+        SMILE, OPEN, OOH
+    }
+
     val middle: PointMass = PointMass(x1, y1, 1.0f)
 
     val points: List<PointMass> = pointsInit()
@@ -25,10 +31,10 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
         val list = mutableListOf<PointMass>()
         for (i in 0 until numPoints) {
             val theta = i * 2.0 * Math.PI / numPoints
-            val cx = (Math.cos(theta) * radius + x1).toFloat()
-            val cy = (Math.sin(theta) * radius + y1).toFloat()
-            val mass = if (i < 2) 4.0f else 1.0f
-            val pt = PointMass(cx, cy, mass)
+            val cx = Math.cos(theta) * radius + x1
+            val cy = Math.sin(theta) * radius + y1
+            val mass = if (i >= numPoints - 2) 4.0f else 1.0f
+            val pt = PointMass(cx.toFloat(), cy.toFloat(), mass)
             list.add(pt)
         }
         return list
@@ -99,6 +105,9 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
             break
         }
     }
+
+    private var eyes: Eye = Eye.OPEN
+    private var face: Face = Face.OPEN
 
     fun scale(scaleFactor: Float) {
         for (skin in skins)
@@ -185,69 +194,49 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
     fun drawEars(canvas: Canvas, scaleFactor: Float) {}
 
     fun drawEyesOpen(canvas: Canvas, scaleFactor: Float) {
-        run {
-            val r = 0.12f * radius * scaleFactor
-            val x = 0.35f * radius * scaleFactor
-            val y = 0.30f * radius * scaleFactor
-
-            paint.style = Paint.Style.STROKE
-            paint.strokeWidth = 1.0f
-            canvas.drawCircle(x, y, r, paint)
-        }
-
-        run {
-            val r = 0.12f * radius * scaleFactor
-            val x = 0.65f * radius * scaleFactor
-            val y = 0.30f * radius * scaleFactor
-
-            paint.style = Paint.Style.STROKE
-            paint.strokeWidth = 1.0f
-            canvas.drawCircle(x, y, r, paint)
-        }
-
-        run {
-            val r = 0.06f * radius * scaleFactor
-            val x = 0.35f * radius * scaleFactor
-            val y = 0.33f * radius * scaleFactor
-
-            paint.style = Paint.Style.FILL
-            paint.strokeWidth = 1.0f
-            canvas.drawCircle(x, y, r, paint)
-        }
-
-        run {
-            val r = 0.06f * radius * scaleFactor
-            val x = 0.65f * radius * scaleFactor
-            val y = 0.33f * radius * scaleFactor
-
-            paint.style = Paint.Style.FILL
-            paint.strokeWidth = 1.0f
-            canvas.drawCircle(x, y, r, paint)
-        }
-    }
-
-    fun drawEyesClosed(canvas: Canvas, scaleFactor: Float) {
-        paint.style = Paint.Style.STROKE
-        paint.color = Color.BLACK
         paint.strokeWidth = 1.0f
 
-        run {
-            val r = 0.12f * radius * scaleFactor
-            val x = 0.35f * radius * scaleFactor
-            val y = 0.30f * radius * scaleFactor
+        val r1 = 0.12f * radius * scaleFactor
+        val left1 = 0.35f * radius * scaleFactor
+        val right1 = 0.65f * radius * scaleFactor
+        val y1 = 0.30f * radius * scaleFactor
 
-            canvas.drawCircle(x, y, r, paint)
-            canvas.drawLine(x - r, y, x + r, y, paint)
-        }
+        paint.color = Color.WHITE
+        paint.style = Paint.Style.FILL
+        canvas.drawCircle(left1, y1, r1, paint)
+        canvas.drawCircle(right1, y1, r1, paint)
 
-        run {
-            val r = 0.12f * radius * scaleFactor
-            val x = 0.65f * radius * scaleFactor
-            val y = 0.30f * radius * scaleFactor
+        paint.color = Color.BLACK
+        paint.style = Paint.Style.STROKE
+        canvas.drawCircle(left1, y1, r1, paint)
+        canvas.drawCircle(right1, y1, r1, paint)
 
-            canvas.drawCircle(x, y, r, paint)
-            canvas.drawLine(x - r, y, x + r, y, paint)
-        }
+        val r2 = 0.06f * radius * scaleFactor
+        val left2 = 0.35f * radius * scaleFactor
+        val right2 = 0.65f * radius * scaleFactor
+        val y2 = 0.33f * radius * scaleFactor
+
+        paint.style = Paint.Style.FILL
+        canvas.drawCircle(left2, y2, r2, paint)
+        canvas.drawCircle(right2, y2, r2, paint)
+    }
+
+
+    fun drawEyesClosed(canvas: Canvas, scaleFactor: Float) {
+        paint.color = Color.BLACK
+        paint.style = Paint.Style.STROKE
+        paint.strokeWidth = 1.0f
+
+        val r = 0.12f * radius * scaleFactor
+        val left = 0.35f * radius * scaleFactor
+        val right = 0.65f * radius * scaleFactor
+        val y = 0.30f * radius * scaleFactor
+
+        canvas.drawCircle(left, y, r, paint)
+        canvas.drawLine(left - r, y, left + r, y, paint)
+
+        canvas.drawCircle(right, y, r, paint)
+        canvas.drawLine(right - r, y, right + r, y, paint)
     }
 
     fun drawSmile(canvas: Canvas, scaleFactor: Float, paint: Paint) {
@@ -258,5 +247,100 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
 
         val oval = RectF(left, top, right, bottom)
         canvas.drawArc(oval, 0f, 180f, false, paint)
+    }
+
+    fun drawOohFace(canvas: Canvas, scaleFactor: Float) {
+        paint.style = Paint.Style.FILL
+        paint.strokeWidth = 2.0f
+        drawSmile(canvas, scaleFactor, paint)
+
+        val x1 = 0.25f * radius * scaleFactor
+        val x2 = 0.45f * radius * scaleFactor
+        val x3 = 0.75f * radius * scaleFactor
+        val x4 = 0.55f * radius * scaleFactor
+        val y1 = 0.20f * radius * scaleFactor
+        val y2 = 0.30f * radius * scaleFactor
+        val y3 = 0.40f * radius * scaleFactor
+
+        canvas.drawLine(x1, y1, x2, y2, paint)
+        canvas.drawLine(x2, y2, x1, y3, paint)
+        canvas.drawLine(x3, y1, x4, y2, paint)
+        canvas.drawLine(x4, y2, x3, y3, paint)
+    }
+
+    fun updateFace() {
+        if (face == Face.SMILE && Random.nextDouble() < 0.05)
+            face = Face.OPEN
+        else if (face == Face.OPEN && Random.nextDouble() < 0.10)
+            face = Face.SMILE
+
+        if (eyes == Eye.OPEN && Random.nextDouble() < 0.025)
+            eyes = Eye.CLOSED
+        else if (eyes == Eye.CLOSED && Random.nextDouble() < 0.300)
+            eyes = Eye.OPEN
+    }
+
+
+    fun drawFace(canvas: Canvas, scaleFactor: Float) {
+//        if (middle.velocity > 0.004)
+//            drawOohFace(canvas, scaleFactor)
+//        else {
+            if (face == Face.SMILE) {
+                paint.style = Paint.Style.STROKE
+                paint.strokeWidth = 2.0f
+                drawSmile(canvas, scaleFactor, paint)
+            } else {
+                paint.style = Paint.Style.FILL
+                paint.strokeWidth = 2.0f
+                drawSmile(canvas, scaleFactor, paint)
+            }
+
+            if (eyes == Eye.OPEN) {
+                drawEyesOpen(canvas, scaleFactor)
+            } else {
+                drawEyesClosed(canvas, scaleFactor)
+            }
+//        }
+    }
+
+    fun drawBody(canvas: Canvas, scaleFactor: Float) {
+
+        paint.style = Paint.Style.STROKE
+        paint.strokeWidth = 1.0f
+
+        val path = Path()
+        path.moveTo(points[0].xPos * scaleFactor, points[0].yPos * scaleFactor)
+        for (i in points.indices) {
+
+            val prevPointMass = points[PointMassIndex(i - 1)]
+            val currentPointMass = points[PointMassIndex(i)]
+            val nextPointMass = points[PointMassIndex(i + 1)]
+            val nextNextPointMass = points[PointMassIndex(i + 2)]
+
+//            var tx = nextPointMass.xPos
+//            var ty = nextPointMass.yPos
+//            val cx = currentPointMass.xPos
+//            val cy = currentPointMass.yPos
+//            var px = cx * 0.5f + tx * 0.5f
+//            var py = cy * 0.5f + tx * 0.5f
+//            val nx = cx - prevPointMass.xPos + tx - nextNextPointMass.xPos
+//            val ny = cy - prevPointMass.yPos + ty - nextNextPointMass.yPos
+//            px += nx * 0.16f
+//            py += ny * 0.16f
+//            px *= scaleFactor
+//            py *= scaleFactor
+//            tx *= scaleFactor
+//            ty *= scaleFactor
+//
+//            path.cubicTo(px, py, tx, ty, tx, ty)
+
+            canvas.drawCircle(currentPointMass.xPos, currentPointMass.yPos, points[i].mass, paint)
+
+        }
+
+//        canvas.drawPath(path, paint)
+    }
+
+    fun draw(canvas: Canvas, scaleFactor: Float) {
     }
 }
