@@ -3,6 +3,7 @@ package info.gdbtech.greg.myapplicationii
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.Point
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RectShape
@@ -31,7 +32,25 @@ class MainView(context: Context) : View(context) {
         this.drawable.paint.color = Color.RED
     }
 
+    private val paint = Paint()
+
+    init {
+        paint.style = Paint.Style.FILL
+        paint.color = Color.GREEN
+
+    }
+
     override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+
+//        canvas!!.translate(width/2f, height/2f)
+
+//        val radius = 10.0f
+//        canvas!!.drawCircle(x, y, radius, paint);
+
+//        canvas!!.drawLine(0f, 0f, 20f, 20f, paint);
+//        canvas!!.drawLine(20f, 0f, 0f, 20f, paint);
+
         val now = System.currentTimeMillis()
         val delta = now - last
         if (delta > 10) {
@@ -56,5 +75,6 @@ class MainView(context: Context) : View(context) {
         val bottom = top + boxHeight
         this.drawable.setBounds(left, top, right, bottom)
         this.drawable.draw(canvas!!)
+        invalidate()
     }
 }
