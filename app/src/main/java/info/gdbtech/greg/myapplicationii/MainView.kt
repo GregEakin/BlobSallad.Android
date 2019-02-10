@@ -41,7 +41,7 @@ class MainView(context: Context) : View(context) {
         strokeWidth = 2.0f
     }
 
-    private val env = Environment(20f, 20f, 800f, 800f)
+    private val env = Environment(0f, 0f, 700f, 700f)
     private val gravity = Vector(0.0f, 10.0f)
     // private val blob = Blob(250f, 250f, 100f, 8)
     private val collective = BlobCollective(200.0f, 200.0f, 5)
