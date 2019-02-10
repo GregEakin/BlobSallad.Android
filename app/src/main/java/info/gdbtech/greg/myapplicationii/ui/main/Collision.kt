@@ -6,8 +6,6 @@ import android.graphics.ColorFilter
 class Collision(pointMassA: PointMass, pointMassB: PointMass, var shortLimit: Float) :
     Force(pointMassA, pointMassB) {
 
-    val longLimit: Float = Float.POSITIVE_INFINITY
-
     private val slSquared: Float
         get() {
             return shortLimit * shortLimit

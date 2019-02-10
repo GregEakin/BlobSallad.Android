@@ -6,30 +6,30 @@ import org.junit.Test
 public class PointMassTests {
     @Test
     fun ctor_test() {
-        val pointMass = PointMass(31.0, 23.0, 11.0)
-        assertEquals(11.0, pointMass.mass, 0.001)
+        val pointMass = PointMass(31.0f, 23.0f, 11.0f)
+        assertEquals(11.0f, pointMass.mass, 0.001f)
     }
 
     @Test
     fun velocityTest() {
-        val pointMass = PointMass(31.0, 23.0, 11.0)
-        pointMass.force = Vector(7.0, 13.0)
-        pointMass.move(3.0)
+        val pointMass = PointMass(31.0f, 23.0f, 11.0f)
+        pointMass.force = Vector(7.0f, 13.0f)
+        pointMass.move(3.0f)
 
         val velocity = pointMass.velocity
-        assertEquals(145.934, velocity, 0.001)
+        assertEquals(145.934f, velocity, 0.001f)
     }
 
     @Test
     fun move_test() {
-        val pointMass = PointMass(31.0, 23.0, 11.0)
-        val force = Vector(7.0, 13.0)
+        val pointMass = PointMass(31.0f, 23.0f, 11.0f)
+        val force = Vector(7.0f, 13.0f)
         pointMass.force = force
 
-        pointMass.move(3.0)
-        assertEquals(31.0, pointMass.xPrev, 0.01);
-        assertEquals(23.0, pointMass.yPrev, 0.01);
-        assertEquals(36.727, pointMass.xPos, 0.01);
-        assertEquals(33.636, pointMass.yPos, 0.01);
+        pointMass.move(3.0f)
+        assertEquals(31.0f, pointMass.xPrev, 0.01f);
+        assertEquals(23.0f, pointMass.yPrev, 0.01f);
+        assertEquals(36.727f, pointMass.xPos, 0.01f);
+        assertEquals(33.636f, pointMass.yPos, 0.01f);
     }
 }
