@@ -34,8 +34,8 @@ class MainView(context: Context) : View(context) {
 
         val now = System.currentTimeMillis()
         val delta = now - last
-        last = now
 
+        last = now
         // env.draw(canvas)
         collective.move(delta / 1000f)
         collective.sc(env)
