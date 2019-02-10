@@ -8,7 +8,7 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
     private val blobPointMass = 8
     private val blobInitialRadius = 100.0f
 
-    val blobs = createBlobs()
+    private val blobs = createBlobs()
     fun createBlobs(): MutableList<Blob> {
         val list = mutableListOf<Blob>()
         val blob = Blob(x, y, blobInitialRadius, blobPointMass)
