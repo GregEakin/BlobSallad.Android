@@ -151,7 +151,7 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
 
     fun sc(env: Environment) {
         for (blob in blobs)
-            blob.Sc(env)
+            blob.sc(env)
     }
 
     var force: Vector

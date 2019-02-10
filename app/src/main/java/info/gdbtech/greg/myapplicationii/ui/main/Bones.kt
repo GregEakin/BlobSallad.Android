@@ -6,15 +6,19 @@ import android.graphics.ColorFilter
 class Bones(pointMassA: PointMass, pointMassB: PointMass, shortFactor: Float, longFactor: Float) :
     Force(pointMassA, pointMassB) {
 
-    private var delta = pointMassB.pos - pointMassA.pos
+    var shortLimit: Float = (pointMassB.pos - pointMassA.pos).length * shortFactor
 
-    var shortLimit: Float = delta.length * shortFactor
+    var longLimit: Float = (pointMassB.pos - pointMassA.pos).length * longFactor
 
-    var longLimit: Float = delta.length * longFactor
+    private val slSquared: Float
+        get() {
+            return shortLimit * shortLimit
+        }
 
-    private var slSquared = shortLimit * shortLimit
-
-    private var llSquared = longLimit * longLimit
+    private val llSquared: Float
+        get() {
+            return longLimit * longLimit
+        }
 
     override fun scale(scaleFactor: Float) {
         shortLimit *= scaleFactor
@@ -22,18 +26,19 @@ class Bones(pointMassA: PointMass, pointMassB: PointMass, shortFactor: Float, lo
     }
 
     override fun sc(env: Environment) {
+        val delta = pointMassB.pos - pointMassA.pos
         val dp = delta.dotProd(delta)
         if (dp < slSquared) {
             val scaleFactor = slSquared / (dp + slSquared) - 0.5f
             delta.scale(scaleFactor)
             pointMassA.pos.sub(delta)
-            pointMassB.pos.sub(delta)
+            pointMassB.pos.add(delta)
         }
         if (dp > llSquared) {
             val scaleFactor = llSquared / (dp + llSquared) - 0.5f
             delta.scale(scaleFactor)
             pointMassA.pos.sub(delta)
-            pointMassB.pos.sub(delta)
+            pointMassB.pos.add(delta)
         }
     }
 

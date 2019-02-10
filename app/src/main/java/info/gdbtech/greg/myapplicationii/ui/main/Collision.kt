@@ -25,13 +25,13 @@ class Collision(pointMassA: PointMass, pointMassB: PointMass, var shortLimit: Fl
             val scaleFactor = slSquared / (dp + slSquared) - 0.5f
             delta.scale(scaleFactor)
             pointMassA.pos.sub(delta)
-            pointMassB.pos.sub(delta)
+            pointMassB.pos.add(delta)
         }
         if (dp > llSquared) {
             val scaleFactor = llSquared / (dp + llSquared) - 0.5f
             delta.scale(scaleFactor)
             pointMassA.pos.sub(delta)
-            pointMassB.pos.sub(delta)
+            pointMassB.pos.add(delta)
         }
     }
 

@@ -23,22 +23,29 @@ public class PointMass(cx: Float, cy: Float, val mass: Float) {
 
     var friction: Float = 0.01f
 
-    var force: Vector =
-        Vector(0.0f, 0.0f)
+    private val _force = Vector(0.0f, 0.0f)
+    var force: Vector
+        get() {
+            return _force
+        }
+        set(value) {
+            _force.set(value)
+        }
 
-    fun addForce(force: Vector) = this.force.add(force)
+    fun addForce(force: Vector) =
+        _force.add(force)
 
     fun move(dt: Float) {
         val dt2 = dt * dt
 
-        val ax = force.x / mass
+        val ax = _force.x / mass
         val cx = pos.x
         val px = prev.x
         val tx = (2.0f - friction) * cx - (1.0f - friction) * px + ax * dt2
         prev.x = cx
         pos.x = tx
 
-        val ay = force.y / mass
+        val ay = _force.y / mass
         val cy = pos.y
         val py = prev.y
         val ty = (2.0f - friction) * cy - (1.0f - friction) * py + ay * dt2

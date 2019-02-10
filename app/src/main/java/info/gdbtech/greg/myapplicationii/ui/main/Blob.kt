@@ -129,7 +129,7 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
         middle.move(dt)
     }
 
-    fun Sc(env: Environment) {
+    fun sc(env: Environment) {
         for (j in 0 until 4) {
             for (point in points) {
                 val collision = env.Collision(point.pos, point.prev)
@@ -152,9 +152,9 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
             return middle.force
         }
         set(value) {
+            middle.force = value
             for (point in points)
                 point.force = value
-            middle.force = value
         }
 
     fun addForce(force: Vector) {
@@ -162,11 +162,11 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
         for (point in points)
             point.addForce(force)
 
-        if (!points.any())
+        if (numPoints < 2)
             return
 
         // put a spin on the blob
-        val pointMass = points[0]
+        val pointMass = points[numPoints - 2]
         pointMass.addForce(force)
         pointMass.addForce(force)
         pointMass.addForce(force)

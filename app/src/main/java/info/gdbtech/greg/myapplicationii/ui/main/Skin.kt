@@ -22,7 +22,7 @@ class Skin(pointMassA: PointMass, pointMassB: PointMass) :
         val scaleFactor = lengthSquared / (dotProd + lengthSquared) - 0.5f
         delta.scale(scaleFactor)
         pointMassA.pos.sub(delta)
-        pointMassB.pos.sub(delta)
+        pointMassB.pos.add(delta)
     }
 
     override fun draw(canvas: Canvas) {

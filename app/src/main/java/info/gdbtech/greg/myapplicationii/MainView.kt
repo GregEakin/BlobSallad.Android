@@ -2,12 +2,9 @@ package info.gdbtech.greg.myapplicationii
 
 import android.content.Context
 import android.graphics.*
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.RectShape
 import android.view.View
 import info.gdbtech.greg.myapplicationii.ui.main.Blob
 import info.gdbtech.greg.myapplicationii.ui.main.Environment
-import info.gdbtech.greg.myapplicationii.ui.main.Force
 import info.gdbtech.greg.myapplicationii.ui.main.Vector
 import kotlin.random.Random
 
@@ -43,14 +40,15 @@ class MainView(context: Context) : View(context) {
         strokeWidth = 2.0f
     }
 
+    private val env = Environment(20f, 20f, 800f, 800f)
+    private val gravity = Vector(0.0f, 10.0f)
     private val blob = Blob(250f, 250f, 100f, 8)
 
     init {
-        val force = Vector(0.0f, 10.0f)
+        val force = gravity
         blob.addForce(force)
-    }
 
-    private val env = Environment(20f, 20f, 800f, 800f)
+    }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
@@ -60,21 +58,21 @@ class MainView(context: Context) : View(context) {
 
         val now = System.currentTimeMillis()
         val delta = now - last
-        if (delta > 10) {
-            last = now
-            position.x += xVelocity * delta
-            position.y += yVelocity * delta
-
-            if (position.x >= width - boxWidth && xVelocity > 0f)
-                xVelocity = -(0.004f * Random.nextFloat() + 0.1f)
-            else if (position.x < 0f && xVelocity < 0f)
-                xVelocity = 0.004f * Random.nextFloat() + 0.1f
-
-            if (position.y >= height - boxHeight && yVelocity > 0f)
-                yVelocity = -(0.004f * Random.nextFloat() + 0.1f)
-            else if (position.y < 0f && yVelocity < 0f)
-                yVelocity = 0.004f * Random.nextFloat() + 0.1f
-        }
+//        if (delta > 10) {
+//            last = now
+//            position.x += xVelocity * delta
+//            position.y += yVelocity * delta
+//
+//            if (position.x >= width - boxWidth && xVelocity > 0f)
+//                xVelocity = -(0.004f * Random.nextFloat() + 0.1f)
+//            else if (position.x < 0f && xVelocity < 0f)
+//                xVelocity = 0.004f * Random.nextFloat() + 0.1f
+//
+//            if (position.y >= height - boxHeight && yVelocity > 0f)
+//                yVelocity = -(0.004f * Random.nextFloat() + 0.1f)
+//            else if (position.y < 0f && yVelocity < 0f)
+//                yVelocity = 0.004f * Random.nextFloat() + 0.1f
+//        }
 //
 //        val left = position.x
 //        val top = position.y
@@ -95,8 +93,9 @@ class MainView(context: Context) : View(context) {
 //        drawEyesClosed(canvas)
 //        blob.moveTo(position.x, position.y)
 
-        blob.move(delta / 1000f)
-        blob.Sc(env)
+        blob.move(0.05f) // delta / 1000f)
+        blob.sc(env)
+        blob.force = gravity
 
         blob.drawBody(canvas, 1.0f)
         blob.updateFace()
@@ -106,7 +105,7 @@ class MainView(context: Context) : View(context) {
         val ang = Math.acos(ori.dotProd(up) / ori.length.toDouble())
         val radians = if (ori.x < 0.0) -ang else ang
         val theta = (180.0 / Math.PI) * radians
-        //canvas.rotate(theta.toFloat(), blob.middle.xPos, blob.middle.yPos)
+        canvas.rotate(theta.toFloat(), blob.middle.xPos, blob.middle.yPos)
 
         val tx = blob.middle.xPos * scaleFactor - radius / 2f * scaleFactor
         val ty = (blob.middle.yPos - 0.35f * radius) * scaleFactor - radius / 2f * scaleFactor
