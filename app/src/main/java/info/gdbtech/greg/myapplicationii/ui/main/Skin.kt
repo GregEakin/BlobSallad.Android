@@ -6,13 +6,18 @@ import android.graphics.ColorFilter
 class Skin(pointMassA: PointMass, pointMassB: PointMass) :
     Force(pointMassA, pointMassB) {
 
-    private val aXbX = pointMassA.xPos - pointMassB.xPos
-    private val aYbY = pointMassA.yPos - pointMassB.yPos
-    var lengthSquared: Float = aXbX * aXbX + aYbY * aYbY
-    var length: Float = Math.sqrt(lengthSquared.toDouble()).toFloat()
+    var lengthSquared: Float
+    var length: Float
+
+    init {
+        val aXbX = pointMassA.xPos - pointMassB.xPos
+        val aYbY = pointMassA.yPos - pointMassB.yPos
+        lengthSquared = aXbX * aXbX + aYbY * aYbY
+        length = Math.sqrt(lengthSquared.toDouble()).toFloat()
+    }
 
     override fun scale(scaleFactor: Float) {
-        length += scaleFactor
+        length *= scaleFactor
         lengthSquared = length * length
     }
 

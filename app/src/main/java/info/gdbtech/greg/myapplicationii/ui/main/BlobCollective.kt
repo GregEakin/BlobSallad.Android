@@ -1,11 +1,12 @@
 package info.gdbtech.greg.myapplicationii.ui.main
 
+import android.graphics.Canvas
 import android.graphics.Point
 import kotlin.random.Random
 
 class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
     private val blobPointMass = 8
-    private val blobInitialRadius = 0.4f
+    private val blobInitialRadius = 100.0f
 
     val blobs = createBlobs()
     fun createBlobs(): MutableList<Blob> {
@@ -154,16 +155,12 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
             blob.sc(env)
     }
 
-    var force: Vector
-        get() {
-            return Vector(0.0f, 0.0f)
+    fun setForce(value: Vector) {
+        for (blob in blobs) {
+            val force = if (blob === selectedBlob) Vector(0.0f, 0.0f) else value
+            blob.setForce(force)
         }
-        set(value) {
-            for (blob in blobs) {
-                val force = if (blob === selectedBlob) Vector(0.0f, 0.0f) else value
-                blob.force = force
-            }
-        }
+    }
 
     fun addForce(force: Vector) {
         for (blob in blobs) {
@@ -177,5 +174,8 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
         }
     }
 
-    // draw...
+    fun draw(canvas: Canvas, scaleFactor: Float) {
+        for (blob in blobs)
+            blob.draw(canvas, scaleFactor)
+    }
 }

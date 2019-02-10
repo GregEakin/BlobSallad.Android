@@ -147,15 +147,11 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
         }
     }
 
-    var force: Vector
-        get() {
-            return middle.force
-        }
-        set(value) {
-            middle.force = value
-            for (point in points)
-                point.force = value
-        }
+    fun setForce(value: Vector) {
+        middle.force = value
+        for (point in points)
+            point.force = value
+    }
 
     fun addForce(force: Vector) {
         middle.addForce(force)
@@ -285,21 +281,21 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
 //        if (middle.velocity > 0.004)
 //            drawOohFace(canvas, scaleFactor)
 //        else {
-            if (face == Face.SMILE) {
-                paint.style = Paint.Style.STROKE
-                paint.strokeWidth = 2.0f
-                drawSmile(canvas, scaleFactor, paint)
-            } else {
-                paint.style = Paint.Style.FILL
-                paint.strokeWidth = 2.0f
-                drawSmile(canvas, scaleFactor, paint)
-            }
+        if (face == Face.SMILE) {
+            paint.style = Paint.Style.STROKE
+            paint.strokeWidth = 2.0f
+            drawSmile(canvas, scaleFactor, paint)
+        } else {
+            paint.style = Paint.Style.FILL
+            paint.strokeWidth = 2.0f
+            drawSmile(canvas, scaleFactor, paint)
+        }
 
-            if (eyes == Eye.OPEN) {
-                drawEyesOpen(canvas, scaleFactor)
-            } else {
-                drawEyesClosed(canvas, scaleFactor)
-            }
+        if (eyes == Eye.OPEN) {
+            drawEyesOpen(canvas, scaleFactor)
+        } else {
+            drawEyesClosed(canvas, scaleFactor)
+        }
 //        }
     }
 
@@ -342,5 +338,28 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
     }
 
     fun draw(canvas: Canvas, scaleFactor: Float) {
+        canvas.save()
+
+        drawBody(canvas, 1.0f)
+        updateFace()
+
+        if (numPoints < 2)
+            return;
+
+        val up = Vector(0.0f, -1.0f)
+        val ori = points[numPoints - 2].pos - middle.pos
+        val ang = Math.acos(ori.dotProd(up) / ori.length.toDouble())
+        val radians = if (ori.x < 0.0) -ang else ang
+        val theta = (180.0 / Math.PI) * radians
+        canvas.rotate(theta.toFloat(), middle.xPos, middle.yPos)
+
+        val tx = middle.xPos * scaleFactor - radius / 2f * scaleFactor
+        val ty = (middle.yPos - 0.35f * radius) * scaleFactor - radius / 2f * scaleFactor
+        canvas.translate(tx, ty)
+
+        drawFace(canvas, 1.0f)
+        // drawOohFace(canvas, 1.0f)
+
+        canvas.restore()
     }
 }

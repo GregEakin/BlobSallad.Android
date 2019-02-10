@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.*
 import android.view.View
 import info.gdbtech.greg.myapplicationii.ui.main.Blob
+import info.gdbtech.greg.myapplicationii.ui.main.BlobCollective
 import info.gdbtech.greg.myapplicationii.ui.main.Environment
 import info.gdbtech.greg.myapplicationii.ui.main.Vector
 import kotlin.random.Random
@@ -42,12 +43,12 @@ class MainView(context: Context) : View(context) {
 
     private val env = Environment(20f, 20f, 800f, 800f)
     private val gravity = Vector(0.0f, 10.0f)
-    private val blob = Blob(250f, 250f, 100f, 8)
+    // private val blob = Blob(250f, 250f, 100f, 8)
+    private val collective = BlobCollective(200.0f, 200.0f, 5)
 
     init {
-        val force = gravity
-        blob.addForce(force)
-
+        collective.split()
+        collective.split()
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -93,26 +94,10 @@ class MainView(context: Context) : View(context) {
 //        drawEyesClosed(canvas)
 //        blob.moveTo(position.x, position.y)
 
-        blob.move(0.05f) // delta / 1000f)
-        blob.sc(env)
-        blob.force = gravity
-
-        blob.drawBody(canvas, 1.0f)
-        blob.updateFace()
-
-        val up = Vector(0.0f, -1.0f)
-        val ori = blob.points[blob.numPoints - 2].pos - blob.middle.pos
-        val ang = Math.acos(ori.dotProd(up) / ori.length.toDouble())
-        val radians = if (ori.x < 0.0) -ang else ang
-        val theta = (180.0 / Math.PI) * radians
-        canvas.rotate(theta.toFloat(), blob.middle.xPos, blob.middle.yPos)
-
-        val tx = blob.middle.xPos * scaleFactor - radius / 2f * scaleFactor
-        val ty = (blob.middle.yPos - 0.35f * radius) * scaleFactor - radius / 2f * scaleFactor
-        canvas.translate(tx, ty)
-
-        blob.drawFace(canvas, 1.0f)
-        // blob.drawOohFace(canvas, 1.0f)
+        collective.move(0.05f) // delta / 1000f)
+        collective.sc(env)
+        collective.setForce(gravity)
+        collective.draw(canvas, scaleFactor)
 
         invalidate()
     }
