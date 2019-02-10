@@ -20,7 +20,7 @@ class BlobTests {
         for (i in 0..4) {
             val point = blob.points[i]
 
-            val mass = if (i > 2) 4.0f else 1.0f
+            val mass = if (i < 2) 4.0f else 1.0f
             assertEquals(mass, point.mass, 0.001f)
 
             val theta = i.toDouble() * 2.0 * Math.PI / 5
