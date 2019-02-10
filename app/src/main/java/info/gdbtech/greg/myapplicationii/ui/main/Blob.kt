@@ -32,7 +32,7 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
             val theta = i * 2.0 * Math.PI / numPoints
             val cx = Math.cos(theta) * radius + x1
             val cy = Math.sin(theta) * radius + y1
-            val mass = if (i >= numPoints - 2) 4.0f else 1.0f
+            val mass = if (i < 2) 4.0f else 1.0f
             val pt = PointMass(cx.toFloat(), cy.toFloat(), mass)
             list.add(pt)
         }
@@ -158,7 +158,7 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
             point.addForce(force)
 
         // put a spin on the blob
-        val pointMass = points[numPoints - 2]
+        val pointMass = points[0]
         pointMass.addForce(force)
         pointMass.addForce(force)
         pointMass.addForce(force)
@@ -212,7 +212,6 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
         canvas.drawCircle(left2, y2, r2, paint)
         canvas.drawCircle(right2, y2, r2, paint)
     }
-
 
     fun drawEyesClosed(canvas: Canvas, scaleFactor: Float) {
         paint.color = Color.BLACK
@@ -333,11 +332,12 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
     fun draw(canvas: Canvas, scaleFactor: Float) {
         canvas.save()
 
-        drawBody(canvas, 1.0f)
-        updateFace()
+        // canvas.scale(scaleFactor, scaleFactor)
+
+        drawBody(canvas, scaleFactor)
 
         val up = Vector(0.0f, -1.0f)
-        val ori = points[numPoints - 2].pos - middle.pos
+        val ori = points[0].pos - middle.pos
         val ang = Math.acos(ori.dotProd(up) / ori.length.toDouble())
         val radians = if (ori.x < 0.0) -ang else ang
         val theta = (180.0 / Math.PI) * radians
@@ -347,9 +347,8 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
         val ty = (middle.yPos - 0.35f * radius) * scaleFactor - radius / 2f * scaleFactor
         canvas.translate(tx, ty)
 
-        drawFace(canvas, 1.0f)
-        // drawOohFace(canvas, 1.0f)
-
+        updateFace()
+        drawFace(canvas, scaleFactor)
         canvas.restore()
     }
 }
