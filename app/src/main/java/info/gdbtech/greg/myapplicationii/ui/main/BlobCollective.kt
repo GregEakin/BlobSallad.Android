@@ -2,6 +2,7 @@ package info.gdbtech.greg.myapplicationii.ui.main
 
 import android.graphics.Canvas
 import android.graphics.Point
+import android.util.Log
 import kotlin.random.Random
 
 class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
@@ -34,6 +35,7 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
         }
 
         blobs.add(newBlob)
+        Log.d("BlobAndroid", "New blob ${blobs.size}")
     }
 
     fun join() {
@@ -49,6 +51,8 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
         blobs.remove(smallest)
         for (blob in blobs)
             blob.unlinkBlob(smallest)
+
+        Log.d("BlobAndroid", "Delete blob ${blobs.size}")
     }
 
     fun findLargest(exclude: Blob?): Blob? {

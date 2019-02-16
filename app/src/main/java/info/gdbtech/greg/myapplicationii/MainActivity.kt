@@ -54,6 +54,8 @@ class MainActivity : Activity() {
                 val message = Message()
                 message.what = MainActivity.GuiUpdateIdentifier
                 this@MainActivity.handler.sendMessage(message)
+
+                Thread.sleep(100)
             }
         }
     }

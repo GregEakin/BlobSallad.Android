@@ -260,6 +260,12 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
     }
 
     fun updateFace() {
+//        val random = Random.nextDouble()
+//        if (face == Face.SMILE && random < 0.05)
+//            face = Face.OPEN
+//        else if (face == Face.OPEN && random < 0.10)
+//            face = Face.SMILE
+
         if (face == Face.SMILE && Random.nextDouble() < 0.05)
             face = Face.OPEN
         else if (face == Face.OPEN && Random.nextDouble() < 0.10)
@@ -272,18 +278,12 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
     }
 
     fun drawFace(canvas: Canvas, scaleFactor: Float) {
-        if (middle.velocity > 40.0f)
+        if (middle.velocity > 200.0f)
             drawOohFace(canvas, scaleFactor)
         else {
-            if (face == Face.SMILE) {
-                paint.style = Paint.Style.STROKE
-                paint.strokeWidth = 2.0f
-                drawSmile(canvas, scaleFactor, paint)
-            } else {
-                paint.style = Paint.Style.FILL
-                paint.strokeWidth = 2.0f
-                drawSmile(canvas, scaleFactor, paint)
-            }
+            paint.style = if (face == Face.SMILE) Paint.Style.STROKE else Paint.Style.FILL
+            paint.strokeWidth = 2.0f
+            drawSmile(canvas, scaleFactor, paint)
 
             if (eyes == Eye.OPEN) {
                 drawEyesOpen(canvas, scaleFactor)
@@ -339,7 +339,7 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
         val up = Vector(0.0f, -1.0f)
         val ori = points[0].pos - middle.pos
         val ang = Math.acos(ori.dotProd(up) / ori.length.toDouble())
-        val radians = if (ori.x < 0.0) -ang else ang
+        val radians = if (ori.x < 0.0f) -ang else ang
         val theta = (180.0 / Math.PI) * radians
         canvas.rotate(theta.toFloat(), middle.xPos, middle.yPos)
 
