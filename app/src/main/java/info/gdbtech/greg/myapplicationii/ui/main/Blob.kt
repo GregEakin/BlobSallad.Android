@@ -185,13 +185,13 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
 
     fun drawEars(canvas: Canvas, scaleFactor: Float) {}
 
-    fun drawEyesOpen(canvas: Canvas, scaleFactor: Float) {
+    fun drawEyesOpen(canvas: Canvas) {
         paint.strokeWidth = 1.0f
 
-        val r1 = 0.12f * radius * scaleFactor
-        val left1 = 0.35f * radius * scaleFactor
-        val right1 = 0.65f * radius * scaleFactor
-        val y1 = 0.30f * radius * scaleFactor
+        val r1 = 0.12f * radius
+        val left1 = 0.35f * radius
+        val right1 = 0.65f * radius
+        val y1 = 0.30f * radius
 
         paint.color = Color.WHITE
         paint.style = Paint.Style.FILL
@@ -203,25 +203,25 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
         canvas.drawCircle(left1, y1, r1, paint)
         canvas.drawCircle(right1, y1, r1, paint)
 
-        val r2 = 0.06f * radius * scaleFactor
-        val left2 = 0.35f * radius * scaleFactor
-        val right2 = 0.65f * radius * scaleFactor
-        val y2 = 0.33f * radius * scaleFactor
+        val r2 = 0.06f * radius
+        val left2 = 0.35f * radius
+        val right2 = 0.65f * radius
+        val y2 = 0.33f * radius
 
         paint.style = Paint.Style.FILL
         canvas.drawCircle(left2, y2, r2, paint)
         canvas.drawCircle(right2, y2, r2, paint)
     }
 
-    fun drawEyesClosed(canvas: Canvas, scaleFactor: Float) {
+    fun drawEyesClosed(canvas: Canvas) {
         paint.color = Color.BLACK
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = 1.0f
 
-        val r = 0.12f * radius * scaleFactor
-        val left = 0.35f * radius * scaleFactor
-        val right = 0.65f * radius * scaleFactor
-        val y = 0.30f * radius * scaleFactor
+        val r = 0.12f * radius
+        val left = 0.35f * radius
+        val right = 0.65f * radius
+        val y = 0.30f * radius
 
         canvas.drawCircle(left, y, r, paint)
         canvas.drawLine(left - r, y, left + r, y, paint)
@@ -230,28 +230,28 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
         canvas.drawLine(right - r, y, right + r, y, paint)
     }
 
-    fun drawSmile(canvas: Canvas, scaleFactor: Float, paint: Paint) {
-        val left = 0.25f * radius * scaleFactor
-        val top = 0.40f * radius * scaleFactor
-        val right = 0.50f * radius * scaleFactor + left
-        val bottom = 0.50f * radius * scaleFactor + top
+    fun drawSmile(canvas: Canvas, paint: Paint) {
+        val left = 0.25f * radius
+        val top = 0.40f * radius
+        val right = 0.50f * radius + left
+        val bottom = 0.50f * radius + top
 
         val oval = RectF(left, top, right, bottom)
         canvas.drawArc(oval, 0f, 180f, false, paint)
     }
 
-    fun drawOohFace(canvas: Canvas, scaleFactor: Float) {
+    fun drawOohFace(canvas: Canvas) {
         paint.style = Paint.Style.FILL
         paint.strokeWidth = 2.0f
-        drawSmile(canvas, scaleFactor, paint)
+        drawSmile(canvas, paint)
 
-        val x1 = 0.25f * radius * scaleFactor
-        val x2 = 0.45f * radius * scaleFactor
-        val x3 = 0.75f * radius * scaleFactor
-        val x4 = 0.55f * radius * scaleFactor
-        val y1 = 0.20f * radius * scaleFactor
-        val y2 = 0.30f * radius * scaleFactor
-        val y3 = 0.40f * radius * scaleFactor
+        val x1 = 0.25f * radius
+        val x2 = 0.45f * radius
+        val x3 = 0.75f * radius
+        val x4 = 0.55f * radius
+        val y1 = 0.20f * radius
+        val y2 = 0.30f * radius
+        val y3 = 0.40f * radius
 
         canvas.drawLine(x1, y1, x2, y2, paint)
         canvas.drawLine(x2, y2, x1, y3, paint)
@@ -271,29 +271,29 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
             eyes = Eye.OPEN
     }
 
-    fun drawFace(canvas: Canvas, scaleFactor: Float) {
+    fun drawFace(canvas: Canvas) {
         if (middle.velocity > 200.0f)
-            drawOohFace(canvas, scaleFactor)
+            drawOohFace(canvas)
         else {
             paint.style = if (face == Face.SMILE) Paint.Style.STROKE else Paint.Style.FILL
             paint.strokeWidth = 2.0f
-            drawSmile(canvas, scaleFactor, paint)
+            drawSmile(canvas, paint)
 
             if (eyes == Eye.OPEN) {
-                drawEyesOpen(canvas, scaleFactor)
+                drawEyesOpen(canvas)
             } else {
-                drawEyesClosed(canvas, scaleFactor)
+                drawEyesClosed(canvas)
             }
         }
     }
 
-    fun drawBody(canvas: Canvas, scaleFactor: Float) {
+    fun drawBody(canvas: Canvas) {
 
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = 3.0f
         val path = Path()
-        val startX = points[0].xPos * scaleFactor
-        val startY = points[0].yPos * scaleFactor
+        val startX = points[0].xPos
+        val startY = points[0].yPos
         path.moveTo(startX, startY)
         for (i in points.indices) {
             val prevPointMass = points[PointMassIndex(i - 1)]
@@ -311,24 +311,24 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
             val py = cy * 0.5f + ty * 0.5f + ny * 0.16f
 
             path.cubicTo(
-                px * scaleFactor,
-                py * scaleFactor,
-                tx * scaleFactor,
-                ty * scaleFactor,
-                tx * scaleFactor,
-                ty * scaleFactor
+                px,
+                py,
+                tx,
+                ty,
+                tx,
+                ty
             )
         }
 
         canvas.drawPath(path, paint)
     }
 
-    fun draw(canvas: Canvas, scaleFactor: Float) {
+    fun draw(canvas: Canvas) {
         canvas.save()
 
         // canvas.scale(scaleFactor, scaleFactor)
 
-        drawBody(canvas, scaleFactor)
+        drawBody(canvas)
 
         val up = Vector(0.0f, -1.0f)
         val ori = points[0].pos - middle.pos
@@ -337,12 +337,12 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
         val theta = (180.0 / Math.PI) * radians
         canvas.rotate(theta.toFloat(), middle.xPos, middle.yPos)
 
-        val tx = middle.xPos * scaleFactor - radius / 2f * scaleFactor
-        val ty = (middle.yPos - 0.35f * radius) * scaleFactor - radius / 2f * scaleFactor
+        val tx = middle.xPos - radius / 2f
+        val ty = (middle.yPos - 0.35f * radius) - radius / 2f
         canvas.translate(tx, ty)
 
         updateFace()
-        drawFace(canvas, scaleFactor)
+        drawFace(canvas)
         canvas.restore()
     }
 }

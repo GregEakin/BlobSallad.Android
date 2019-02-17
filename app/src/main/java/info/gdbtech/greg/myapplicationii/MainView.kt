@@ -18,7 +18,6 @@ class MainView(context: Context) : View(context) {
     private val env = Environment(0f, 0f, 700f, 700f)
     private val gravity = Vector(0.0f, 9.8e-5f)
     private val collective = BlobCollective(200.0f, 200.0f, 5)
-    private val scaleFactor = 1.0f
     private var last = SystemClock.uptimeMillis()
 
     init {
@@ -31,7 +30,7 @@ class MainView(context: Context) : View(context) {
 
     private var mProfileFrames: Int = 0
     private var mProfileTime: Long = 0L
-    private var mFloat: Float = 0.0f
+    private var mStepAverage: Float = 0.0f
 
 //    private var trace = 100;
 
@@ -57,7 +56,7 @@ class MainView(context: Context) : View(context) {
             collective.move(step)
             collective.sc(env)
             collective.setForce(gravity)
-            collective.draw(canvas, scaleFactor)
+            collective.draw(canvas)
 //            if (trace == 0) {
 //                Debug.stopMethodTracing()
 //                Log.d("BlobAndroid", "Log finished.")
@@ -70,16 +69,16 @@ class MainView(context: Context) : View(context) {
             val finalDelta = endTime - time
             mProfileTime += finalDelta
             mProfileFrames++
-            mFloat += step
-            if (mProfileFrames > 100) {
+            mStepAverage += step
+            if (mProfileFrames > 200) {
                 val averageFrameTime = mProfileTime.toFloat() / mProfileFrames
-                val averageStep = mFloat / mProfileTime
+                val averageStep = mStepAverage / mProfileTime
                 Log.d("BlobAndroid", "Average: $averageFrameTime ms, step: $averageStep ms")
                 mProfileTime = 0L
                 mProfileFrames = 0
-                mFloat = 0.0f
+                mStepAverage = 0.0f
             }
         } else
-            collective.draw(canvas, scaleFactor)
+            collective.draw(canvas)
     }
 }

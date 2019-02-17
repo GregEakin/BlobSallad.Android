@@ -178,8 +178,8 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
         }
     }
 
-    fun draw(canvas: Canvas, scaleFactor: Float) {
+    fun draw(canvas: Canvas) {
         for (blob in blobs)
-            blob.draw(canvas, scaleFactor)
+            blob.draw(canvas)
     }
 }

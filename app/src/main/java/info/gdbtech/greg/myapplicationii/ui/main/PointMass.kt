@@ -36,6 +36,9 @@ public class PointMass(cx: Float, cy: Float, val mass: Float) {
         _force.add(force)
 
     fun move(dt: Float) {
+        //velocity += acceleration * deltaTime;
+        //position += velocity * deltaTime - 0.5 * acceleration * deltaTime * deltaTime;
+
         val dt2 = dt * dt
 
         val ax = _force.x / mass
@@ -53,10 +56,10 @@ public class PointMass(cx: Float, cy: Float, val mass: Float) {
         pos.y = ty
     }
 
-    fun draw(scaleFactor: Float) {
+    fun draw() {
         val radius = 4f
-        val x = pos.x * scaleFactor
-        val y = pos.y * scaleFactor
+        val x = pos.x
+        val y = pos.y
         // val circle = EllipseGeometry(Point(x, y), radius, radius);
     }
 }
