@@ -260,12 +260,6 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
     }
 
     fun updateFace() {
-//        val random = Random.nextDouble()
-//        if (face == Face.SMILE && random < 0.05)
-//            face = Face.OPEN
-//        else if (face == Face.OPEN && random < 0.10)
-//            face = Face.SMILE
-
         if (face == Face.SMILE && Random.nextDouble() < 0.05)
             face = Face.OPEN
         else if (face == Face.OPEN && Random.nextDouble() < 0.10)

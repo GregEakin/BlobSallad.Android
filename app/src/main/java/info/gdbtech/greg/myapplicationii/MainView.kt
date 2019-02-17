@@ -16,7 +16,7 @@ class MainView(context: Context) : View(context) {
     }
 
     private val env = Environment(0f, 0f, 700f, 700f)
-    private val gravity = Vector(0.0f, 10.0f)
+    private val gravity = Vector(0.0f, 9.8e-5f)
     private val collective = BlobCollective(200.0f, 200.0f, 5)
     private val scaleFactor = 1.0f
     private var last = SystemClock.uptimeMillis()
@@ -24,23 +24,23 @@ class MainView(context: Context) : View(context) {
     init {
         Log.d("BlobAndroid", "Start")
 
-//        collective.split()
-//        collective.split()
+        collective.split()
+        collective.split()
 //        collective.split()
     }
 
     private var mProfileFrames: Int = 0
     private var mProfileTime: Long = 0L
+    private var mFloat: Float = 0.0f
 
 //    private var trace = 100;
 
     override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
 
         val time = SystemClock.uptimeMillis()
         val delta = time - last
 
-        if (delta >= 100L) {
+        if (delta >= 0L) {
             last = time
 
             // env.draw(canvas)
@@ -52,7 +52,9 @@ class MainView(context: Context) : View(context) {
 //                    Debug.startMethodTracing("blob")
 //                }
 //            }
-            collective.move(delta / 100f)
+
+            val step = delta.toFloat()
+            collective.move(step)
             collective.sc(env)
             collective.setForce(gravity)
             collective.draw(canvas, scaleFactor)
@@ -62,17 +64,20 @@ class MainView(context: Context) : View(context) {
 //                trace--;
 //            }
 
-            // invalidate()
+            invalidate()
 
             val endTime = SystemClock.uptimeMillis()
             val finalDelta = endTime - time
             mProfileTime += finalDelta
             mProfileFrames++
-            if (mProfileFrames > 30) {
+            mFloat += step
+            if (mProfileFrames > 100) {
                 val averageFrameTime = mProfileTime.toFloat() / mProfileFrames
-                Log.d("BlobAndroid", "Average: $averageFrameTime ms")
+                val averageStep = mFloat / mProfileTime
+                Log.d("BlobAndroid", "Average: $averageFrameTime ms, step: $averageStep ms")
                 mProfileTime = 0L
                 mProfileFrames = 0
+                mFloat = 0.0f
             }
         } else
             collective.draw(canvas, scaleFactor)
