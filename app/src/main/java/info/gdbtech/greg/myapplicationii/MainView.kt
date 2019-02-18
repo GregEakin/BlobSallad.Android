@@ -34,6 +34,15 @@ class MainView(context: Context) : View(context) {
 
 //    private var trace = 100;
 
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+
+        Log.d("Arcs", "Width: $w")
+        Log.d("Arcs", "Height: $h")
+        env.width = w.toFloat()
+        env.height = h.toFloat()
+    }
+
     override fun onDraw(canvas: Canvas) {
 
         val time = SystemClock.uptimeMillis()
