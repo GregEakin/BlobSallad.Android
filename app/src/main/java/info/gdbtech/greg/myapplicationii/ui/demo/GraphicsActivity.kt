@@ -1,4 +1,4 @@
-package info.gdbtech.greg.myapplicationii
+package info.gdbtech.greg.myapplicationii.ui.demo
 
 import android.app.Activity
 import android.os.Bundle

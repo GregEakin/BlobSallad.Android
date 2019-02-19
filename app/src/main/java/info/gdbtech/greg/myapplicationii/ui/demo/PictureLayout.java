@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package info.gdbtech.greg.myapplicationii;
+package info.gdbtech.greg.myapplicationii.ui.demo;
 
 import android.content.Context;
 import android.graphics.Canvas;

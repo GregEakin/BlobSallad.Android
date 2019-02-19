@@ -72,7 +72,7 @@ class MainView(context: Context) : View(context) {
 //                trace--;
 //            }
 
-            invalidate()
+            //invalidate()
 
             val endTime = SystemClock.uptimeMillis()
             val finalDelta = endTime - time

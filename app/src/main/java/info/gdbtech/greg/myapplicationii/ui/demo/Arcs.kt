@@ -1,4 +1,4 @@
-package info.gdbtech.greg.myapplicationii
+package info.gdbtech.greg.myapplicationii.ui.demo
 
 import android.content.Context
 import android.graphics.Canvas
@@ -17,16 +17,10 @@ class Arcs : GraphicsActivity() {
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-
         Log.d("Arcs", "onWindowFocusChanged $hasFocus")
     }
 
     private class SampleView(context: Context) : View(context) {
-//        init {
-//            val info = context.applicationInfo
-//            info.
-//            Log.d("Arcs", "$(x)")
-//        }
 
         private val mPaints: Array<Paint>
 
@@ -48,7 +42,6 @@ class Arcs : GraphicsActivity() {
             paint3.color = -0x77777778
 
             mPaints = arrayOf(paint0, paint1, paint2, paint3)
-            Log.d("Arcs", "Init for Paints[4]")
         }
 
         private val mFramePaint: Paint = Paint()
@@ -57,7 +50,6 @@ class Arcs : GraphicsActivity() {
             mFramePaint.isAntiAlias = true
             mFramePaint.style = Paint.Style.STROKE
             mFramePaint.strokeWidth = 0f
-            Log.d("Arcs", "Init for FramePaint")
         }
 
         private val mUseCenters: BooleanArray = booleanArrayOf(false, true, false, true)
@@ -70,7 +62,6 @@ class Arcs : GraphicsActivity() {
             val oval2 = RectF(170f, 270f, 230f, 330f)
             val oval3 = RectF(250f, 270f, 310f, 330f)
             mOvals = arrayOf(oval0, oval1, oval2, oval3)
-            Log.d("Arcs", "Init for Ovals[4]")
         }
 
         private val mBigOval: RectF = RectF(40f, 10f, 280f, 250f)
