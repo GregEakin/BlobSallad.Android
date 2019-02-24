@@ -2,6 +2,7 @@ package info.gdbtech.greg.myapplicationii
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Point
 import android.os.SystemClock
 import android.util.Log
 import android.view.KeyEvent
@@ -111,20 +112,28 @@ class MainView(context: Context) : View(context) {
         return false
     }
 
-    var selectedOffset: Vector? = null
+    var selectedOffset: Point? = null
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        if (event != null) {
-            val x = event.rawX
-            val y = event.rawY
+        if (event == null) return false
 
-            when (event.action) {
-                MotionEvent.ACTION_UP -> {
-                }
-                else -> {
-                }
+        val x = event.rawX
+        val y = event.rawY
+
+        when (event.action) {
+            MotionEvent.ACTION_UP -> {
+                selectedOffset = null
+                collective.unselectBlob()
+            }
+            MotionEvent.ACTION_DOWN -> {
+                selectedOffset = collective.findClosest(x, y)
+            }
+            else -> {
+                if (selectedOffset != null)
+                    collective.selectedBlobMoveTo(x, y)
             }
         }
+
         return super.onTouchEvent(event)
     }
 }
