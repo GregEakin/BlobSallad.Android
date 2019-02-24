@@ -310,24 +310,28 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
             val px = cx * 0.5f + tx * 0.5f + nx * 0.16f
             val py = cy * 0.5f + ty * 0.5f + ny * 0.16f
 
-            path.cubicTo(
-                px,
-                py,
-                tx,
-                ty,
-                tx,
-                ty
-            )
+            path.cubicTo(px, py, tx, ty, tx, ty)
         }
 
         canvas.drawPath(path, paint)
+
+//        for (i in points.indices) {
+//            val point = points[i]
+//            val r2 = 0.06f * radius * point.mass
+//            paint.style = Paint.Style.STROKE
+//            canvas.drawCircle(point.xPos, point.yPos, r2, paint)
+//
+//            val force = point.force
+//            val x = point.xPos + 1e5f * force.x * point.mass
+//            val y = point.yPos + 1e5f * force.y * point.mass
+//            canvas.drawLine(point.xPos, point.yPos, x, y, paint)
+//        }
     }
 
     fun draw(canvas: Canvas) {
+        updateFace()
         canvas.save()
-
         // canvas.scale(scaleFactor, scaleFactor)
-
         drawBody(canvas)
 
         val up = Vector(0.0f, -1.0f)
@@ -340,8 +344,6 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
         val tx = middle.xPos - radius / 2f
         val ty = (middle.yPos - 0.35f * radius) - radius / 2f
         canvas.translate(tx, ty)
-
-        updateFace()
         drawFace(canvas)
         canvas.restore()
     }

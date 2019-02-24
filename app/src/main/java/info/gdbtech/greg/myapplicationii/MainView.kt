@@ -17,6 +17,10 @@ class MainView(context: Context) : View(context) {
 
     private val env = Environment(0f, 0f, 700f, 700f)
     private val gravity = Vector(0.0f, 9.8e-5f)
+    public fun setGravity(force: Vector) {
+        gravity.set(force)
+    }
+
     private val collective = BlobCollective(200.0f, 200.0f, 5)
     private var last = SystemClock.uptimeMillis()
 
@@ -30,15 +34,12 @@ class MainView(context: Context) : View(context) {
 
     private var mProfileFrames: Int = 0
     private var mProfileTime: Long = 0L
-    private var mStepAverage: Float = 0.0f
+    private var mStepAverage: Long = 0L
 
 //    private var trace = 100;
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-
-        Log.d("Arcs", "Width: $w")
-        Log.d("Arcs", "Height: $h")
         env.width = w.toFloat()
         env.height = h.toFloat()
     }
@@ -78,14 +79,14 @@ class MainView(context: Context) : View(context) {
             val finalDelta = endTime - time
             mProfileTime += finalDelta
             mProfileFrames++
-            mStepAverage += step
+            mStepAverage += delta
             if (mProfileFrames > 200) {
                 val averageFrameTime = mProfileTime.toFloat() / mProfileFrames
-                val averageStep = mStepAverage / mProfileTime
+                val averageStep = mStepAverage.toFloat() / mProfileFrames
                 Log.d("BlobAndroid", "Average: $averageFrameTime ms, step: $averageStep ms")
                 mProfileTime = 0L
                 mProfileFrames = 0
-                mStepAverage = 0.0f
+                mStepAverage = 0L
             }
         } else
             collective.draw(canvas)
