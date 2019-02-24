@@ -1,9 +1,9 @@
-package info.gdbtech.greg.myapplicationii.ui.main;
+package info.gdbtech.greg.myapplicationii.ui.main
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-public class VectorTests {
+class VectorTests {
     @Test
     fun ctor_test() {
         val vector = Vector(71.0f, 67.0f)

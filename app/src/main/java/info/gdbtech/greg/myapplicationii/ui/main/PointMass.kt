@@ -1,6 +1,6 @@
 package info.gdbtech.greg.myapplicationii.ui.main
 
-public class PointMass(cx: Float, cy: Float, val mass: Float) {
+class PointMass(cx: Float, cy: Float, val mass: Float) {
     val pos = Vector(cx, cy)
     val prev = Vector(cx, cy)
 

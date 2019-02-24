@@ -20,7 +20,7 @@ class MainView(context: Context) : View(context) {
 
     private val env = Environment(0f, 0f, 700f, 700f)
     private val gravity = Vector(0.0f, 9.8e-5f)
-    public fun setGravity(force: Vector) {
+    fun setGravity(force: Vector) {
         gravity.set(force)
     }
 

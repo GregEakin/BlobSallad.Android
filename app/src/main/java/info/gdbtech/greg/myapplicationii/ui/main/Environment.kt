@@ -1,44 +1,44 @@
 package info.gdbtech.greg.myapplicationii.ui.main
 
-class Environment(val x: Float, val y: Float, val w: Float, val h: Float) {
+class Environment(val x: Float, val y: Float, w: Float, h: Float) {
     val left: Float = x
     var right: Float = x + w
     val top: Float = y
     var bottom: Float = y + h
     var width: Float = w
-        set(value: Float) {
+        set(value) {
             right = left + value
             field = value
         }
     var height: Float = h
-        set(value: Float) {
+        set(value) {
             bottom = top + value
             field = value
         }
 
-    fun Collision(curPos: Vector, prePos: Vector): Boolean {
+    fun collision(curPos: Vector, prePos: Vector): Boolean {
         if (curPos.x < left) {
             curPos.x = left
-            return true;
+            return true
         }
 
         if (curPos.x > right) {
             curPos.x = right
-            return true;
+            return true
         }
 
         if (curPos.y < top) {
             curPos.y = top
-            return true;
+            return true
         }
 
         if (curPos.y > bottom) {
             curPos.y = bottom
-            return true;
+            return true
         }
 
-        return false;
+        return false
     }
 
-    fun Draw(canvas: Int, scaleFactor: Double) {}
+    fun draw(canvas: Int, scaleFactor: Double) {}
 }

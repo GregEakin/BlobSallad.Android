@@ -12,8 +12,7 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
             throw Exception("Need at least three points to draw a blob.")
     }
 
-    constructor(mother: Blob) : this(mother.x1, mother.y1, mother.radius, mother.numPoints) {
-    }
+    constructor(mother: Blob) : this(mother.x1, mother.y1, mother.radius, mother.numPoints)
 
     enum class Eye {
         OPEN, CLOSED, CROSSED
@@ -44,7 +43,7 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
         val list = mutableListOf<Skin>()
         for (i in 0 until numPoints) {
             val pointMassA = points[i]
-            val index = PointMassIndex(i + 1)
+            val index = pointMassIndex(i + 1)
             val pointMassB = points[index]
             val skin = Skin(pointMassA, pointMassB)
             list.add(skin)
@@ -62,7 +61,7 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
             val middleLong = crossShort * 1.1f
             val pointMassA = points[i]
 
-            val index = PointMassIndex(i + numPoints / 2 + 1)
+            val index = pointMassIndex(i + numPoints / 2 + 1)
             val pointMassB = points[index]
             val bone1 = Bones(pointMassA, pointMassB, crossShort, crossLong)
             list.add(bone1)
@@ -82,7 +81,7 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
     val mass: Float
         get() = middle.mass
 
-    fun PointMassIndex(x: Int): Int {
+    fun pointMassIndex(x: Int): Int {
         val m = numPoints
         return (x % m + m) % m
     }
@@ -131,7 +130,7 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
     fun sc(env: Environment) {
         for (j in 0 until 4) {
             for (point in points) {
-                val collision = env.Collision(point.pos, point.prev)
+                val collision = env.collision(point.pos, point.prev)
                 point.friction = if (collision) 0.75f else 0.01f
             }
 
@@ -296,10 +295,10 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
         val startY = points[0].yPos
         path.moveTo(startX, startY)
         for (i in points.indices) {
-            val prevPointMass = points[PointMassIndex(i - 1)]
-            val currentPointMass = points[PointMassIndex(i)]
-            val nextPointMass = points[PointMassIndex(i + 1)]
-            val nextNextPointMass = points[PointMassIndex(i + 2)]
+            val prevPointMass = points[pointMassIndex(i - 1)]
+            val currentPointMass = points[pointMassIndex(i)]
+            val nextPointMass = points[pointMassIndex(i + 1)]
+            val nextNextPointMass = points[pointMassIndex(i + 2)]
 
             val cx = currentPointMass.xPos
             val cy = currentPointMass.yPos

@@ -3,7 +3,7 @@ package info.gdbtech.greg.myapplicationii.ui.main
 import org.junit.Assert.*
 import org.junit.Test
 
-public class BlobCollectiveTests {
+class BlobCollectiveTests {
     @Test
     fun ctorTest() {
         val collective = BlobCollective(71.0f, 67.0f, 4)
@@ -21,10 +21,10 @@ public class BlobCollectiveTests {
 
     @Test
     fun joinTest() {
-        val collective = BlobCollective(1.0f, 1.0f, 4);
-        collective.split();
-        collective.join();
-        assertEquals(1, collective.numActive);
+        val collective = BlobCollective(1.0f, 1.0f, 4)
+        collective.split()
+        collective.join()
+        assertEquals(1, collective.numActive)
     }
 
     @Test
@@ -79,14 +79,14 @@ public class BlobCollectiveTests {
     @Test
     fun selectBlobMissTest() {
         val collective = BlobCollective(1.0f, 1.0f, 4)
-        collective.findClosest(2.0, 2.0)
+        collective.findClosest(2.0f, 2.0f)
         assertNull(collective.selectedBlob)
     }
 
     @Test
     fun selectBlobHitTest() {
         val collective = BlobCollective(1.0f, 1.0f, 4)
-        collective.findClosest(1.0, 1.1)
+        collective.findClosest(1.0f, 1.1f)
         assertNotNull(collective.selectedBlob)
         assertTrue(collective.selectedBlob!!.selected)
     }

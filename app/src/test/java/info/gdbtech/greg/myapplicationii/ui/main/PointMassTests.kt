@@ -3,7 +3,7 @@ package info.gdbtech.greg.myapplicationii.ui.main
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-public class PointMassTests {
+class PointMassTests {
     @Test
     fun ctor_test() {
         val pointMass = PointMass(31.0f, 23.0f, 11.0f)
@@ -27,9 +27,9 @@ public class PointMassTests {
         pointMass.force = force
 
         pointMass.move(3.0f)
-        assertEquals(31.0f, pointMass.xPrev, 0.01f);
-        assertEquals(23.0f, pointMass.yPrev, 0.01f);
-        assertEquals(36.727f, pointMass.xPos, 0.01f);
-        assertEquals(33.636f, pointMass.yPos, 0.01f);
+        assertEquals(31.0f, pointMass.xPrev, 0.01f)
+        assertEquals(23.0f, pointMass.yPrev, 0.01f)
+        assertEquals(36.727f, pointMass.xPos, 0.01f)
+        assertEquals(33.636f, pointMass.yPos, 0.01f)
     }
 }
