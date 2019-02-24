@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Canvas
 import android.os.SystemClock
 import android.util.Log
+import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.View
 import info.gdbtech.greg.myapplicationii.ui.main.BlobCollective
 import info.gdbtech.greg.myapplicationii.ui.main.Environment
@@ -21,7 +23,7 @@ class MainView(context: Context) : View(context) {
         gravity.set(force)
     }
 
-    private val collective = BlobCollective(200.0f, 200.0f, 5)
+    private val collective = BlobCollective(200.0f, 200.0f, 25)
     private var last = SystemClock.uptimeMillis()
 
     init {
@@ -90,5 +92,39 @@ class MainView(context: Context) : View(context) {
             }
         } else
             collective.draw(canvas)
+    }
+
+    fun keyEvent(event: KeyEvent?): Boolean {
+        if (event != null && event.action == KeyEvent.ACTION_DOWN) {
+            when (event.keyCode) {
+                KeyEvent.KEYCODE_VOLUME_UP -> {
+                    collective.split()
+                    return true
+                }
+
+                KeyEvent.KEYCODE_VOLUME_DOWN -> {
+                    collective.join()
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    var selectedOffset: Vector? = null
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        if (event != null) {
+            val x = event.rawX
+            val y = event.rawY
+
+            when (event.action) {
+                MotionEvent.ACTION_UP -> {
+                }
+                else -> {
+                }
+            }
+        }
+        return super.onTouchEvent(event)
     }
 }

@@ -10,6 +10,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.util.Log
+import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.Window
 import info.gdbtech.greg.myapplicationii.ui.main.Vector
 
@@ -62,9 +64,8 @@ class MainActivity : Activity(), SensorEventListener {
         sensorManager = systemService
         accelerometer = systemService.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
-        if (accelerometer != null) {
+        if (accelerometer != null)
             systemService.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
-        }
     }
 
     override fun onStart() {
@@ -74,7 +75,8 @@ class MainActivity : Activity(), SensorEventListener {
 
     override fun onResume() {
         super.onResume()
-        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
+        if (accelerometer != null)
+            sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
         Log.w("BlobAndroid", "onResume()")
     }
 
@@ -125,6 +127,32 @@ class MainActivity : Activity(), SensorEventListener {
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+    }
+
+    private var mLastTouchTime: Long = 0L
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        // game.onTouchEvent(event)
+        this@MainActivity.view.onTouchEvent(event)
+
+        if (event != null) {
+            val time = System.currentTimeMillis()
+            if (event.action == MotionEvent.ACTION_MOVE && time - mLastTouchTime < 32) {
+                try {
+                    Thread.sleep(32)
+                } catch (e: InterruptedException) {
+                }
+
+                // mGame.renderer.waitDrawingComplete();
+            }
+            mLastTouchTime = time
+        }
+        return super.onTouchEvent(event)
+    }
+
+    override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
+        val hit = this@MainActivity.view.keyEvent(event)
+        if (hit) return true
+        return super.dispatchKeyEvent(event)
     }
 
     inner class RefreshRunner : Runnable {
