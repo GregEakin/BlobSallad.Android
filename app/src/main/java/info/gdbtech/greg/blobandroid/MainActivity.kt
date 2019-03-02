@@ -60,12 +60,9 @@ class MainActivity : Activity(), SensorEventListener {
 //
 //        if ((anonymous || member || local) && (static == 0))
 //            var x = 0;
-        val systemService = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        sensorManager = systemService
-        accelerometer = systemService.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-
-        if (accelerometer != null)
-            systemService.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
+        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
     }
 
     override fun onStart() {
@@ -75,8 +72,7 @@ class MainActivity : Activity(), SensorEventListener {
 
     override fun onResume() {
         super.onResume()
-        if (accelerometer != null)
-            sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
         Log.w("BlobAndroid", "onResume()")
     }
 

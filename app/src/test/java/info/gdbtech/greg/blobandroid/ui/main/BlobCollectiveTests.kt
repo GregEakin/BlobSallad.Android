@@ -79,7 +79,7 @@ class BlobCollectiveTests {
     @Test
     fun selectBlobMissTest() {
         val collective = BlobCollective(1.0f, 1.0f, 4)
-        collective.findClosest(20.0f, 20.0f)
+        collective.findClosest(200.0f, 200.0f)
         assertNull(collective.selectedBlob)
     }
 

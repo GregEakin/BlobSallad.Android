@@ -40,5 +40,5 @@ class Environment(val x: Float, val y: Float, w: Float, h: Float) {
         return false
     }
 
-    fun draw(canvas: Int, scaleFactor: Double) {}
+//    fun draw(canvas: Int, scaleFactor: Double) {}
 }

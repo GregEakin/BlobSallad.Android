@@ -182,7 +182,7 @@ open class Blob(private val xx: Float, private val yy: Float, var radius: Float,
 
     private val paint = Paint()
 
-    fun drawEars(canvas: Canvas, scaleFactor: Float) {}
+//    fun drawEars(canvas: Canvas, scaleFactor: Float) {}
 
     fun drawEyesOpen(canvas: Canvas) {
         paint.strokeWidth = 1.0f

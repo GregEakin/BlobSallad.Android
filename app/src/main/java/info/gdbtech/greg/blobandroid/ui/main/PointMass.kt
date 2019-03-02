@@ -56,10 +56,10 @@ class PointMass(cx: Float, cy: Float, val mass: Float) {
         pos.y = ty
     }
 
-    fun draw() {
-        val radius = 4f
-        val x = pos.x
-        val y = pos.y
-        // val circle = EllipseGeometry(Point(x, y), radius, radius);
-    }
+//    fun draw() {
+//        val radius = 4f
+//        val x = pos.x
+//        val y = pos.y
+//        // val circle = EllipseGeometry(Point(x, y), radius, radius);
+//    }
 }

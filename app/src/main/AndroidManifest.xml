@@ -9,7 +9,7 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name="info.gdbtech.greg.blobandroid.MainActivity"
+        <activity android:name=".MainActivity"
                   android:screenOrientation="nosensor"
                   android:configChanges="screenSize">
             <intent-filter>
