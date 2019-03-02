@@ -6,13 +6,13 @@ import android.util.Log
 import kotlin.random.Random
 
 class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
-    private val blobPointMass = 8
-    private val blobInitialRadius = 100.0f
+    private val blobPointCount = 8
+    private val blobInitialRadius = 100f
 
     private val blobs = createBlobs()
     private fun createBlobs(): MutableList<Blob> {
         val list = mutableListOf<Blob>()
-        val blob = Blob(x, y, blobInitialRadius, blobPointMass)
+        val blob = Blob(x, y, blobInitialRadius, blobPointCount)
         list.add(blob)
         return list
     }
@@ -45,8 +45,11 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
         val smallest = findSmallest(null) ?: return
         val closest = findClosest(smallest) ?: return
 
-        val length = Math.sqrt((smallest.radius * smallest.radius + closest.radius * closest.radius).toDouble())
-        closest.scale((0.945 * length / closest.radius).toFloat())
+        val r1 = smallest.radius.toDouble()
+        val r2 = closest.radius.toDouble()
+        val length = Math.sqrt(r1 * r1 + r2 * r2)
+        val factor = 0.945 * length / closest.radius
+        closest.scale(factor.toFloat())
 
         blobs.remove(smallest)
         for (blob in blobs)

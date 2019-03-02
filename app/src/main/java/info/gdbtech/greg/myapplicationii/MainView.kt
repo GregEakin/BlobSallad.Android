@@ -19,12 +19,12 @@ class MainView(context: Context) : View(context) {
     }
 
     private val env = Environment(0f, 0f, 700f, 700f)
-    private val gravity = Vector(0.0f, 9.8e-5f)
+    private val gravity = Vector(0f, 9.8e-5f)
     fun setGravity(force: Vector) {
         gravity.set(force)
     }
 
-    private val collective = BlobCollective(200.0f, 200.0f, 25)
+    private val collective = BlobCollective(200f, 200f, 25)
     private var last = SystemClock.uptimeMillis()
 
     init {
@@ -117,20 +117,25 @@ class MainView(context: Context) : View(context) {
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         if (event == null) return false
 
-        val x = event.rawX
-        val y = event.rawY
+        val xp = event.rawX
+        val yp = event.rawY
+        val action = event.action
 
-        when (event.action) {
+        when (action) {
             MotionEvent.ACTION_UP -> {
                 selectedOffset = null
                 collective.unselectBlob()
+                Log.d("BlobAndroid", "onTouch up $xp, $yp, $action, ${selectedOffset}")
             }
             MotionEvent.ACTION_DOWN -> {
-                selectedOffset = collective.findClosest(x, y)
+                if (selectedOffset == null) {
+                    selectedOffset = collective.findClosest(xp, yp)
+                    Log.d("BlobAndroid", "onTouch down $xp, $yp, $action, ${selectedOffset}")
+                }
             }
             else -> {
                 if (selectedOffset != null)
-                    collective.selectedBlobMoveTo(x, y)
+                    collective.selectedBlobMoveTo(xp, yp)
             }
         }
 

@@ -3,7 +3,7 @@ package info.gdbtech.greg.myapplicationii.ui.main
 import android.graphics.*
 import kotlin.random.Random
 
-open class Blob(private val x1: Float, private val y1: Float, var radius: Float, val numPoints: Int) {
+open class Blob(private val xx: Float, private val yy: Float, var radius: Float, val numPoints: Int) {
     init {
         if (radius <= 0.0f)
             throw Exception("Can't have a negative radius.")
@@ -12,7 +12,7 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
             throw Exception("Need at least three points to draw a blob.")
     }
 
-    constructor(mother: Blob) : this(mother.x1, mother.y1, mother.radius, mother.numPoints)
+    constructor(mother: Blob) : this(mother.x, mother.y, mother.radius, mother.numPoints)
 
     enum class Eye {
         OPEN, CLOSED, CROSSED
@@ -22,15 +22,15 @@ open class Blob(private val x1: Float, private val y1: Float, var radius: Float,
         SMILE, OPEN, OOH
     }
 
-    val middle: PointMass = PointMass(x1, y1, 1.0f)
+    val middle: PointMass = PointMass(xx, yy, 1.0f)
 
     val points: List<PointMass> = pointsInit()
     private fun pointsInit(): List<PointMass> {
         val list = mutableListOf<PointMass>()
         for (i in 0 until numPoints) {
             val theta = i * 2.0 * Math.PI / numPoints
-            val cx = Math.cos(theta) * radius + x1
-            val cy = Math.sin(theta) * radius + y1
+            val cx = Math.cos(theta) * radius + xx
+            val cy = Math.sin(theta) * radius + yy
             val mass = if (i < 2) 4.0f else 1.0f
             val pt = PointMass(cx.toFloat(), cy.toFloat(), mass)
             list.add(pt)
