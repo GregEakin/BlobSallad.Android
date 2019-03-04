@@ -35,10 +35,8 @@ class PointMass(cx: Float, cy: Float, val mass: Float) {
     fun addForce(force: Vector) =
         _force.add(force)
 
+    /// https://en.wikipedia.org/wiki/Verlet_integration
     fun move(dt: Float) {
-        //velocity += acceleration * deltaTime;
-        //position += velocity * deltaTime - 0.5 * acceleration * deltaTime * deltaTime;
-
         val dt2 = dt * dt
 
         val ax = _force.x / mass
