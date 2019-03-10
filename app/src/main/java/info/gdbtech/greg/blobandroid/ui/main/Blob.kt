@@ -87,7 +87,7 @@ open class Blob(private val xx: Float, private val yy: Float, var radius: Float,
         return list
     }
 
-    var selected: Boolean = false
+    var selected: Touch? = null
 
     val x: Float
         get() = middle.xPos
@@ -196,6 +196,10 @@ open class Blob(private val xx: Float, private val yy: Float, var radius: Float,
     }
 
     private val paint = Paint()
+
+    init {
+        paint.textSize = 20.0f
+    }
 
 //    fun drawEars(canvas: Canvas, scaleFactor: Float) {}
 
@@ -360,5 +364,10 @@ open class Blob(private val xx: Float, private val yy: Float, var radius: Float,
         canvas.translate(tx, ty)
         drawFace(canvas)
         canvas.restore()
+
+        if (selected?.blob != this) return
+
+        var r = radius * radius
+        canvas.drawText("${selected?.number}", x, y, paint)
     }
 }

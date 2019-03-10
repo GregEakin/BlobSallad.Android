@@ -140,24 +140,23 @@ class MainActivity : Activity(), SensorEventListener {
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
     }
 
-    private var mLastTouchTime: Long = 0L
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-        // game.onTouchEvent(event)
+    //    private var mLastTouchTime: Long = 0L
+    override fun onTouchEvent(event: MotionEvent): Boolean {
         this@MainActivity.view.onTouchEvent(event)
 
-        if (event != null) {
-            val time = System.currentTimeMillis()
-            if (event.action == MotionEvent.ACTION_MOVE && time - mLastTouchTime < 32) {
-                try {
-                    Thread.sleep(32)
-                } catch (e: InterruptedException) {
-                }
+//        val time = System.currentTimeMillis()
+//        if (event.action == MotionEvent.ACTION_MOVE && time - mLastTouchTime < 32) {
+//            try {
+//                Thread.sleep(32)
+//            } catch (e: InterruptedException) {
+//            }
+//
+//            // mGame.renderer.waitDrawingComplete();
+//        }
+//        mLastTouchTime = time
 
-                // mGame.renderer.waitDrawingComplete();
-            }
-            mLastTouchTime = time
-        }
-        return super.onTouchEvent(event)
+        // return super.onTouchEvent(event)
+        return true
     }
 
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {

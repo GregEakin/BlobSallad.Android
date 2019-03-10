@@ -6,11 +6,11 @@ I found this little blob engine code, and converted it run on [Android](https://
 
 Original version by: [Björn Lindberg](mailto:bjoern.lindberg@gmail.com)
 
-## See his writeup at Dev.Opera
+## See the writeup at Dev.Opera
 [Blob Sallad — Canvas Tag and JavaScript Physics Simulation Experiment](https://dev.opera.com/articles/blob-sallad-canvas-tag-and-javascript/)
 
 ## Sample code
-Here's the code that calculates the [Verlet integration](https://en.wikipedia.org/wiki/Verlet_integration) for each time step.
+Here's the code that calculates the [Verlet Integration](https://en.wikipedia.org/wiki/Verlet_integration) for each time step.
 ```kotlin
 fun move(dt: Float) {
     val dt2 = dt * dt

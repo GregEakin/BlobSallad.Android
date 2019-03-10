@@ -25,6 +25,7 @@ import android.view.MotionEvent
 import android.view.View
 import info.gdbtech.greg.blobandroid.ui.main.BlobCollective
 import info.gdbtech.greg.blobandroid.ui.main.Environment
+import info.gdbtech.greg.blobandroid.ui.main.Touch
 import info.gdbtech.greg.blobandroid.ui.main.Vector
 
 class MainView(context: Context) : View(context) {
@@ -53,6 +54,7 @@ class MainView(context: Context) : View(context) {
     private var mProfileFrames: Int = 0
     private var mProfileTime: Long = 0L
     private var mStepAverage: Long = 0L
+    private var mTouchCount: Long = 0L
 
 //    private var trace = 100;
 
@@ -81,6 +83,11 @@ class MainView(context: Context) : View(context) {
 //            }
 
             val step = delta.toFloat()
+
+            for (touch in touches)
+                touch.draw(canvas)
+
+
             collective.move(step)
             collective.sc(env)
             collective.setForce(gravity)
@@ -101,10 +108,12 @@ class MainView(context: Context) : View(context) {
             if (mProfileFrames > 200) {
                 val averageFrameTime = mProfileTime.toFloat() / mProfileFrames
                 val averageStep = mStepAverage.toFloat() / mProfileFrames
-                Log.d("BlobAndroid", "Average: $averageFrameTime ms, step: $averageStep ms")
+                val averageTouch = mTouchCount / mProfileTime.toFloat()
+                Log.d("BlobAndroid", "Average: $averageFrameTime ms, step: $averageStep ms, touch: $mTouchCount / $mProfileTime")
                 mProfileTime = 0L
                 mProfileFrames = 0
                 mStepAverage = 0L
+                mTouchCount = 0L
             }
         } else
             collective.draw(canvas)
@@ -127,33 +136,55 @@ class MainView(context: Context) : View(context) {
         return false
     }
 
-    var selectedOffset: Point? = null
+    private var selectedOffset: Point? = null
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        mTouchCount++
+//        val xp = event.rawX
+//        val yp = event.rawY
+//        val action = event.action
+//
+//        when (action) {
+//            MotionEvent.ACTION_UP -> {
+//                selectedOffset = null
+//                collective.unselectBlob()
+//                Log.d("BlobAndroid", "onTouch up $xp, $yp, $action")
+//            }
+//            MotionEvent.ACTION_DOWN -> {
+//                if (selectedOffset == null) {
+//                    selectedOffset = collective.findClosest(xp, yp)
+//                    Log.d("BlobAndroid", "onTouch down $xp, $yp, $action, $selectedOffset")
+//                }
+//            }
+//            else -> {
+//                if (selectedOffset != null)
+//                    collective.selectedBlobMoveTo(xp, yp)
+//            }
+//        }
 
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-        if (event == null) return false
+        for ((i, t) in touches.withIndex()) {
+            if (i < event.pointerCount) {
+                val id = event.getPointerId(i)
+                val index = event.findPointerIndex(id)
+                val x = event.getX(index)
+                val y = event.getY(index)
+                val p = event.getPressure(index)
 
-        val xp = event.rawX
-        val yp = event.rawY
-        val action = event.action
-
-        when (action) {
-            MotionEvent.ACTION_UP -> {
-                selectedOffset = null
-                collective.unselectBlob()
-                Log.d("BlobAndroid", "onTouch up $xp, $yp, $action, ${selectedOffset}")
-            }
-            MotionEvent.ACTION_DOWN -> {
-                if (selectedOffset == null) {
-                    selectedOffset = collective.findClosest(xp, yp)
-                    Log.d("BlobAndroid", "onTouch down $xp, $yp, $action, ${selectedOffset}")
-                }
-            }
-            else -> {
-                if (selectedOffset != null)
-                    collective.selectedBlobMoveTo(xp, yp)
+                touches[i].update(x, y, p, event.action, id)
+            } else {
+                touches[i].zero()
             }
         }
 
         return super.onTouchEvent(event)
+    }
+
+    private val touches = createTouches()
+    private fun createTouches(): List<Touch> {
+        val list = mutableListOf<Touch>()
+        for (i in 0 until 10) {
+            val touch = Touch(collective, i)
+            list.add(touch)
+        }
+        return list
     }
 }

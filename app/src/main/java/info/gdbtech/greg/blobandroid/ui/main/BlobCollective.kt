@@ -149,17 +149,58 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
             closestBlob = blob
         }
 
-        if (closestBlob != null)
-            closestBlob.selected = true
-
         selectedBlob = closestBlob
         return selectOffset
+    }
+
+    fun findClosestBlob(x: Float, y: Float, radius: Float): Blob? {
+        var minDistance = Float.MAX_VALUE
+        var closestBlob: Blob? = null
+        for (blob in blobs) {
+            val aXbX = x - blob.x
+            val aYbY = y - blob.y
+            val distance = aXbX * aXbX + aYbY * aYbY
+            if (distance >= minDistance)
+                continue
+
+            minDistance = distance
+            val hit = (blob.radius + radius)
+            if (distance > hit * hit)
+                continue
+
+            closestBlob = blob
+        }
+
+        if (closestBlob == null)
+            return null;
+
+        return closestBlob
+    }
+
+    fun findClosestDist(x: Float, y: Float): Float {
+        var minDistance = Float.MAX_VALUE
+        var closestBlob: Blob? = null
+        for (blob in blobs) {
+            val aXbX = x - blob.x
+            val aYbY = y - blob.y
+            val distance = aXbX * aXbX + aYbY * aYbY
+            if (distance >= minDistance)
+                continue
+
+            minDistance = distance
+            if (distance >= blob.radius * blob.radius)
+                continue
+
+            closestBlob = blob
+        }
+
+        return minDistance
     }
 
     fun unselectBlob() {
         val blob = selectedBlob ?: return
 
-        blob.selected = false
+        blob.selected = null
         selectedBlob = null
     }
 
