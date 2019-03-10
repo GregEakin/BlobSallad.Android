@@ -15,6 +15,8 @@
 
 package info.gdbtech.greg.blobandroid.ui.main
 
+import android.util.Log
+
 class PointMass(cx: Float, cy: Float, val mass: Float) {
     val pos = Vector(cx, cy)
     val prev = Vector(cx, cy)
@@ -67,6 +69,8 @@ class PointMass(cx: Float, cy: Float, val mass: Float) {
         val ty = (2.0f - friction) * cy - (1.0f - friction) * py + ay * dt2
         prev.y = cy
         pos.y = ty
+
+        val velocity = cx - px
     }
 
 //    fun draw() {

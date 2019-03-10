@@ -21,7 +21,7 @@ import android.graphics.Paint
 import android.util.Log
 import android.view.MotionEvent
 
-class Touch(val collective: BlobCollective, val id: Int) {
+class Touch(private val collective: BlobCollective, val id: Int) {
     private val paint = Paint()
 
     init {
@@ -37,13 +37,15 @@ class Touch(val collective: BlobCollective, val id: Int) {
     var number: Int = -1;
     var blob: Blob? = null
 
+    val radius: Float
+        get() = 100.0f * p
+
     fun draw(canvas: Canvas) {
         if (action == MotionEvent.ACTION_UP) return
 
         // paint.strokeWidth = 1.0f
         // canvas.drawText("$number", x + 100.0f, y + 100.0f, paint);
 
-        val radius = 100.0f * p
         paint.strokeWidth = 2.0f
         canvas.drawCircle(x, y, radius, paint)
 
@@ -56,14 +58,13 @@ class Touch(val collective: BlobCollective, val id: Int) {
 //        canvas.drawText("$distance", x + 120.0f, y + 120.0f, paint);
     }
 
-    fun update(x: Float, y: Float, p: Float, action: Int, number: Int) {
-        //Log.e("BlobAndroid", "update $id, $x, $y, $action")
+    fun update(action: Int, number: Int, x: Float, y: Float, p: Float) {
+        this.action = action
+        this.number = number
         this.x = x
         this.y = y
         this.p = p
-        this.action = action
-        this.number = number
-        val radius = 100.0f * p
+
         val closetBlob = collective.findClosestBlob(x, y, radius)
         blob = closetBlob
         closetBlob?.selected = this
@@ -71,5 +72,8 @@ class Touch(val collective: BlobCollective, val id: Int) {
 
     fun zero() {
         action = MotionEvent.ACTION_UP
+        val currentBlob = blob
+        blob = null
+        currentBlob?.selected = null
     }
 }

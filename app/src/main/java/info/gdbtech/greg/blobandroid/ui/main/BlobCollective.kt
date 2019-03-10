@@ -127,32 +127,6 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
         return closest
     }
 
-    fun findClosest(x: Float, y: Float): Point? {
-        if (selectedBlob != null)
-            return null
-
-        var minDistance = Float.MAX_VALUE
-        var selectOffset: Point? = null
-        var closestBlob: Blob? = null
-        for (blob in blobs) {
-            val aXbX = x - blob.x
-            val aYbY = y - blob.y
-            val distance = aXbX * aXbX + aYbY * aYbY
-            if (distance >= minDistance)
-                continue
-
-            minDistance = distance
-            if (distance >= blob.radius * blob.radius)
-                continue
-
-            selectOffset = Point(aXbX.toInt(), aYbY.toInt())
-            closestBlob = blob
-        }
-
-        selectedBlob = closestBlob
-        return selectOffset
-    }
-
     fun findClosestBlob(x: Float, y: Float, radius: Float): Blob? {
         var minDistance = Float.MAX_VALUE
         var closestBlob: Blob? = null
@@ -175,37 +149,6 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
             return null;
 
         return closestBlob
-    }
-
-    fun findClosestDist(x: Float, y: Float): Float {
-        var minDistance = Float.MAX_VALUE
-        var closestBlob: Blob? = null
-        for (blob in blobs) {
-            val aXbX = x - blob.x
-            val aYbY = y - blob.y
-            val distance = aXbX * aXbX + aYbY * aYbY
-            if (distance >= minDistance)
-                continue
-
-            minDistance = distance
-            if (distance >= blob.radius * blob.radius)
-                continue
-
-            closestBlob = blob
-        }
-
-        return minDistance
-    }
-
-    fun unselectBlob() {
-        val blob = selectedBlob ?: return
-
-        blob.selected = null
-        selectedBlob = null
-    }
-
-    fun selectedBlobMoveTo(x: Float, y: Float) {
-        selectedBlob?.moveTo(x, y)
     }
 
     fun move(dt: Float) {
@@ -240,5 +183,10 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
     fun draw(canvas: Canvas) {
         for (blob in blobs)
             blob.draw(canvas)
+    }
+
+    fun unselectBlob() {
+        for(blob in blobs)
+            blob.selected = null
     }
 }

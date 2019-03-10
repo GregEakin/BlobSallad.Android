@@ -75,19 +75,4 @@ class BlobCollectiveTests {
         val closest = collective.findClosest(largest!!)
         assertSame(smallest2, closest)
     }
-
-    @Test
-    fun selectBlobMissTest() {
-        val collective = BlobCollective(1.0f, 1.0f, 4)
-        collective.findClosest(200.0f, 200.0f)
-        assertNull(collective.selectedBlob)
-    }
-
-    @Test
-    fun selectBlobHitTest() {
-        val collective = BlobCollective(1.0f, 1.0f, 4)
-        collective.findClosest(1.0f, 1.1f)
-        assertNotNull(collective.selectedBlob)
-        // assertTrue(collective.selectedBlob!!.selected)
-    }
 }

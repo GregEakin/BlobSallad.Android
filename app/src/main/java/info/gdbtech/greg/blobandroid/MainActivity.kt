@@ -142,7 +142,7 @@ class MainActivity : Activity(), SensorEventListener {
 
     //    private var mLastTouchTime: Long = 0L
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        this@MainActivity.view.onTouchEvent(event)
+        return this@MainActivity.view.onTouchEvent(event)
 
 //        val time = System.currentTimeMillis()
 //        if (event.action == MotionEvent.ACTION_MOVE && time - mLastTouchTime < 32) {
@@ -156,7 +156,6 @@ class MainActivity : Activity(), SensorEventListener {
 //        mLastTouchTime = time
 
         // return super.onTouchEvent(event)
-        return true
     }
 
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {

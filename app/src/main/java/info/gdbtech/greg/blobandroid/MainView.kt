@@ -17,7 +17,6 @@ package info.gdbtech.greg.blobandroid
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Point
 import android.os.SystemClock
 import android.util.Log
 import android.view.KeyEvent
@@ -84,9 +83,8 @@ class MainView(context: Context) : View(context) {
 
             val step = delta.toFloat()
 
-            for (touch in touches)
-                touch.draw(canvas)
-
+//            for (touch in touches)
+//                touch.draw(canvas)
 
             collective.move(step)
             collective.sc(env)
@@ -109,7 +107,10 @@ class MainView(context: Context) : View(context) {
                 val averageFrameTime = mProfileTime.toFloat() / mProfileFrames
                 val averageStep = mStepAverage.toFloat() / mProfileFrames
                 val averageTouch = mTouchCount / mProfileTime.toFloat()
-                Log.d("BlobAndroid", "Average: $averageFrameTime ms, step: $averageStep ms, touch: $mTouchCount / $mProfileTime")
+                Log.d(
+                    "BlobAndroid",
+                    "Average: $averageFrameTime ms, step: $averageStep ms, touch: $mTouchCount / $mProfileTime"
+                )
                 mProfileTime = 0L
                 mProfileFrames = 0
                 mStepAverage = 0L
@@ -136,30 +137,13 @@ class MainView(context: Context) : View(context) {
         return false
     }
 
-    private var selectedOffset: Point? = null
     override fun onTouchEvent(event: MotionEvent): Boolean {
         mTouchCount++
-//        val xp = event.rawX
-//        val yp = event.rawY
-//        val action = event.action
-//
-//        when (action) {
-//            MotionEvent.ACTION_UP -> {
-//                selectedOffset = null
-//                collective.unselectBlob()
-//                Log.d("BlobAndroid", "onTouch up $xp, $yp, $action")
-//            }
-//            MotionEvent.ACTION_DOWN -> {
-//                if (selectedOffset == null) {
-//                    selectedOffset = collective.findClosest(xp, yp)
-//                    Log.d("BlobAndroid", "onTouch down $xp, $yp, $action, $selectedOffset")
-//                }
-//            }
-//            else -> {
-//                if (selectedOffset != null)
-//                    collective.selectedBlobMoveTo(xp, yp)
-//            }
-//        }
+        if (event.action == MotionEvent.ACTION_UP) {
+            for (touch in touches)
+                touch.zero()
+            return true;
+        }
 
         for ((i, t) in touches.withIndex()) {
             if (i < event.pointerCount) {
@@ -169,7 +153,7 @@ class MainView(context: Context) : View(context) {
                 val y = event.getY(index)
                 val p = event.getPressure(index)
 
-                touches[i].update(x, y, p, event.action, id)
+                touches[i].update(event.action, id, x, y, p)
             } else {
                 touches[i].zero()
             }
