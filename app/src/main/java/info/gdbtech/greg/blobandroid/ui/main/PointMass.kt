@@ -15,8 +15,6 @@
 
 package info.gdbtech.greg.blobandroid.ui.main
 
-import android.util.Log
-
 class PointMass(cx: Float, cy: Float, val mass: Float) {
     val pos = Vector(cx, cy)
     val prev = Vector(cx, cy)
