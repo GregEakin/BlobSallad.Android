@@ -17,19 +17,9 @@ package info.gdbtech.greg.blobandroid.ui.main
 
 class Environment(val x: Float, val y: Float, w: Float, h: Float) {
     val left: Float = x
-    var right: Float = x + w
+    val right: Float = x + w
     val top: Float = y
-    var bottom: Float = y + h
-    var width: Float = w
-        set(value) {
-            right = left + value
-            field = value
-        }
-    var height: Float = h
-        set(value) {
-            bottom = top + value
-            field = value
-        }
+    val bottom: Float = y + h
 
     fun collision(curPos: Vector, prePos: Vector): Boolean {
         if (curPos.x < left) {

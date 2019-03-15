@@ -33,7 +33,7 @@ class MainView(context: Context) : View(context) {
         isFocusable = true
     }
 
-    private val env = Environment(0f, 0f, 700f, 700f)
+    private var env = Environment(0f, 0f, 700f, 700f)
     private val gravity = Vector(0f, 9.8e-5f)
     fun setGravity(force: Vector) {
         gravity.set(force)
@@ -56,8 +56,7 @@ class MainView(context: Context) : View(context) {
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        env.width = w.toFloat()
-        env.height = h.toFloat()
+        env = Environment(0f, 0f, w.toFloat(), h.toFloat())
     }
 
     override fun onDraw(canvas: Canvas) {
