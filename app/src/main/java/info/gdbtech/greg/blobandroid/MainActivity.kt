@@ -41,14 +41,7 @@ class MainActivity : Activity(), SensorEventListener {
 
     private lateinit var accelerometer: Sensor
 
-    val handler: Handler = Handler(object : Handler.Callback {
-        override fun handleMessage(msg: Message): Boolean {
-            when (msg.what) {
-                MainActivity.GuiUpdateIdentifier -> view.invalidate()
-            }
-            return true
-        }
-    })
+    private val handler: Handler = IncomingHandler(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -146,5 +139,16 @@ class MainActivity : Activity(), SensorEventListener {
 
     companion object {
         const val GuiUpdateIdentifier = 0x101
+
+        internal class IncomingHandler(mainActivity: MainActivity) : Handler() {
+            private val mService: WeakReference<MainActivity> = WeakReference(mainActivity)
+
+            override fun handleMessage(msg: Message) {
+                val mainActivity = mService.get() ?: return
+                when (msg.what) {
+                    MainActivity.GuiUpdateIdentifier -> mainActivity.view.invalidate()
+                }
+            }
+        }
     }
 }
