@@ -39,21 +39,21 @@ class MainView(context: Context) : View(context) {
         gravity.set(force)
     }
 
-    private val collective = BlobCollective(200f, 200f, 25)
+    private val collective = BlobCollective(200f, 200f, 64)
     private var last = SystemClock.uptimeMillis()
 
     init {
-        Log.d("BlobAndroid", "Start")
+        //Log.d("BlobAndroid", "Start")
 
         collective.split()
         collective.split()
 //        collective.split()
     }
 
-    private var mProfileFrames: Int = 0
-    private var mProfileTime: Long = 0L
-    private var mStepAverage: Long = 0L
-    private var mTouchCount: Long = 0L
+//    private var mProfileFrames: Int = 0
+//    private var mProfileTime: Long = 0L
+//    private var mStepAverage: Long = 0L
+//    private var mTouchCount: Long = 0L
 
 //    private var trace = 100;
 
@@ -98,24 +98,24 @@ class MainView(context: Context) : View(context) {
 
             //invalidate()
 
-            val endTime = SystemClock.uptimeMillis()
-            val finalDelta = endTime - time
-            mProfileTime += finalDelta
-            mProfileFrames++
-            mStepAverage += delta
-            if (mProfileFrames > 200) {
-                val averageFrameTime = mProfileTime.toFloat() / mProfileFrames
-                val averageStep = mStepAverage.toFloat() / mProfileFrames
-                val averageTouch = mTouchCount / mProfileTime.toFloat()
-                Log.d(
-                    "BlobAndroid",
-                    "Average: $averageFrameTime ms, step: $averageStep ms, touch: $mTouchCount / $mProfileTime"
-                )
-                mProfileTime = 0L
-                mProfileFrames = 0
-                mStepAverage = 0L
-                mTouchCount = 0L
-            }
+//            val endTime = SystemClock.uptimeMillis()
+//            val finalDelta = endTime - time
+//            mProfileTime += finalDelta
+//            mProfileFrames++
+//            mStepAverage += delta
+//            if (mProfileFrames > 200) {
+//                val averageFrameTime = mProfileTime.toFloat() / mProfileFrames
+//                val averageStep = mStepAverage.toFloat() / mProfileFrames
+//                val averageTouch = mTouchCount / mProfileTime.toFloat()
+//                Log.d(
+//                    "BlobAndroid",
+//                    "Average: $averageFrameTime ms, step: $averageStep ms, touch: $mTouchCount / $mProfileTime"
+//                )
+//                mProfileTime = 0L
+//                mProfileFrames = 0
+//                mStepAverage = 0L
+//                mTouchCount = 0L
+//            }
         } else
             collective.draw(canvas)
     }
@@ -138,7 +138,7 @@ class MainView(context: Context) : View(context) {
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        mTouchCount++
+        //mTouchCount++
         if (event.action == MotionEvent.ACTION_UP) {
             for (touch in touches)
                 touch.zero()

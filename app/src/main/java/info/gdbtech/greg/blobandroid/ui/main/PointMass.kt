@@ -40,9 +40,8 @@ class PointMass(cx: Float, cy: Float, val mass: Float) {
 
     private val _force = Vector(0.0f, 0.0f)
     var force: Vector
-        get() {
-            return _force
-        }
+        get() = _force
+
         set(value) {
             _force.set(value)
         }

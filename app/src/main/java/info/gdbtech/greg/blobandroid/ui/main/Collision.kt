@@ -19,9 +19,7 @@ class Collision(pointMassA: PointMass, pointMassB: PointMass, var shortLimit: Fl
     Force(pointMassA, pointMassB) {
 
     private val slSquared: Float
-        get() {
-            return shortLimit * shortLimit
-        }
+        get() = shortLimit * shortLimit
 
     override fun scale(scaleFactor: Float) {
         shortLimit *= scaleFactor

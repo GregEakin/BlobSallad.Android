@@ -23,14 +23,10 @@ class Bones(pointMassA: PointMass, pointMassB: PointMass, shortFactor: Float, lo
     var longLimit: Float = (pointMassB.pos - pointMassA.pos).length * longFactor
 
     private val slSquared: Float
-        get() {
-            return shortLimit * shortLimit
-        }
+        get() = shortLimit * shortLimit
 
     private val llSquared: Float
-        get() {
-            return longLimit * longLimit
-        }
+        get() = longLimit * longLimit
 
     override fun scale(scaleFactor: Float) {
         shortLimit *= scaleFactor

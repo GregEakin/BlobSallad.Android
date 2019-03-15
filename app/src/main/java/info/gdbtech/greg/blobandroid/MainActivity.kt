@@ -29,6 +29,7 @@ import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.Window
 import info.gdbtech.greg.blobandroid.ui.main.Vector
+import java.lang.ref.WeakReference
 
 class MainActivity : Activity(), SensorEventListener {
 
@@ -40,25 +41,14 @@ class MainActivity : Activity(), SensorEventListener {
 
     private lateinit var accelerometer: Sensor
 
-
-    val handler: Handler = object : Handler() {
-        override fun handleMessage(msg: Message) {
+    val handler: Handler = Handler(object : Handler.Callback {
+        override fun handleMessage(msg: Message): Boolean {
             when (msg.what) {
-                MainActivity.GuiUpdateIdentifier -> this@MainActivity.view.invalidate()
+                MainActivity.GuiUpdateIdentifier -> view.invalidate()
             }
-            super.handleMessage(msg)
+            return true
         }
-    }
-
-//    val handler = UpdateHandler(this)
-//    class UpdateHandler(val main:MainActivity) : Handler() {
-//        override fun handleMessage(msg: Message) {
-//            when (msg.what) {
-//                MainActivity.GuiUpdateIdentifier -> main.view.invalidate()
-//            }
-//            super.handleMessage(msg)
-//        }
-//    }
+    })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,14 +57,6 @@ class MainActivity : Activity(), SensorEventListener {
         setContentView(view)
         runner.start()
 
-//        val clazz = handler.javaClass
-//        val anonymous = clazz.isAnonymousClass
-//        val member = clazz.isMemberClass
-//        val local = clazz.isLocalClass
-//        val static = clazz.modifiers and Modifier.STATIC
-//
-//        if ((anonymous || member || local) && (static == 0))
-//            var x = 0;
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
@@ -109,8 +91,8 @@ class MainActivity : Activity(), SensorEventListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.w("BlobAndroid", "onDestroy()")
         runner.interrupt()
+        Log.w("BlobAndroid", "onDestroy()")
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -134,47 +116,31 @@ class MainActivity : Activity(), SensorEventListener {
         val x = event.values[0] * -1e-4f
         val y = event.values[1] * 1e-4f
         val force = Vector(x, y)
-        this@MainActivity.view.setGravity(force)
+        view.setGravity(force)
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
     }
 
-    //    private var mLastTouchTime: Long = 0L
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        return this@MainActivity.view.onTouchEvent(event)
-
-//        val time = System.currentTimeMillis()
-//        if (event.action == MotionEvent.ACTION_MOVE && time - mLastTouchTime < 32) {
-//            try {
-//                Thread.sleep(32)
-//            } catch (e: InterruptedException) {
-//            }
-//
-//            // mGame.renderer.waitDrawingComplete();
-//        }
-//        mLastTouchTime = time
-
-        // return super.onTouchEvent(event)
+        return view.onTouchEvent(event)
     }
 
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
-        val hit = this@MainActivity.view.keyEvent(event)
+        val hit = view.keyEvent(event)
         if (hit) return true
         return super.dispatchKeyEvent(event)
     }
 
     inner class RefreshRunner : Runnable {
         override fun run() {
-            Log.w("BlobAndroid", "Runnable start $this")
             while (!Thread.currentThread().isInterrupted) {
                 val message = Message()
                 message.what = MainActivity.GuiUpdateIdentifier
-                this@MainActivity.handler.sendMessage(message)
+                handler.sendMessage(message)
 
                 Thread.sleep(20)
             }
-            Log.w("BlobAndroid", "Runnable exit $this")
         }
     }
 

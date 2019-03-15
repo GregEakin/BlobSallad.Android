@@ -22,7 +22,7 @@ import kotlin.random.Random
 
 class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
     private val blobPointCount = 8
-    private val blobInitialRadius = 100f
+    private val blobInitialRadius = 250.0f
 
     private val blobs = createBlobs()
     private fun createBlobs(): MutableList<Blob> {
@@ -50,7 +50,7 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
         }
 
         blobs.add(newBlob)
-        Log.d("BlobAndroid", "New blob ${blobs.size}")
+        //Log.d("BlobAndroid", "New blob ${blobs.size}")
     }
 
     fun join() {
@@ -70,7 +70,7 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
         for (blob in blobs)
             blob.unlinkBlob(smallest)
 
-        Log.d("BlobAndroid", "Delete blob ${blobs.size}")
+        //Log.d("BlobAndroid", "Delete blob ${blobs.size}")
     }
 
     fun findLargest(exclude: Blob?): Blob? {
@@ -183,10 +183,5 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
     fun draw(canvas: Canvas) {
         for (blob in blobs)
             blob.draw(canvas)
-    }
-
-    fun unselectBlob() {
-        for(blob in blobs)
-            blob.selected = null
     }
 }
