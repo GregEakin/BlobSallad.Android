@@ -120,7 +120,7 @@ class MainActivity : Activity(), SensorEventListener {
     }
 
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
-        val hit = view.keyEvent(event)
+        val hit = view.dispatchKeyEvent(event)
         if (hit) return true
         return super.dispatchKeyEvent(event)
     }

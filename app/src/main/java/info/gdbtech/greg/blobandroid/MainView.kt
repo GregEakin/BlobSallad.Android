@@ -43,11 +43,8 @@ class MainView(context: Context) : View(context) {
     private var last = SystemClock.uptimeMillis()
 
     init {
-        //Log.d("BlobAndroid", "Start")
-
         collective.split()
         collective.split()
-//        collective.split()
     }
 
     private var mProfileFrames: Int = 0
@@ -64,7 +61,6 @@ class MainView(context: Context) : View(context) {
     }
 
     override fun onDraw(canvas: Canvas) {
-
         val time = SystemClock.uptimeMillis()
         val delta = time - last
 
@@ -118,7 +114,7 @@ class MainView(context: Context) : View(context) {
             collective.draw(canvas)
     }
 
-    fun keyEvent(event: KeyEvent?): Boolean {
+    override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
         if (event != null && event.action == KeyEvent.ACTION_DOWN) {
             when (event.keyCode) {
                 KeyEvent.KEYCODE_VOLUME_UP -> {
@@ -132,7 +128,8 @@ class MainView(context: Context) : View(context) {
                 }
             }
         }
-        return false
+
+        return super.dispatchKeyEvent(event)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
