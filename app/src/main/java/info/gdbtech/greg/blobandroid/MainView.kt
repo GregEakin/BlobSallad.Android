@@ -50,10 +50,10 @@ class MainView(context: Context) : View(context) {
 //        collective.split()
     }
 
-//    private var mProfileFrames: Int = 0
-//    private var mProfileTime: Long = 0L
-//    private var mStepAverage: Long = 0L
-//    private var mTouchCount: Long = 0L
+    private var mProfileFrames: Int = 0
+    private var mProfileTime: Long = 0L
+    private var mStepAverage: Long = 0L
+    private var mTouchCount: Long = 0L
 
 //    private var trace = 100;
 
@@ -96,26 +96,24 @@ class MainView(context: Context) : View(context) {
 //                trace--;
 //            }
 
-            //invalidate()
-
-//            val endTime = SystemClock.uptimeMillis()
-//            val finalDelta = endTime - time
-//            mProfileTime += finalDelta
-//            mProfileFrames++
-//            mStepAverage += delta
-//            if (mProfileFrames > 200) {
-//                val averageFrameTime = mProfileTime.toFloat() / mProfileFrames
-//                val averageStep = mStepAverage.toFloat() / mProfileFrames
-//                val averageTouch = mTouchCount / mProfileTime.toFloat()
-//                Log.d(
-//                    "BlobAndroid",
-//                    "Average: $averageFrameTime ms, step: $averageStep ms, touch: $mTouchCount / $mProfileTime"
-//                )
-//                mProfileTime = 0L
-//                mProfileFrames = 0
-//                mStepAverage = 0L
-//                mTouchCount = 0L
-//            }
+            val endTime = SystemClock.uptimeMillis()
+            val finalDelta = endTime - time
+            mProfileTime += finalDelta
+            mProfileFrames++
+            mStepAverage += delta
+            if (mProfileFrames > 200) {
+                val averageFrameTime = mProfileTime.toFloat() / mProfileFrames
+                val averageStep = mStepAverage.toFloat() / mProfileFrames
+                // val averageTouch = mTouchCount / mProfileTime.toFloat()
+                Log.d(
+                    "BlobAndroid",
+                    "Average: $averageFrameTime ms, step: $averageStep ms, touch: $mTouchCount / $mProfileTime"
+                )
+                mProfileTime = 0L
+                mProfileFrames = 0
+                mStepAverage = 0L
+                mTouchCount = 0L
+            }
         } else
             collective.draw(canvas)
     }
@@ -138,11 +136,11 @@ class MainView(context: Context) : View(context) {
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        //mTouchCount++
+        mTouchCount++
         if (event.action == MotionEvent.ACTION_UP) {
             for (touch in touches)
                 touch.zero()
-            return true;
+            return true
         }
 
         for ((i, t) in touches.withIndex()) {
@@ -153,13 +151,17 @@ class MainView(context: Context) : View(context) {
                 val y = event.getY(index)
                 val p = event.getPressure(index)
 
-                touches[i].update(event.action, id, x, y, p)
+                t.update(event.action, id, x, y, p)
             } else {
-                touches[i].zero()
+                t.zero()
             }
         }
 
         return super.onTouchEvent(event)
+    }
+
+    override fun performClick(): Boolean {
+        return super.performClick()
     }
 
     private val touches = createTouches()

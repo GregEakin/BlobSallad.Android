@@ -136,7 +136,7 @@ open class Blob(private val xx: Float, private val yy: Float, var radius: Float,
     }
 
     fun move(dt: Float) {
-        val touch = selected;
+        val touch = selected
         if (touch?.blob == this) {
             moveTo(touch.x, touch.y)
         } else {
@@ -191,14 +191,12 @@ open class Blob(private val xx: Float, private val yy: Float, var radius: Float,
         for (point in points) {
             point.prev.x = point.pos.x
             point.prev.y = point.pos.y
-            point.pos.addX(x4)
-            point.pos.addY(y4)
+            point.pos.add(x4, y4)
         }
 
         middle.prev.x = middle.pos.x
         middle.prev.y = middle.pos.y
-        middle.pos.addX(x4)
-        middle.pos.addY(y4)
+        middle.pos.add(x4, y4)
     }
 
     private val paint = Paint()

@@ -35,8 +35,6 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
     val numActive: Int
         get() = blobs.size
 
-    var selectedBlob: Blob? = null
-
     fun split() {
         if (numActive >= maxNum)
             return
@@ -146,7 +144,7 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
         }
 
         if (closestBlob == null)
-            return null;
+            return null
 
         return closestBlob
     }
@@ -163,14 +161,14 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
 
     fun setForce(value: Vector) {
         for (blob in blobs) {
-            val force = if (blob === selectedBlob) Vector(0.0f, 0.0f) else value
+            val force = if (blob.selected?.blob === blob) Vector(0.0f, 0.0f) else value
             blob.setForce(force)
         }
     }
 
     fun addForce(force: Vector) {
         for (blob in blobs) {
-            if (blob === selectedBlob)
+            if (blob.selected?.blob === blob)
                 continue
 
             val x = force.x * (Random.nextFloat() * 0.75f + 0.25f)

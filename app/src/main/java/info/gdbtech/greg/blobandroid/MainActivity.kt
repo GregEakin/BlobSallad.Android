@@ -141,10 +141,10 @@ class MainActivity : Activity(), SensorEventListener {
         const val GuiUpdateIdentifier = 0x101
 
         internal class IncomingHandler(mainActivity: MainActivity) : Handler() {
-            private val mService: WeakReference<MainActivity> = WeakReference(mainActivity)
+            private val mActivity: WeakReference<MainActivity> = WeakReference(mainActivity)
 
             override fun handleMessage(msg: Message) {
-                val mainActivity = mService.get() ?: return
+                val mainActivity = mActivity.get() ?: return
                 when (msg.what) {
                     MainActivity.GuiUpdateIdentifier -> mainActivity.view.invalidate()
                 }

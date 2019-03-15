@@ -41,10 +41,7 @@ class PointMass(cx: Float, cy: Float, val mass: Float) {
     private val _force = Vector(0.0f, 0.0f)
     var force: Vector
         get() = _force
-
-        set(value) {
-            _force.set(value)
-        }
+        set(value) = _force.set(value)
 
     fun addForce(force: Vector) =
         _force.add(force)
@@ -67,7 +64,7 @@ class PointMass(cx: Float, cy: Float, val mass: Float) {
         prev.y = cy
         pos.y = ty
 
-        val velocity = cx - px
+        // val velocity = cx - px
     }
 
 //    fun draw() {

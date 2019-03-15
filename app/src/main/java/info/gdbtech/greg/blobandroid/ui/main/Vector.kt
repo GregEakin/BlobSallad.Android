@@ -18,18 +18,17 @@ package info.gdbtech.greg.blobandroid.ui.main
 import java.lang.Math.sqrt
 
 class Vector(var x: Float, var y: Float) {
-    val length: Float = sqrt(this.x.toDouble() * this.x + this.y * this.y).toFloat()
-    fun addX(x: Float) {
-        this.x += x
-    }
-
-    fun addY(y: Float) {
-        this.y += y
-    }
+    val length: Float
+            get() = sqrt(this.x.toDouble() * this.x + this.y * this.y).toFloat()
 
     fun set(that: Vector) {
         this.x = that.x
         this.y = that.y
+    }
+
+    fun add(x: Float, y: Float) {
+        this.x += x
+        this.y += y
     }
 
     fun add(that: Vector) {
