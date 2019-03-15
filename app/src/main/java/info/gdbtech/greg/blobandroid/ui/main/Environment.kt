@@ -15,34 +15,33 @@
 
 package info.gdbtech.greg.blobandroid.ui.main
 
-class Environment(val x: Float, val y: Float, w: Float, h: Float) {
-    val left: Float = x
-    val right: Float = x + w
-    val top: Float = y
-    val bottom: Float = y + h
+class Environment(val x: Float, val y: Float, val w: Float, val h: Float) {
+    init {
+        if (w < 0.0f)
+            throw Exception("Can't have negative width.")
+        if (h < 0.0f)
+            throw Exception("Can't have negative height.")
+    }
 
     fun collision(curPos: Vector, prePos: Vector): Boolean {
-        if (curPos.x < left) {
-            curPos.x = left
-            return true
+        var outOfBounds = false
+        if (curPos.x < x) {
+            curPos.x = x
+            outOfBounds = true
+        } else if (curPos.x > x + w) {
+            curPos.x = x + w
+            outOfBounds = true
         }
 
-        if (curPos.x > right) {
-            curPos.x = right
-            return true
+        if (curPos.y < y) {
+            curPos.y = y
+            outOfBounds = true
+        } else if (curPos.y > y + h) {
+            curPos.y = y + h
+            outOfBounds = true
         }
 
-        if (curPos.y < top) {
-            curPos.y = top
-            return true
-        }
-
-        if (curPos.y > bottom) {
-            curPos.y = bottom
-            return true
-        }
-
-        return false
+        return outOfBounds
     }
 
 //    fun draw(canvas: Int, scaleFactor: Double) {}
