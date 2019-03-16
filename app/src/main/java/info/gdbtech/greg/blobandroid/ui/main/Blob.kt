@@ -211,28 +211,26 @@ open class Blob(private val xx: Float, private val yy: Float, var radius: Float,
         paint.strokeWidth = 1.0f
 
         val r1 = 0.12f * radius
-        val left1 = 0.35f * radius
-        val right1 = 0.65f * radius
+        val left = 0.35f * radius
+        val right = 0.65f * radius
         val y1 = 0.30f * radius
 
         paint.color = Color.WHITE
         paint.style = Paint.Style.FILL
-        canvas.drawCircle(left1, y1, r1, paint)
-        canvas.drawCircle(right1, y1, r1, paint)
+        canvas.drawCircle(left, y1, r1, paint)
+        canvas.drawCircle(right, y1, r1, paint)
 
         paint.color = Color.BLACK
         paint.style = Paint.Style.STROKE
-        canvas.drawCircle(left1, y1, r1, paint)
-        canvas.drawCircle(right1, y1, r1, paint)
+        canvas.drawCircle(left, y1, r1, paint)
+        canvas.drawCircle(right, y1, r1, paint)
 
         val r2 = 0.06f * radius
-        val left2 = 0.35f * radius
-        val right2 = 0.65f * radius
         val y2 = 0.33f * radius
 
         paint.style = Paint.Style.FILL
-        canvas.drawCircle(left2, y2, r2, paint)
-        canvas.drawCircle(right2, y2, r2, paint)
+        canvas.drawCircle(left, y2, r2, paint)
+        canvas.drawCircle(right, y2, r2, paint)
     }
 
     fun drawEyesClosed(canvas: Canvas) {
