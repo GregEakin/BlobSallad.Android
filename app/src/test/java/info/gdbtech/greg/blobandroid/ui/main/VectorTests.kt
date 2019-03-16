@@ -12,19 +12,11 @@ class VectorTests {
     }
 
     @Test
-    fun addX_test() {
+    fun addFloat_test() {
         val vector = Vector(71.0f, 67.0f)
-        vector.addX(100.0f)
+        vector.add(100.0f, 200.0f)
         assertEquals(171.0f, vector.x, 0.001f)
-        assertEquals(67.0f, vector.y, 0.001f)
-    }
-
-    @Test
-    fun addY_test() {
-        val vector = Vector(71.0f, 67.0f)
-        vector.addY(100.0f)
-        assertEquals(71.0f, vector.x, 0.001f)
-        assertEquals(167.0f, vector.y, 0.001f)
+        assertEquals(267.0f, vector.y, 0.001f)
     }
 
     @Test
@@ -76,6 +68,15 @@ class VectorTests {
         val vector = Vector(71.0f, 67.0f)
         val length = vector.length
         assertEquals(97.621f, length, 0.001f)
+    }
+
+    @Test
+    fun length_change_test() {
+        val vector = Vector(71.0f, 67.0f)
+        vector.x = 3.0f
+        vector.y = 4.0f
+        val length = vector.length
+        assertEquals(5.0f, length, 0.001f)
     }
 
     @Test
