@@ -16,13 +16,16 @@
 package info.gdbtech.greg.blobandroid.ui.main
 
 import android.graphics.Canvas
-import android.graphics.Point
-import android.util.Log
 import kotlin.random.Random
 
 class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
+    init {
+        if (maxNum < 1)
+            throw Exception("Need to allow at least one blob in the collective.")
+    }
+
     private val blobPointCount = 8
-    private val blobInitialRadius = 250.0f
+    private val blobInitialRadius = 200.0f
 
     private val blobs = createBlobs()
     private fun createBlobs(): MutableList<Blob> {
@@ -47,8 +50,8 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
             newBlob.linkBlob(blob)
         }
 
-        blobs.add(newBlob)
         //Log.d("BlobAndroid", "New blob ${blobs.size}")
+        blobs.add(newBlob)
     }
 
     fun join() {
@@ -64,11 +67,10 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
         val factor = 0.945 * length / closest.radius
         closest.scale(factor.toFloat())
 
+        //Log.d("BlobAndroid", "Delete blob ${blobs.size}")
         blobs.remove(smallest)
         for (blob in blobs)
             blob.unlinkBlob(smallest)
-
-        //Log.d("BlobAndroid", "Delete blob ${blobs.size}")
     }
 
     fun findLargest(exclude: Blob?): Blob? {
@@ -125,7 +127,7 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
         return closest
     }
 
-    fun findClosestBlob(x: Float, y: Float, radius: Float): Blob? {
+    fun findClosest(x: Float, y: Float, radius: Float): Blob? {
         var minDistance = Float.MAX_VALUE
         var closestBlob: Blob? = null
         for (blob in blobs) {

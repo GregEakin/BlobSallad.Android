@@ -18,7 +18,6 @@ package info.gdbtech.greg.blobandroid.ui.main
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.util.Log
 import android.view.MotionEvent
 
 class Touch(private val collective: BlobCollective, val id: Int) {
@@ -65,7 +64,7 @@ class Touch(private val collective: BlobCollective, val id: Int) {
         this.y = y
         this.p = p
 
-        val closetBlob = collective.findClosestBlob(x, y, radius)
+        val closetBlob = collective.findClosest(x, y, radius)
         blob = closetBlob
         closetBlob?.selected = this
     }
