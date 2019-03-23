@@ -15,7 +15,7 @@
 
 package info.gdbtech.greg.blobandroid.ui.main
 
-class Collision(pointMassA: PointMass, pointMassB: PointMass, var shortLimit: Float) :
+class Neighbor(pointMassA: PointMass, pointMassB: PointMass, var shortLimit: Float) :
     Force(pointMassA, pointMassB) {
 
     private val slSquared: Float

@@ -101,20 +101,20 @@ open class Blob(private val xx: Float, private val yy: Float, var radius: Float,
         return (x % m + m) % m
     }
 
-    val collisions: MutableList<Collision> = mutableListOf()
+    val neighbors: MutableList<Neighbor> = mutableListOf()
 
     fun linkBlob(blob: Blob) {
         val dist = radius + blob.radius
-        val collision = Collision(middle, blob.middle, dist * 0.95f)
-        collisions.add(collision)
+        val neighbor = Neighbor(middle, blob.middle, dist * 0.95f)
+        neighbors.add(neighbor)
     }
 
     fun unlinkBlob(blob: Blob) {
-        for (collision in collisions) {
-            if (collision.pointMassB != blob.middle)
+        for (neighbor in neighbors) {
+            if (neighbor.pointMassB != blob.middle)
                 continue
 
-            collisions.remove(collision)
+            neighbors.remove(neighbor)
             break
         }
     }
@@ -129,8 +129,8 @@ open class Blob(private val xx: Float, private val yy: Float, var radius: Float,
         for (bone in bones)
             bone.scale(scaleFactor)
 
-        for (collision in collisions)
-            collision.scale(scaleFactor)
+        for (neighbor in neighbors)
+            neighbor.scale(scaleFactor)
 
         radius *= scaleFactor
     }
@@ -160,8 +160,8 @@ open class Blob(private val xx: Float, private val yy: Float, var radius: Float,
             for (bone in bones)
                 bone.sc(env)
 
-            for (collision in collisions)
-                collision.sc(env)
+            for (neighbor in neighbors)
+                neighbor.sc(env)
         }
     }
 

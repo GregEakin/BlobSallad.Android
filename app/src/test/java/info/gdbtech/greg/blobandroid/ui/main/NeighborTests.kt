@@ -3,9 +3,9 @@ package info.gdbtech.greg.blobandroid.ui.main
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class CollisionTests {
+class NeighborTests {
     @Test
-    fun ctor_collisionTest() {
+    fun ctor_neighborTest() {
         val cxA = 41.0f
         val cyA = 43.0f
         val massA = 4.0f
@@ -18,8 +18,8 @@ class CollisionTests {
 
         // sum of the two radii
         val dist = 17.0f
-        val collision = Collision(pointMassA, pointMassB, dist)
+        val neighbor = Neighbor(pointMassA, pointMassB, dist)
 
-        assertEquals(17.000f, collision.shortLimit, 0.01f)
+        assertEquals(dist, neighbor.shortLimit, 0.01f)
     }
 }

@@ -37,10 +37,10 @@ class BlobTests {
         val blob2 = Blob(59.0f, 61.0f, 13.0f, 0)
         blob1.linkBlob(blob2)
 
-        assertEquals(0, blob2.collisions.size)
-        assertEquals(1, blob1.collisions.size)
-        val collision = blob1.collisions[0]
-        assertEquals(22.800f, collision.shortLimit, 0.01f)
+        assertEquals(0, blob2.neighbors.size)
+        assertEquals(1, blob1.neighbors.size)
+        val neighbor = blob1.neighbors[0]
+        assertEquals(22.800f, neighbor.shortLimit, 0.01f)
     }
 
     @Test
