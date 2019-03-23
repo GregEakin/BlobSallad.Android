@@ -11,7 +11,6 @@ class BlobTests {
         assertEquals(67.0f, blob.y, 0.001f)
         assertEquals(11.0f, blob.radius, 0.001f)
         assertEquals(1.0f, blob.mass, 0.001f)
-
     }
 
     @Test
@@ -33,8 +32,8 @@ class BlobTests {
 
     @Test
     fun add_blob_test() {
-        val blob1 = Blob(17.0f, 19.0f, 11.0f, 0)
-        val blob2 = Blob(59.0f, 61.0f, 13.0f, 0)
+        val blob1 = Blob(17.0f, 19.0f, 11.0f, 3)
+        val blob2 = Blob(59.0f, 61.0f, 13.0f, 3)
         blob1.linkBlob(blob2)
 
         assertEquals(0, blob2.neighbors.size)
@@ -45,12 +44,12 @@ class BlobTests {
 
     @Test
     fun removeBlobTest() {
-        val blob1 = Blob(17.0f, 19.0f, 11.0f, 0)
-        val blob2 = Blob(59.0f, 61.0f, 13.0f, 0)
+        val blob1 = Blob(17.0f, 19.0f, 11.0f, 3)
+        val blob2 = Blob(59.0f, 61.0f, 13.0f, 3)
         blob1.linkBlob(blob2)
         blob1.unlinkBlob(blob2)
 
-        assertEquals(0, blob2.bones.size)
-        assertEquals(0, blob1.bones.size)
+        assertEquals(0, blob2.neighbors.size)
+        assertEquals(0, blob1.neighbors.size)
     }
 }
