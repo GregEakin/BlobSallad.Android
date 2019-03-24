@@ -19,36 +19,39 @@ import java.lang.Math.sqrt
 
 class Vector(var x: Float, var y: Float) {
     val length: Float
-            get() = sqrt(this.x.toDouble() * this.x + this.y * this.y).toFloat()
+            get() = sqrt(x.toDouble() * x + y * y).toFloat()
 
-    fun set(that: Vector) {
-        this.x = that.x
-        this.y = that.y
+    fun setValue(that: Vector) {
+        x = that.x
+        y = that.y
     }
 
-    fun add(x: Float, y: Float) {
-        this.x += x
-        this.y += y
+    fun add(x1: Float, y1: Float) {
+        x += x1
+        y += y1
     }
 
     fun scale(factor: Float) {
-        this.x *= factor
-        this.y *= factor
+        x *= factor
+        y *= factor
     }
-
-    fun dotProd(that: Vector): Float = this.x * that.x + this.y * that.y
 
     override fun toString(): String = "(X: $x, Y: $y)"
 
     operator fun plusAssign(that: Vector): Unit {
-        this.x += that.x
-        this.y += that.y
+        x += that.x
+        y += that.y
     }
 
-    operator fun minus(that: Vector): Vector = Vector(this.x - that.x, this.y - that.y)
+    operator fun minus(that: Vector): Vector = Vector(x - that.x, y - that.y)
 
     operator fun minusAssign(that: Vector): Unit {
-        this.x -= that.x
-        this.y -= that.y
+        x -= that.x
+        y -= that.y
+    }
+
+    // dot product: a * b = ‖a‖ ‖b‖ cos(θ)
+    operator fun times(that: Vector): Float {
+        return x * that.x + y * that.y
     }
 }

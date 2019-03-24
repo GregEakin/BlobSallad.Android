@@ -23,7 +23,7 @@ class VectorTests {
     fun set_test() {
         val vector = Vector(71.0f, 67.0f)
         val setter = Vector(61.0f, 59.0f)
-        vector.set(setter)
+        vector.setValue(setter)
         assertEquals(61.0f, vector.x, 0.001f)
         assertEquals(59.0f, vector.y, 0.001f)
     }
@@ -59,7 +59,7 @@ class VectorTests {
     fun dot_test() {
         val vector = Vector(71.0f, 67.0f)
         val setter = Vector(13.0f, 11.0f)
-        val dot = vector.dotProd(setter)
+        val dot = vector * setter
         assertEquals(1660.0f, dot, 0.001f)
     }
 

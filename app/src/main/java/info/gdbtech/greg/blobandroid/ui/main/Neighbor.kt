@@ -27,7 +27,7 @@ class Neighbor(pointMassA: PointMass, pointMassB: PointMass, var shortLimit: Flo
 
     override fun sc(env: Environment) {
         val delta = pointMassB.pos - pointMassA.pos
-        val dp = delta.dotProd(delta)
+        val dp = delta * delta
         if (dp < slSquared) {
             val scaleFactor = slSquared / (dp + slSquared) - 0.5f
             delta.scale(scaleFactor)

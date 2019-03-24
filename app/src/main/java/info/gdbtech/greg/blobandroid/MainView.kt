@@ -36,7 +36,7 @@ class MainView(context: Context) : View(context) {
     private var env = Environment(0f, 0f, 700f, 700f)
     private val gravity = Vector(0f, 9.8e-5f)
     fun setGravity(force: Vector) {
-        gravity.set(force)
+        gravity.setValue(force)
     }
 
     private val collective = BlobCollective(200f, 200f, 64)

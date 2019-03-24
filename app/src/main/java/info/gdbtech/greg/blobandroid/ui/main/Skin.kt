@@ -35,7 +35,7 @@ class Skin(pointMassA: PointMass, pointMassB: PointMass) :
 
     override fun sc(env: Environment) {
         val delta = pointMassB.pos - pointMassA.pos
-        val dotProd = delta.dotProd(delta)
+        val dotProd = delta * delta
         val scaleFactor = lengthSquared / (dotProd + lengthSquared) - 0.5f
         delta.scale(scaleFactor)
         pointMassA.pos -= delta
