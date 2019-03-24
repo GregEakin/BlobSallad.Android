@@ -137,7 +137,7 @@ open class Blob(private val xx: Float, private val yy: Float, var radius: Float,
 
     fun move(dt: Float) {
         val touch = selected
-        if (touch?.blob == this) {
+        if (touch?.blob === this) {
             moveTo(touch.x, touch.y)
         } else {
             for (point in points)
@@ -184,19 +184,19 @@ open class Blob(private val xx: Float, private val yy: Float, var radius: Float,
         pointMass.addForce(force)
     }
 
-    fun moveTo(x2: Float, y2: Float) {
-        val x4 = x2 - middle.pos.x
-        val y4 = y2 - middle.pos.y
+    fun moveTo(destX: Float, destY: Float) {
+        val deltaX = destX - middle.pos.x
+        val deltaY = destY - middle.pos.y
 
         for (point in points) {
             point.prev.x = point.pos.x
             point.prev.y = point.pos.y
-            point.pos.add(x4, y4)
+            point.pos.add(deltaX, deltaY)
         }
 
         middle.prev.x = middle.pos.x
         middle.prev.y = middle.pos.y
-        middle.pos.add(x4, y4)
+        middle.pos.add(deltaX, deltaY)
     }
 
     private val paint = Paint()
@@ -351,7 +351,6 @@ open class Blob(private val xx: Float, private val yy: Float, var radius: Float,
     fun draw(canvas: Canvas) {
         updateFace()
         canvas.save()
-        // canvas.scale(scaleFactor, scaleFactor)
         drawBody(canvas)
 
         val up = Vector(0.0f, -1.0f)
@@ -367,7 +366,7 @@ open class Blob(private val xx: Float, private val yy: Float, var radius: Float,
         drawFace(canvas)
         canvas.restore()
 
-//        if (selected?.blob != this) return
+//        if (selected?.blob !== this) return
 //
 //        var r = radius * radius
 //        canvas.drawText("${selected?.number}", x, y, paint)

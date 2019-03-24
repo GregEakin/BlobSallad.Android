@@ -30,10 +30,12 @@ import android.view.MotionEvent
 import android.view.Window
 import info.gdbtech.greg.blobandroid.ui.main.Vector
 import java.lang.ref.WeakReference
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.ScheduledFuture
+import java.util.concurrent.TimeUnit
 
 class MainActivity : Activity(), SensorEventListener {
-
-    private val runner: Thread by lazy { Thread(RefreshRunner()) }
 
     private val view: MainView by lazy { MainView(this) }
 
@@ -43,12 +45,16 @@ class MainActivity : Activity(), SensorEventListener {
 
     private val handler: Handler = IncomingHandler(this)
 
+    private val scheduleTaskExecutor: ScheduledExecutorService = Executors.newScheduledThreadPool(5)
+
+    private var f1: ScheduledFuture<*>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(view)
-        runner.start()
+        // Log.w("BlobAndroid", "onCreate() ${Thread.currentThread().id}")
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
@@ -57,40 +63,47 @@ class MainActivity : Activity(), SensorEventListener {
 
     override fun onStart() {
         super.onStart()
-        Log.w("BlobAndroid", "onStart()")
+        // Log.w("BlobAndroid", "onStart() ${Thread.currentThread().id}")
+
+        f1?.cancel(false)
+        f1 = scheduleTaskExecutor.scheduleAtFixedRate(RefreshRunner(), 200, 20, TimeUnit.MILLISECONDS);
     }
 
     override fun onResume() {
         super.onResume()
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
-        Log.w("BlobAndroid", "onResume()")
+        // Log.w("BlobAndroid", "onResume() ${Thread.currentThread().id}")
     }
 
     override fun onPause() {
         super.onPause()
         sensorManager.unregisterListener(this)
-        Log.w("BlobAndroid", "onPause()")
+        // Log.w("BlobAndroid", "onPause() ${Thread.currentThread().id}")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.w("BlobAndroid", "onStop()")
+        // Log.w("BlobAndroid", "onStop() ${Thread.currentThread().id}")
+        f1?.cancel(false)
+        f1 = null
     }
 
-    override fun onRestart() {
-        super.onRestart()
-        Log.w("BlobAndroid", "onRestart()")
-    }
+//    override fun onRestart() {
+//        super.onRestart()
+//        Log.w("BlobAndroid", "onRestart() ${Thread.currentThread().id}")
+//    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        runner.interrupt()
-        Log.w("BlobAndroid", "onDestroy()")
-    }
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        // Log.w("BlobAndroid", "onDestroy() ${Thread.currentThread().id}")
+//        f1?.cancel(false)
+//        f1 = null
+//    }
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        Log.w("BlobAndroid", "onSaveInstanceState()")
+        outState?.putInt("Blobs", 3)
+        Log.w("BlobAndroid", "onSaveInstanceState(3) ${Thread.currentThread().id}")
 
 //        outState?.run {
 //            putInt("One", this@MainActivity.taskId)
@@ -101,7 +114,8 @@ class MainActivity : Activity(), SensorEventListener {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         super.onRestoreInstanceState(savedInstanceState)
-        Log.w("BlobAndroid", "onRestoreInstanceState()")
+        val blobs = savedInstanceState?.getInt("Blobs")
+        Log.w("BlobAndroid", "onRestoreInstanceState($blobs) ${Thread.currentThread().id}")
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
@@ -127,13 +141,9 @@ class MainActivity : Activity(), SensorEventListener {
 
     inner class RefreshRunner : Runnable {
         override fun run() {
-            while (!Thread.currentThread().isInterrupted) {
-                val message = Message()
-                message.what = MainActivity.GuiUpdateIdentifier
-                handler.sendMessage(message)
-
-                Thread.sleep(20)
-            }
+            val message = Message()
+            message.what = MainActivity.GuiUpdateIdentifier
+            handler.sendMessage(message)
         }
     }
 

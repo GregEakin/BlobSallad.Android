@@ -67,6 +67,8 @@ class MainView(context: Context) : View(context) {
             last = time
 
             // env.draw(canvas)
+//            for (touch in touches)
+//                touch.draw(canvas)
 
 //            if (trace > 0) {
 //                trace--;
@@ -77,10 +79,6 @@ class MainView(context: Context) : View(context) {
 //            }
 
             val step = delta.toFloat()
-
-//            for (touch in touches)
-//                touch.draw(canvas)
-
             collective.move(step)
             collective.sc(env)
             collective.setForce(gravity)
