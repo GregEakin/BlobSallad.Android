@@ -51,21 +51,17 @@ class PointMass(cx: Float, cy: Float, val mass: Float) {
     fun move(dt: Float) {
         val dt2 = dt * dt
 
-        val ax = _force.x / mass
-        val cx = pos.x
-        val px = prev.x
-        val tx = (2.0f - friction) * cx - (1.0f - friction) * px + ax * dt2
-        prev.x = cx
-        pos.x = tx
+        val currX = pos.x
+        val prevX = prev.x
+        val accX = _force.x / mass
+        prev.x = currX
+        pos.x = (2.0f - friction) * currX - (1.0f - friction) * prevX + accX * dt2
 
-        val ay = _force.y / mass
-        val cy = pos.y
-        val py = prev.y
-        val ty = (2.0f - friction) * cy - (1.0f - friction) * py + ay * dt2
-        prev.y = cy
-        pos.y = ty
-
-        // val velocity = cx - px
+        val prevY = prev.y
+        val currY = pos.y
+        val accY = _force.y / mass
+        prev.y = currY
+        pos.y = (2.0f - friction) * currY - (1.0f - friction) * prevY + accY * dt2
     }
 
 //    fun draw() {
