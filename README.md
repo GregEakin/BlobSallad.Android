@@ -10,24 +10,22 @@ Original version by: [Björn Lindberg](mailto:bjoern.lindberg@gmail.com)
 [Blob Sallad — Canvas Tag and JavaScript Physics Simulation Experiment](https://dev.opera.com/articles/blob-sallad-canvas-tag-and-javascript/)
 
 ## Sample code
-Here's the code that calculates the [Verlet Integration](https://en.wikipedia.org/wiki/Verlet_integration) for each time step.
+Here's the code that calculates the [Verlet Integration](https://en.wikipedia.org/wiki/Verlet_integration) to integrate Newton's equations of motion, as used from the Störmer method.
 ```kotlin
 fun move(dt: Float) {
     val dt2 = dt * dt
 
-    val ax = _force.x / mass
-    val cx = pos.x
-    val px = prev.x
-    val tx = (2.0f - friction) * cx - (1.0f - friction) * px + ax * dt2
-    prev.x = cx
-    pos.x = tx
+    val currX = pos.x
+    val prevX = prev.x
+    val accX = _force.x / mass
+    prev.x = currX
+    pos.x = (2.0f - friction) * currX - (1.0f - friction) * prevX + accX * dt2
 
-    val ay = _force.y / mass
-    val cy = pos.y
-    val py = prev.y
-    val ty = (2.0f - friction) * cy - (1.0f - friction) * py + ay * dt2
-    prev.y = cy
-    pos.y = ty
+    val currY = pos.y
+    val prevY = prev.y
+    val accY = _force.y / mass
+    prev.y = currY
+    pos.y = (2.0f - friction) * currY - (1.0f - friction) * prevY + accY * dt2
 }
 ```
 

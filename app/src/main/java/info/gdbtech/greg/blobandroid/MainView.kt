@@ -52,7 +52,7 @@ class MainView(context: Context) : View(context) {
     private var mStepAverage: Long = 0L
     private var mTouchCount: Long = 0L
 
-//    private var trace = 100;
+    // private var trace = 100;
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
@@ -63,52 +63,50 @@ class MainView(context: Context) : View(context) {
         val time = SystemClock.uptimeMillis()
         val delta = time - last
 
-        if (delta >= 0L) {
-            last = time
+        last = time
 
-            // env.draw(canvas)
-//            for (touch in touches)
-//                touch.draw(canvas)
+        // env.draw(canvas)
+        // for (touch in touches)
+        //     touch.draw(canvas)
 
-//            if (trace > 0) {
-//                trace--;
-//                if (trace == 0 && android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
-//                    Log.d("BlobAndroid", "Log starting...")
-//                    Debug.startMethodTracing("blob")
-//                }
-//            }
+        // if (trace > 0) {
+        //     trace--;
+        //     if (trace == 0 && android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
+        //         Log.d("BlobAndroid", "Log starting...")
+        //         Debug.startMethodTracing("blob")
+        //     }
+        // }
 
-            val step = delta.toFloat()
-            collective.move(step)
-            collective.sc(env)
-            collective.setForce(gravity)
-            collective.draw(canvas)
-//            if (trace == 0) {
-//                Debug.stopMethodTracing()
-//                Log.d("BlobAndroid", "Log finished.")
-//                trace--;
-//            }
+        val step = delta.toFloat()
+        collective.move(step)
+        collective.sc(env)
+        collective.setForce(gravity)
+        collective.draw(canvas)
 
-            val endTime = SystemClock.uptimeMillis()
-            val finalDelta = endTime - time
-            mProfileTime += finalDelta
-            mProfileFrames++
-            mStepAverage += delta
-            if (mProfileFrames > 200) {
-                val averageFrameTime = mProfileTime.toFloat() / mProfileFrames
-                val averageStep = mStepAverage.toFloat() / mProfileFrames
-                // val averageTouch = mTouchCount / mProfileTime.toFloat()
-                Log.d(
-                    "BlobAndroid",
-                    "Average: $averageFrameTime ms, step: $averageStep ms, touch: $mTouchCount / $mProfileTime"
-                )
-                mProfileTime = 0L
-                mProfileFrames = 0
-                mStepAverage = 0L
-                mTouchCount = 0L
-            }
-        } else
-            collective.draw(canvas)
+        // if (trace == 0) {
+        //     Debug.stopMethodTracing()
+        //     Log.d("BlobAndroid", "Log finished.")
+        //     trace--;
+        // }
+
+        val endTime = SystemClock.uptimeMillis()
+        val finalDelta = endTime - time
+        mProfileTime += finalDelta
+        mProfileFrames++
+        mStepAverage += delta
+        if (mProfileFrames > 200) {
+            val averageFrameTime = mProfileTime.toFloat() / mProfileFrames
+            val averageStep = mStepAverage.toFloat() / mProfileFrames
+            // val averageTouch = mTouchCount / mProfileTime.toFloat()
+            Log.d(
+                "BlobAndroid",
+                "Average: $averageFrameTime ms, step: $averageStep ms, touch: $mTouchCount / $mProfileTime"
+            )
+            mProfileTime = 0L
+            mProfileFrames = 0
+            mStepAverage = 0L
+            mTouchCount = 0L
+        }
     }
 
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
