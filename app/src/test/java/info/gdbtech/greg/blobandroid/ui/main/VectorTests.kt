@@ -32,7 +32,7 @@ class VectorTests {
     fun add_test() {
         val vector = Vector(71.0f, 67.0f)
         val setter = Vector(13.0f, 11.0f)
-        vector.add(setter)
+        vector += setter
         assertEquals(84.0f, vector.x, 0.001f)
         assertEquals(78.0f, vector.y, 0.001f)
     }
@@ -41,7 +41,7 @@ class VectorTests {
     fun sub_test() {
         val vector = Vector(71.0f, 67.0f)
         val setter = Vector(13.0f, 11.0f)
-        vector.sub(setter)
+        vector -= setter
         assertEquals(58.0f, vector.x, 0.001f)
         assertEquals(56.0f, vector.y, 0.001f)
     }

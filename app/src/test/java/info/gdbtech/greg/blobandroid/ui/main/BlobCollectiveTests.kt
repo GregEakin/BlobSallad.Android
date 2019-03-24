@@ -34,7 +34,7 @@ class BlobCollectiveTests {
         collective.split()
 
         val motherBlob = collective.findLargest(null)
-        assertEquals(187.5f, motherBlob!!.radius, 0.001f)
+        assertEquals(150.0f, motherBlob!!.radius, 0.001f)
     }
 
     @Test
@@ -48,13 +48,13 @@ class BlobCollectiveTests {
         // find one of the two smallest blobs
         val smallest1 = collective.findSmallest(null)
         assertNotSame(largest, smallest1)
-        assertEquals(140.625f, smallest1!!.radius, 0.001f)
+        assertEquals(112.5f, smallest1!!.radius, 0.001f)
 
         // find the other smallest blob
         val smallest2 = collective.findSmallest(smallest1)
         assertNotSame(largest, smallest2)
         assertNotSame(smallest1, smallest2)
-        assertEquals(140.625f, smallest2!!.radius, 0.001f)
+        assertEquals(112.5f, smallest2!!.radius, 0.001f)
     }
 
     @Test

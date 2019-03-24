@@ -38,7 +38,7 @@ class Skin(pointMassA: PointMass, pointMassB: PointMass) :
         val dotProd = delta.dotProd(delta)
         val scaleFactor = lengthSquared / (dotProd + lengthSquared) - 0.5f
         delta.scale(scaleFactor)
-        pointMassA.pos.sub(delta)
-        pointMassB.pos.add(delta)
+        pointMassA.pos -= delta
+        pointMassB.pos += delta
     }
 }

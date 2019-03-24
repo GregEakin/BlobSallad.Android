@@ -31,16 +31,6 @@ class Vector(var x: Float, var y: Float) {
         this.y += y
     }
 
-    fun add(that: Vector) {
-        this.x += that.x
-        this.y += that.y
-    }
-
-    fun sub(that: Vector) {
-        this.x -= that.x
-        this.y -= that.y
-    }
-
     fun scale(factor: Float) {
         this.x *= factor
         this.y *= factor
@@ -50,5 +40,15 @@ class Vector(var x: Float, var y: Float) {
 
     override fun toString(): String = "(X: $x, Y: $y)"
 
+    operator fun plusAssign(that: Vector): Unit {
+        this.x += that.x
+        this.y += that.y
+    }
+
     operator fun minus(that: Vector): Vector = Vector(this.x - that.x, this.y - that.y)
+
+    operator fun minusAssign(that: Vector): Unit {
+        this.x -= that.x
+        this.y -= that.y
+    }
 }

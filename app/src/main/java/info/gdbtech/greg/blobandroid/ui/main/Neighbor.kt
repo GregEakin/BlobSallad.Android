@@ -31,8 +31,8 @@ class Neighbor(pointMassA: PointMass, pointMassB: PointMass, var shortLimit: Flo
         if (dp < slSquared) {
             val scaleFactor = slSquared / (dp + slSquared) - 0.5f
             delta.scale(scaleFactor)
-            pointMassA.pos.sub(delta)
-            pointMassB.pos.add(delta)
+            pointMassA.pos -= delta
+            pointMassB.pos += delta
         }
     }
 }

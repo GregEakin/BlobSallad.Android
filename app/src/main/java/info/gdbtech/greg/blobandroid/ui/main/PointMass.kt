@@ -43,8 +43,9 @@ class PointMass(cx: Float, cy: Float, val mass: Float) {
         get() = _force
         set(value) = _force.set(value)
 
-    fun addForce(force: Vector) =
-        _force.add(force)
+    fun addForce(force: Vector) {
+        _force += force
+    }
 
     /// https://en.wikipedia.org/wiki/Verlet_integration
     fun move(dt: Float) {
