@@ -42,10 +42,11 @@ class Touch(private val collective: BlobCollective, val id: Int) {
     fun draw(canvas: Canvas) {
         if (action == MotionEvent.ACTION_UP) return
 
-        if (blob?.selected === this)
-            paint.color = Color.GREEN
-        else
-            paint.color = Color.RED
+        when {
+            blob?.selected == null -> paint.color = Color.BLACK
+            blob?.selected === this -> paint.color = Color.GREEN
+            else -> paint.color = Color.RED
+        }
 
         // paint.strokeWidth = 1.0f
         // canvas.drawText("$number", x + 100.0f, y + 100.0f, paint);
@@ -79,6 +80,5 @@ class Touch(private val collective: BlobCollective, val id: Int) {
         val currentBlob = blob
         blob = null
         currentBlob?.selected = null
-        paint.color = Color.BLACK
     }
 }
