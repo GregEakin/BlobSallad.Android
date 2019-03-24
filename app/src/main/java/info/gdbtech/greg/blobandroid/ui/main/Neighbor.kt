@@ -15,21 +15,21 @@
 
 package info.gdbtech.greg.blobandroid.ui.main
 
-class Neighbor(pointMassA: PointMass, pointMassB: PointMass, var shortLimit: Float) :
+class Neighbor(pointMassA: PointMass, pointMassB: PointMass, var limit: Float) :
     Force(pointMassA, pointMassB) {
 
-    private val slSquared: Float
-        get() = shortLimit * shortLimit
+    private val limitSquared: Float
+        get() = limit * limit
 
     override fun scale(scaleFactor: Float) {
-        shortLimit *= scaleFactor
+        limit *= scaleFactor
     }
 
-    override fun sc(env: Environment) {
+    override fun sc() {
         val delta = pointMassB.pos - pointMassA.pos
         val dp = delta * delta
-        if (dp < slSquared) {
-            val scaleFactor = slSquared / (dp + slSquared) - 0.5f
+        if (dp < limitSquared) {
+            val scaleFactor = limitSquared / (dp + limitSquared) - 0.5f
             delta.scale(scaleFactor)
             pointMassA.pos -= delta
             pointMassB.pos += delta

@@ -20,6 +20,6 @@ class NeighborTests {
         val dist = 17.0f
         val neighbor = Neighbor(pointMassA, pointMassB, dist)
 
-        assertEquals(dist, neighbor.shortLimit, 0.01f)
+        assertEquals(dist, neighbor.limit, 0.01f)
     }
 }

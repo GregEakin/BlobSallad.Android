@@ -39,7 +39,7 @@ class BlobTests {
         assertEquals(0, blob2.neighbors.size)
         assertEquals(1, blob1.neighbors.size)
         val neighbor = blob1.neighbors[0]
-        assertEquals(22.800f, neighbor.shortLimit, 0.01f)
+        assertEquals(22.800f, neighbor.limit, 0.01f)
     }
 
     @Test

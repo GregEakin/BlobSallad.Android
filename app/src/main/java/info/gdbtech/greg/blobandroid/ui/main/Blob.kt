@@ -155,13 +155,13 @@ open class Blob(private val xx: Float, private val yy: Float, var radius: Float,
             }
 
             for (skin in skins)
-                skin.sc(env)
+                skin.sc()
 
             for (bone in bones)
-                bone.sc(env)
+                bone.sc()
 
             for (neighbor in neighbors)
-                neighbor.sc(env)
+                neighbor.sc()
         }
     }
 

@@ -33,7 +33,7 @@ class Bones(pointMassA: PointMass, pointMassB: PointMass, shortFactor: Float, lo
         longLimit *= scaleFactor
     }
 
-    override fun sc(env: Environment) {
+    override fun sc() {
         val delta = pointMassB.pos - pointMassA.pos
         val dp = delta * delta
         if (dp < slSquared) {
