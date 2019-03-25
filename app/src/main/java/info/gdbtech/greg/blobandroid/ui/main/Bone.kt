@@ -15,17 +15,17 @@
 
 package info.gdbtech.greg.blobandroid.ui.main
 
-class Bones(pointMassA: PointMass, pointMassB: PointMass, shortFactor: Float, longFactor: Float) :
+class Bone(pointMassA: PointMass, pointMassB: PointMass, shortFactor: Float, longFactor: Float) :
     Force(pointMassA, pointMassB) {
 
     var shortLimit: Float = (pointMassB.pos - pointMassA.pos).length * shortFactor
 
     var longLimit: Float = (pointMassB.pos - pointMassA.pos).length * longFactor
 
-    private val slSquared: Float
+    val slSquared: Float
         get() = shortLimit * shortLimit
 
-    private val llSquared: Float
+    val llSquared: Float
         get() = longLimit * longLimit
 
     override fun scale(scaleFactor: Float) {

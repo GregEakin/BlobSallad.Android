@@ -18,7 +18,7 @@ package info.gdbtech.greg.blobandroid.ui.main
 class Neighbor(pointMassA: PointMass, pointMassB: PointMass, var limit: Float) :
     Force(pointMassA, pointMassB) {
 
-    private val limitSquared: Float
+    val limitSquared: Float
         get() = limit * limit
 
     override fun scale(scaleFactor: Float) {

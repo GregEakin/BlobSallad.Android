@@ -66,9 +66,9 @@ open class Blob(private val xx: Float, private val yy: Float, var radius: Float,
         return list
     }
 
-    val bones: List<Bones> = bonesInit()
-    private fun bonesInit(): List<Bones> {
-        val list = mutableListOf<Bones>()
+    val bones: List<Bone> = bonesInit()
+    private fun bonesInit(): List<Bone> {
+        val list = mutableListOf<Bone>()
         for (i in 0 until numPoints) {
             val crossShort = 0.95f
             val crossLong = 1.05f
@@ -78,10 +78,10 @@ open class Blob(private val xx: Float, private val yy: Float, var radius: Float,
 
             val index = pointMassIndex(i + numPoints / 2 + 1)
             val pointMassB = points[index]
-            val bone1 = Bones(pointMassA, pointMassB, crossShort, crossLong)
+            val bone1 = Bone(pointMassA, pointMassB, crossShort, crossLong)
             list.add(bone1)
 
-            val bone2 = Bones(pointMassA, middle, middleShort, middleLong)
+            val bone2 = Bone(pointMassA, middle, middleShort, middleLong)
             list.add(bone2)
         }
         return list
