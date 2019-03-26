@@ -18,6 +18,15 @@ package info.gdbtech.greg.blobandroid.ui.main
 class Bone(pointMassA: PointMass, pointMassB: PointMass, shortFactor: Float, longFactor: Float) :
     Force(pointMassA, pointMassB) {
 
+    init{
+        if (shortFactor >= longFactor)
+            throw Exception("Short Factor needs to be less than Long Factor.")
+        if (shortFactor < 0)
+            throw Exception("Short Factor needs to be greater than zero.")
+        if (longFactor < 0)
+            throw Exception("Long Factor needs to be greater than zero.")
+    }
+
     var shortLimit: Float = (pointMassB.pos - pointMassA.pos).length * shortFactor
 
     var longLimit: Float = (pointMassB.pos - pointMassA.pos).length * longFactor
@@ -35,15 +44,15 @@ class Bone(pointMassA: PointMass, pointMassB: PointMass, shortFactor: Float, lon
 
     override fun sc() {
         val delta = pointMassB.pos - pointMassA.pos
-        val dp = delta * delta
-        if (dp < slSquared) {
-            val scaleFactor = slSquared / (dp + slSquared) - 0.5f
+        val dist = delta * delta
+        if (dist < slSquared) {
+            val scaleFactor = slSquared / (dist + slSquared) - 0.5f
             delta.scale(scaleFactor)
             pointMassA.pos -= delta
             pointMassB.pos += delta
         }
-        if (dp > llSquared) {
-            val scaleFactor = llSquared / (dp + llSquared) - 0.5f
+        else if (dist > llSquared) {
+            val scaleFactor = llSquared / (dist + llSquared) - 0.5f
             delta.scale(scaleFactor)
             pointMassA.pos -= delta
             pointMassB.pos += delta

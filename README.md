@@ -10,7 +10,7 @@ Original version by: [Björn Lindberg](mailto:bjoern.lindberg@gmail.com)
 [Blob Sallad — Canvas Tag and JavaScript Physics Simulation Experiment](https://dev.opera.com/articles/blob-sallad-canvas-tag-and-javascript/)
 
 ## Sample code
-Here's the code that calculates the [Verlet Integration](https://en.wikipedia.org/wiki/Verlet_integration) to integrate Newton's equations of motion, as used from the Störmer method.
+Here's the code that calculates the [Verlet Integration](https://en.wikipedia.org/wiki/Verlet_integration) to integrate Newton's equations of motion, as used in the Störmer method.
 ```kotlin
 fun move(dt: Float) {
     val dt2 = dt * dt
