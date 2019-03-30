@@ -129,7 +129,7 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
 
     fun findClosest(x: Float, y: Float, radius: Float): Blob? {
         var minDistance = Float.MAX_VALUE
-        var closestBlob: Blob? = null
+        var closest: Blob? = null
         for (blob in blobs) {
             val aXbX = x - blob.x
             val aYbY = y - blob.y
@@ -137,18 +137,15 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
             if (distance >= minDistance)
                 continue
 
-            minDistance = distance
-            val hit = (blob.radius + radius)
+            val hit = blob.radius + radius
             if (distance > hit * hit)
                 continue
 
-            closestBlob = blob
+            closest = blob
+            minDistance = distance
         }
 
-        if (closestBlob == null)
-            return null
-
-        return closestBlob
+        return closest
     }
 
     fun move(dt: Float) {
