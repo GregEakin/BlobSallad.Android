@@ -30,7 +30,7 @@ open class Blob(private val xx: Float, private val yy: Float, var radius: Float,
     constructor(mother: Blob) : this(mother.x, mother.y, mother.radius, mother.numPoints)
 
     enum class Eye {
-        OPEN, CLOSED, CROSSED
+        OPEN, CLOSED, YIHAA
     }
 
     enum class Face {

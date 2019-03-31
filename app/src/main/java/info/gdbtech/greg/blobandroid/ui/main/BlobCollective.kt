@@ -83,8 +83,8 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
             if (blob.radius <= maxRadius)
                 continue
 
-            largest = blob
             maxRadius = blob.radius
+            largest = blob
         }
 
         return largest
@@ -100,8 +100,8 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
             if (blob.radius >= minRadius)
                 continue
 
-            smallest = blob
             minRadius = blob.radius
+            smallest = blob
         }
 
         return smallest
@@ -120,8 +120,8 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
             if (distance >= minDistance)
                 continue
 
-            closest = blob
             minDistance = distance
+            closest = blob
         }
 
         return closest
@@ -141,8 +141,8 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
             if (distance > hit * hit)
                 continue
 
-            closest = blob
             minDistance = distance
+            closest = blob
         }
 
         return closest
