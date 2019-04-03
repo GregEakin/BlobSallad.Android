@@ -19,12 +19,12 @@ class Bone(pointMassA: PointMass, pointMassB: PointMass, shortFactor: Float, lon
     Force(pointMassA, pointMassB) {
 
     init{
-        if (shortFactor >= longFactor)
-            throw Exception("Short Factor needs to be less than Long Factor.")
         if (shortFactor < 0)
             throw Exception("Short Factor needs to be greater than zero.")
         if (longFactor < 0)
             throw Exception("Long Factor needs to be greater than zero.")
+        if (shortFactor >= longFactor)
+            throw Exception("Short Factor needs to be less than Long Factor.")
     }
 
     var shortLimit: Float = (pointMassB.pos - pointMassA.pos).length * shortFactor
