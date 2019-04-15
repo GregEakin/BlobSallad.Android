@@ -163,6 +163,7 @@ class MainView(context: Context) : View(context) {
             val touch = Touch(collective, i)
             list.add(touch)
         }
+        
         return list
     }
 }
