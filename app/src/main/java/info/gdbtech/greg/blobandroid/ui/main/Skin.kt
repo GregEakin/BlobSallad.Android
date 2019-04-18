@@ -16,7 +16,7 @@
 package info.gdbtech.greg.blobandroid.ui.main
 
 class Skin(pointMassA: PointMass, pointMassB: PointMass) :
-    Force(pointMassA, pointMassB) {
+    Connection(pointMassA, pointMassB) {
 
     var lengthSquared: Float
     var length: Float

@@ -16,7 +16,7 @@
 package info.gdbtech.greg.blobandroid.ui.main
 
 class Bone(pointMassA: PointMass, pointMassB: PointMass, shortFactor: Float, longFactor: Float) :
-    Force(pointMassA, pointMassB) {
+    Connection(pointMassA, pointMassB) {
 
     init{
         if (shortFactor < 0)
