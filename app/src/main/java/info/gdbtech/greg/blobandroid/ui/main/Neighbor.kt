@@ -27,9 +27,9 @@ class Neighbor(pointMassA: PointMass, pointMassB: PointMass, var limit: Float) :
 
     override fun sc() {
         val delta = pointMassB.pos - pointMassA.pos
-        val dist = delta * delta
-        if (dist >= limitSquared) return
-        val scaleFactor = limitSquared / (dist + limitSquared) - 0.5f
+        val distance = delta * delta
+        if (distance >= limitSquared) return
+        val scaleFactor = limitSquared / (distance + limitSquared) - 0.5f
         delta.scale(scaleFactor)
         pointMassA.pos -= delta
         pointMassB.pos += delta

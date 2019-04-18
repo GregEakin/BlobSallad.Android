@@ -44,15 +44,15 @@ class Bone(pointMassA: PointMass, pointMassB: PointMass, shortFactor: Float, lon
 
     override fun sc() {
         val delta = pointMassB.pos - pointMassA.pos
-        val dist = delta * delta
-        if (dist < slSquared) {
-            val scaleFactor = slSquared / (dist + slSquared) - 0.5f
+        val distance = delta * delta
+        if (distance < slSquared) {
+            val scaleFactor = slSquared / (distance + slSquared) - 0.5f
             delta.scale(scaleFactor)
             pointMassA.pos -= delta
             pointMassB.pos += delta
         }
-        else if (dist > llSquared) {
-            val scaleFactor = llSquared / (dist + llSquared) - 0.5f
+        else if (distance > llSquared) {
+            val scaleFactor = llSquared / (distance + llSquared) - 0.5f
             delta.scale(scaleFactor)
             pointMassA.pos -= delta
             pointMassB.pos += delta
