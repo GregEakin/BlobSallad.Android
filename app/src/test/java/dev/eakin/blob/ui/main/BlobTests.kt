@@ -52,4 +52,12 @@ class BlobTests {
         assertEquals(0, blob2.neighbors.size)
         assertEquals(0, blob1.neighbors.size)
     }
+
+    @Test
+    fun pointMassIndexTest() {
+        val blob1 = Blob(17.0f, 19.0f, 11.0f, 3)
+        for (i in -5..5)
+            for (j in 0..2)
+                assertEquals(j, blob1.pointMassIndex(i * 3 + j))
+    }
 }
