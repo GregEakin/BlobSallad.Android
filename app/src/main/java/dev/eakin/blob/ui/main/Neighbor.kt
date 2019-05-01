@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package dev.eakin.blobandroid.ui.main
+package dev.eakin.blob.ui.main
 
 class Neighbor(pointMassA: PointMass, pointMassB: PointMass, var limit: Float) :
     Connection(pointMassA, pointMassB) {

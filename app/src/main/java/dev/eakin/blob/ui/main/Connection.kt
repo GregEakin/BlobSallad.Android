@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package dev.eakin.blobandroid.ui.main
+package dev.eakin.blob.ui.main
 
 abstract class Connection(val pointMassA: PointMass, val pointMassB: PointMass) {
     abstract fun scale(scaleFactor: Float)

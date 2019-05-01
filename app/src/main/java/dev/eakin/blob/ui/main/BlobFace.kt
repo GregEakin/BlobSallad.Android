@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package dev.eakin.blobandroid.ui.main
+package dev.eakin.blob.ui.main
 
 class BlobFace(x: Float, y: Float, radius: Float, numPoints: Int) : Blob(x, y, radius, numPoints) {
 

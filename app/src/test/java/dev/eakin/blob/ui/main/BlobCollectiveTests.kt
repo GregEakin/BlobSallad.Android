@@ -1,7 +1,5 @@
-package dev.eakin.blobandroid.ui.main
+package dev.eakin.blob.ui.main
 
-import dev.eakin.blobandroid.ui.main.BlobCollective
-import dev.eakin.blobandroid.ui.main.Environment
 import org.junit.Assert.*
 import org.junit.Test
 

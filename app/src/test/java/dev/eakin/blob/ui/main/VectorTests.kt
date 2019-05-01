@@ -1,6 +1,5 @@
-package dev.eakin.blobandroid.ui.main
+package dev.eakin.blob.ui.main
 
-import dev.eakin.blobandroid.ui.main.Vector
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

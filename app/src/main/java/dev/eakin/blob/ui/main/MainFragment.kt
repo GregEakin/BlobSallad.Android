@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package dev.eakin.blobandroid.ui.main
+package dev.eakin.blob.ui.main
 
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle

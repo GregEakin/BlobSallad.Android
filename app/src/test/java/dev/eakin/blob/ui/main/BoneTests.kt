@@ -1,7 +1,5 @@
-package dev.eakin.blobandroid.ui.main
+package dev.eakin.blob.ui.main
 
-import dev.eakin.blobandroid.ui.main.Bone
-import dev.eakin.blobandroid.ui.main.PointMass
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

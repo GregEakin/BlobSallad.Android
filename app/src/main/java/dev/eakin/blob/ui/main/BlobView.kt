@@ -13,18 +13,13 @@
  * limitations under the License.
  */
 
-package dev.eakin.blobandroid.ui.main
+package dev.eakin.blob.ui.main
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+class BlobView(blobFace: BlobFace) {
 
-class MainViewModel : ViewModel() {
-    private val _data = MutableLiveData<String>()
-    val data: LiveData<String>
-        get() = _data
-
-    init {
-        _data.value = "Hello, Jetpack!"
-    }
+    var radius = blobFace.radius
+    val middle = blobFace.middle
+    val points = blobFace.points
+    val skins = blobFace.skins
+    var selected = blobFace.selected
 }

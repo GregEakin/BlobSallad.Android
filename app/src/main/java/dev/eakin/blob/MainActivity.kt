@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package dev.eakin.blobandroid
+package dev.eakin.blob
 
 import android.app.Activity
 import android.content.Context
@@ -28,7 +28,7 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.Window
-import dev.eakin.blobandroid.ui.main.Vector
+import dev.eakin.blob.ui.main.Vector
 import java.lang.ref.WeakReference
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService

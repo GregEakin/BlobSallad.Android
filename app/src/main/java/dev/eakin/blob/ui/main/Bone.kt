@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package dev.eakin.blobandroid.ui.main
+package dev.eakin.blob.ui.main
 
 class Bone(pointMassA: PointMass, pointMassB: PointMass, shortFactor: Float, longFactor: Float) :
     Connection(pointMassA, pointMassB) {

@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package dev.eakin.blobandroid.ui.main
+package dev.eakin.blob.ui.main
 
 class Environment(val x: Float, val y: Float, val w: Float, val h: Float) {
     init {

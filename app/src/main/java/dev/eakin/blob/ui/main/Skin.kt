@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package dev.eakin.blobandroid.ui.main
+package dev.eakin.blob.ui.main
 
 class Skin(pointMassA: PointMass, pointMassB: PointMass) :
     Connection(pointMassA, pointMassB) {

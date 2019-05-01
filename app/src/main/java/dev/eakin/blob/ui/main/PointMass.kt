@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package dev.eakin.blobandroid.ui.main
+package dev.eakin.blob.ui.main
 
 class PointMass(cx: Float, cy: Float, val mass: Float) {
     val pos = Vector(cx, cy)

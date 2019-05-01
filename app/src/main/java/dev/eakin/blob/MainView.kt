@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package dev.eakin.blobandroid
+package dev.eakin.blob
 
 import android.content.Context
 import android.graphics.Canvas
@@ -22,10 +22,10 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
-import dev.eakin.blobandroid.ui.main.BlobCollective
-import dev.eakin.blobandroid.ui.main.Environment
-import dev.eakin.blobandroid.ui.main.Touch
-import dev.eakin.blobandroid.ui.main.Vector
+import dev.eakin.blob.ui.main.BlobCollective
+import dev.eakin.blob.ui.main.Environment
+import dev.eakin.blob.ui.main.Touch
+import dev.eakin.blob.ui.main.Vector
 
 class MainView(context: Context) : View(context) {
 
