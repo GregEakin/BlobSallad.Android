@@ -10,7 +10,7 @@
             android:supportsRtl="true"
             android:hardwareAccelerated="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity android:name="dev.eakin.blobandroid.MainActivity"
                   android:screenOrientation="nosensor"
                   android:configChanges="screenSize">
             <intent-filter>
