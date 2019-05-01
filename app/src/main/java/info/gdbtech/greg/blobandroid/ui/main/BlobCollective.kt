@@ -50,8 +50,9 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
             newBlob.linkBlob(blob)
         }
 
-        //Log.d("BlobAndroid", "New blob ${blobs.size}")
         blobs.add(newBlob)
+        //Log.d("BlobAndroid", "New blob ${blobs.size}")
+        //newBlob
     }
 
     fun join() {
@@ -67,10 +68,12 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
         val factor = 0.945 * length / closest.radius
         closest.scale(factor.toFloat())
 
-        //Log.d("BlobAndroid", "Delete blob ${blobs.size}")
         blobs.remove(smallest)
         for (blob in blobs)
             blob.unlinkBlob(smallest)
+
+        //Log.d("BlobAndroid", "Delete blob ${blobs.size}")
+        //xsmallest
     }
 
     fun findLargest(exclude: Blob?): Blob? {

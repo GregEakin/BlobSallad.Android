@@ -104,8 +104,8 @@ open class Blob(private val xx: Float, private val yy: Float, var radius: Float,
     val neighbors: MutableList<Neighbor> = mutableListOf()
 
     fun linkBlob(blob: Blob) {
-        val dist = radius + blob.radius
-        val neighbor = Neighbor(middle, blob.middle, dist * 0.95f)
+        val distance = radius + blob.radius
+        val neighbor = Neighbor(middle, blob.middle, distance * 0.95f)
         neighbors.add(neighbor)
     }
 

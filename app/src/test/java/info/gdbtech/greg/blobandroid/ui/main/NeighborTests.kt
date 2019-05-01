@@ -15,11 +15,11 @@ class NeighborTests {
         val pointMassB = PointMass(cxB, cyB, 0.0f)
 
         // sum of the two radii
-        val dist = 17.0f
-        val neighbor = Neighbor(pointMassA, pointMassB, dist)
+        val distance = 17.0f
+        val neighbor = Neighbor(pointMassA, pointMassB, distance)
 
-        assertEquals(dist, neighbor.limit, 0.01f)
-        assertEquals(dist * dist, neighbor.limitSquared, 0.01f)
+        assertEquals(distance, neighbor.limit, 0.01f)
+        assertEquals(distance * distance, neighbor.limitSquared, 0.01f)
     }
 
     @Test
@@ -33,12 +33,12 @@ class NeighborTests {
         val pointMassB = PointMass(cxB, cyB, 0.0f)
 
         // sum of the two radii
-        val dist = 17.0f
-        val neighbor = Neighbor(pointMassA, pointMassB, dist)
+        val distance = 17.0f
+        val neighbor = Neighbor(pointMassA, pointMassB, distance)
         neighbor.scale(10.0f)
 
-        assertEquals(10.0f * dist, neighbor.limit, 0.01f)
-        assertEquals(100.0f * dist * dist, neighbor.limitSquared, 0.01f)
+        assertEquals(10.0f * distance, neighbor.limit, 0.01f)
+        assertEquals(100.0f * distance * distance, neighbor.limitSquared, 0.01f)
     }
 
     @Test
@@ -51,8 +51,8 @@ class NeighborTests {
         val cyB = 7.0f
         val pointMassB = PointMass(cxB, cyB, 1.0f)
 
-        val dist = 17.0f
-        val neighbor = Neighbor(pointMassA, pointMassB, dist)
+        val distance = 17.0f
+        val neighbor = Neighbor(pointMassA, pointMassB, distance)
         pointMassB.force = Vector(-1.0f, -1.0f)
         pointMassB.move(1.0f)
         neighbor.sc()
@@ -73,8 +73,8 @@ class NeighborTests {
         val cyB = 7.0f
         val pointMassB = PointMass(cxB, cyB, 1.0f)
 
-        val dist = 17.0f
-        val neighbor = Neighbor(pointMassA, pointMassB, dist)
+        val distance = 17.0f
+        val neighbor = Neighbor(pointMassA, pointMassB, distance)
         pointMassB.force = Vector(-1.0f, -1.0f)
         pointMassB.move(1.0f)
         neighbor.sc()
@@ -98,8 +98,8 @@ class NeighborTests {
         val cyB = 7.0f
         val pointMassB = PointMass(cxB, cyB, 1.0f)
 
-        val dist = 17.0f
-        val neighbor = Neighbor(pointMassA, pointMassB, dist)
+        val distance = 17.0f
+        val neighbor = Neighbor(pointMassA, pointMassB, distance)
         pointMassB.force = Vector(10.0f, 10.0f)
         pointMassB.move(1.0f)
         neighbor.sc()

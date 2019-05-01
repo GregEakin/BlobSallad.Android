@@ -16,7 +16,7 @@
 package info.gdbtech.greg.blobandroid.ui.main
 
 class Skin(pointMassA: PointMass, pointMassB: PointMass) :
-    Force(pointMassA, pointMassB) {
+    Connection(pointMassA, pointMassB) {
 
     var lengthSquared: Float
     var length: Float
@@ -35,8 +35,8 @@ class Skin(pointMassA: PointMass, pointMassB: PointMass) :
 
     override fun sc() {
         val delta = pointMassB.pos - pointMassA.pos
-        val dist = delta * delta
-        val scaleFactor = lengthSquared / (dist + lengthSquared) - 0.5f
+        val distance = delta * delta
+        val scaleFactor = lengthSquared / (distance + lengthSquared) - 0.5f
         delta.scale(scaleFactor)
         pointMassA.pos -= delta
         pointMassB.pos += delta
