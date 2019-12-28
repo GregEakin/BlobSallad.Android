@@ -23,9 +23,9 @@ import android.hardware.SensorManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.KeyEvent
+import androidx.appcompat.app.AppCompatActivity
 import android.view.MotionEvent
 import android.view.Window
 import dev.eakin.blob.ui.main.Vector
@@ -100,17 +100,17 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 //        f1 = null
 //    }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
-        super.onSaveInstanceState(outState)
-        outState?.putInt("Blobs", 3)
-        Log.w("BlobAndroid", "onSaveInstanceState(3) ${Thread.currentThread().id}")
-
-//        outState?.run {
-//            putInt("One", this@MainActivity.taskId)
-//            putInt("Two", this.hashCode())
-//            putInt("Three", this@MainActivity.view.hashCode())
-//        }
-    }
+//    override fun onSaveInstanceState(outState: Bundle?) {
+//        super.onSaveInstanceState(outState)
+//        outState?.putInt("Blobs", 3)
+//        Log.w("BlobAndroid", "onSaveInstanceState(3) ${Thread.currentThread().id}")
+//
+////        outState?.run {
+////            putInt("One", this@MainActivity.taskId)
+////            putInt("Two", this.hashCode())
+////            putInt("Three", this@MainActivity.view.hashCode())
+////        }
+//    }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         super.onRestoreInstanceState(savedInstanceState)
