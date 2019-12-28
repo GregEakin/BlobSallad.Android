@@ -15,7 +15,13 @@
 
 package dev.eakin.blob.ui.main
 
-class Environment(val x: Float, val y: Float, val w: Float, val h: Float) {
+interface Environment {
+    fun collision(curPos: Vector, prePos: Vector): Boolean
+    fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int)
+    // fun draw(canvas: Int, scaleFactor: Double)
+}
+
+class EnvironmentImpl(val x: Float, val y: Float, var w: Float, var h: Float) : Environment {
     init {
         if (w < 0.0f)
             throw Exception("Can't have negative width.")
@@ -23,7 +29,7 @@ class Environment(val x: Float, val y: Float, val w: Float, val h: Float) {
             throw Exception("Can't have negative height.")
     }
 
-    fun collision(curPos: Vector, prePos: Vector): Boolean {
+    override fun collision(curPos: Vector, prePos: Vector): Boolean {
         var outOfBounds = false
         if (curPos.x < x) {
             curPos.x = x
@@ -42,6 +48,16 @@ class Environment(val x: Float, val y: Float, val w: Float, val h: Float) {
         }
 
         return outOfBounds
+    }
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        if (w < 0.0f)
+            throw Exception("Can't have negative width.")
+        if (h < 0.0f)
+            throw Exception("Can't have negative height.")
+
+        this.w = w.toFloat();
+        this.h = h.toFloat();
     }
 
 //    fun draw(canvas: Int, scaleFactor: Double) {}

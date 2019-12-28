@@ -22,10 +22,7 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.SurfaceView
-import dev.eakin.blob.ui.main.BlobCollective
-import dev.eakin.blob.ui.main.Environment
-import dev.eakin.blob.ui.main.Touch
-import dev.eakin.blob.ui.main.Vector
+import dev.eakin.blob.ui.main.*
 
 class MainView(context: Context) : SurfaceView(context) {
 
@@ -33,13 +30,14 @@ class MainView(context: Context) : SurfaceView(context) {
         isFocusable = true
     }
 
-    private var env = Environment(0f, 0f, 700f, 700f)
+    private var env = EnvironmentImpl(0f, 0f, 700f, 700f)
     private val gravity = Vector(0f, 9.8e-5f)
     fun setGravity(force: Vector) {
         gravity.setValue(force)
     }
 
-    private val collective = BlobCollective(200f, 200f, 64)
+    private val repository = BlobRepositoryImpl(200f, 200f, 64)
+    private val collective = BlobCollectiveImpl(repository)
     private var last = SystemClock.uptimeMillis()
 
     init {
@@ -56,7 +54,7 @@ class MainView(context: Context) : SurfaceView(context) {
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        env = Environment(0f, 0f, w.toFloat(), h.toFloat())
+        env = EnvironmentImpl(0f, 0f, w.toFloat(), h.toFloat())
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -163,7 +161,7 @@ class MainView(context: Context) : SurfaceView(context) {
             val touch = Touch(collective, i)
             list.add(touch)
         }
-        
+
         return list
     }
 }

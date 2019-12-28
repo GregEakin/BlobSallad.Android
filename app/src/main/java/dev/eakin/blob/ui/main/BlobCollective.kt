@@ -16,35 +16,38 @@
 package dev.eakin.blob.ui.main
 
 import android.graphics.Canvas
+import kotlin.math.sqrt
 import kotlin.random.Random
 
-class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
-    init {
-        if (maxNum < 1)
-            throw Exception("Need to allow at least one blob in the collective.")
-    }
-
-    private val blobPointCount = 8
-    private val blobInitialRadius = 200.0f
-
-    private val blobs = createBlobs()
-    private fun createBlobs(): MutableList<Blob> {
-        val list = mutableListOf<Blob>()
-        val blob = Blob(x, y, blobInitialRadius, blobPointCount)
-        list.add(blob)
-        return list
-    }
-
+interface BlobCollective {
     val numActive: Int
+    fun split()
+    fun join()
+    fun findLargest(exclude: Blob?): Blob?
+    fun findSmallest(exclude: Blob?): Blob?
+    fun findClosest(neighbor: Blob): Blob?
+    fun findClosest(x: Float, y: Float, radius: Float): Blob?
+    fun move(dt: Float)
+    fun sc(env: Environment)
+    fun setForce(value: Vector)
+    fun addForce(force: Vector)
+    fun draw(canvas: Canvas)
+}
+
+class BlobCollectiveImpl(private val repo: BlobRepository) : BlobCollective {
+
+    private val blobs = repo.createBlobs()
+
+    override val numActive: Int
         get() = blobs.size
 
-    fun split() {
-        if (numActive >= maxNum)
+    override fun split() {
+        if (numActive >= repo.maxNum)
             return
 
         val motherBlob = findLargest(null) ?: return
         motherBlob.scale(0.75f)
-        val newBlob = Blob(motherBlob)
+        val newBlob = repo.createBlob(motherBlob)
         for (blob in blobs) {
             blob.linkBlob(newBlob)
             newBlob.linkBlob(blob)
@@ -55,7 +58,7 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
         //newBlob
     }
 
-    fun join() {
+    override fun join() {
         if (numActive <= 1)
             return
 
@@ -64,7 +67,7 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
 
         val r1 = smallest.radius.toDouble()
         val r2 = closest.radius.toDouble()
-        val length = Math.sqrt(r1 * r1 + r2 * r2)
+        val length = sqrt(r1 * r1 + r2 * r2)
         val factor = 0.945 * length / closest.radius
         closest.scale(factor.toFloat())
 
@@ -76,7 +79,7 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
         //xsmallest
     }
 
-    fun findLargest(exclude: Blob?): Blob? {
+    override fun findLargest(exclude: Blob?): Blob? {
         var maxRadius = Float.MIN_VALUE
         var largest: Blob? = null
         for (blob in blobs) {
@@ -93,7 +96,7 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
         return largest
     }
 
-    fun findSmallest(exclude: Blob?): Blob? {
+    override fun findSmallest(exclude: Blob?): Blob? {
         var minRadius = Float.MAX_VALUE
         var smallest: Blob? = null
         for (blob in blobs) {
@@ -110,7 +113,7 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
         return smallest
     }
 
-    fun findClosest(neighbor: Blob): Blob? {
+    override fun findClosest(neighbor: Blob): Blob? {
         var minDistance = Float.MAX_VALUE
         var closest: Blob? = null
         for (blob in blobs) {
@@ -130,7 +133,7 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
         return closest
     }
 
-    fun findClosest(x: Float, y: Float, radius: Float): Blob? {
+    override fun findClosest(x: Float, y: Float, radius: Float): Blob? {
         var minDistance = Float.MAX_VALUE
         var closest: Blob? = null
         for (blob in blobs) {
@@ -151,24 +154,24 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
         return closest
     }
 
-    fun move(dt: Float) {
+    override fun move(dt: Float) {
         for (blob in blobs)
             blob.move(dt)
     }
 
-    fun sc(env: Environment) {
+    override fun sc(env: Environment) {
         for (blob in blobs)
             blob.sc(env)
     }
 
-    fun setForce(value: Vector) {
+    override fun setForce(value: Vector) {
         for (blob in blobs) {
             val force = if (blob.selected?.blob === blob) Vector(0.0f, 0.0f) else value
             blob.setForce(force)
         }
     }
 
-    fun addForce(force: Vector) {
+    override fun addForce(force: Vector) {
         for (blob in blobs) {
             if (blob.selected?.blob === blob)
                 continue
@@ -180,7 +183,7 @@ class BlobCollective(val x: Float, val y: Float, val maxNum: Int) {
         }
     }
 
-    fun draw(canvas: Canvas) {
+    override fun draw(canvas: Canvas) {
         for (blob in blobs)
             blob.draw(canvas)
     }

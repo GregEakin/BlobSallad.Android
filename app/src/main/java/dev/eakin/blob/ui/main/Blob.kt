@@ -16,6 +16,7 @@
 package dev.eakin.blob.ui.main
 
 import android.graphics.*
+import kotlin.math.acos
 import kotlin.random.Random
 
 open class Blob(
@@ -355,14 +356,14 @@ open class Blob(
 //        }
     }
 
+    val up = Vector(0.0f, -1.0f)
     fun draw(canvas: Canvas) {
         updateFace()
         canvas.save()
         drawBody(canvas)
 
-        val up = Vector(0.0f, -1.0f)
         val ori = points[0].pos - middle.pos
-        val ang = Math.acos(ori * up / ori.length.toDouble())
+        val ang = acos(ori * up / ori.length.toDouble())
         val radians = if (ori.x < 0.0f) -ang else ang
         val theta = (180.0 / Math.PI) * radians
         canvas.rotate(theta.toFloat(), middle.xPos, middle.yPos)
