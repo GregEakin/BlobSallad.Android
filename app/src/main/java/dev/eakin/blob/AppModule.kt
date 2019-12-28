@@ -19,7 +19,7 @@ val appModule = module {
     // factory { (activity: Context) -> MainViewModel(activity) }
 
     scope(named<MainActivity>()) {
-        // scope(named<BlobView>(get(),get(),get()))
+        scoped { MainView(get()) }
     }
 
     viewModel { MainViewModel() }

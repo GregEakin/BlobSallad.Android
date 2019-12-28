@@ -29,6 +29,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.MotionEvent
 import android.view.Window
 import dev.eakin.blob.ui.main.Vector
+import org.koin.androidx.scope.lifecycleScope
 import java.lang.ref.WeakReference
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
@@ -37,7 +38,7 @@ import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity(), SensorEventListener {
 
-    private val view: MainView by lazy { MainView(this) }
+    private val presenter: MainView by lifecycleScope.inject()
 
     private lateinit var sensorManager: SensorManager
 
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         super.onCreate(savedInstanceState)
 
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        setContentView(view)
+        setContentView(presenter)
         // Log.w("BlobAndroid", "onCreate() ${Thread.currentThread().id}")
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         // Log.w("BlobAndroid", "onStart() ${Thread.currentThread().id}")
 
         f1?.cancel(false)
-        f1 = scheduleTaskExecutor.scheduleAtFixedRate(RefreshRunner(), 200, 20, TimeUnit.MILLISECONDS);
+        f1 = scheduleTaskExecutor.scheduleAtFixedRate(RefreshRunner(), 200, 20, TimeUnit.MILLISECONDS)
     }
 
     override fun onResume() {
@@ -123,18 +124,18 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         val x = event.values[0] * -1e-4f
         val y = event.values[1] * 1e-4f
         val force = Vector(x, y)
-        view.setGravity(force)
+        presenter.setGravity(force)
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        return view.onTouchEvent(event)
+        return presenter.onTouchEvent(event)
     }
 
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
-        val hit = view.dispatchKeyEvent(event)
+        val hit = presenter.dispatchKeyEvent(event)
         if (hit) return true
         return super.dispatchKeyEvent(event)
     }
@@ -156,7 +157,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             override fun handleMessage(msg: Message) {
                 val mainActivity = mActivity.get() ?: return
                 when (msg.what) {
-                    GuiUpdateIdentifier -> mainActivity.view.invalidate()
+                    GuiUpdateIdentifier -> mainActivity.presenter.invalidate()
                 }
             }
         }

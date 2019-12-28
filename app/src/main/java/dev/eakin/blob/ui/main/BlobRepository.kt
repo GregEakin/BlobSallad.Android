@@ -6,7 +6,7 @@ interface BlobRepository {
     val maxNum: Int
 }
 
-class BlobRepositoryImpl(val x: Float, val y: Float, private val maxBlobs: Int) : BlobRepository {
+class BlobRepositoryImpl(val startX: Float, val startY: Float, val maxBlobs: Int) : BlobRepository {
 
     init {
         if (maxBlobs < 1)
@@ -18,7 +18,7 @@ class BlobRepositoryImpl(val x: Float, val y: Float, private val maxBlobs: Int) 
 
     override fun createBlobs(): MutableList<Blob> {
         val list = mutableListOf<Blob>()
-        val blob = Blob(x, y, blobInitialRadius, blobPointCount)
+        val blob = Blob(startX, startY, blobInitialRadius, blobPointCount)
         list.add(blob)
         return list
     }
