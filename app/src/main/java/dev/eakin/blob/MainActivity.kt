@@ -15,7 +15,6 @@
 
 package dev.eakin.blob
 
-import android.app.Activity
 import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -24,6 +23,7 @@ import android.hardware.SensorManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
@@ -35,7 +35,7 @@ import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
 
-class MainActivity : Activity(), SensorEventListener {
+class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private val view: MainView by lazy { MainView(this) }
 
