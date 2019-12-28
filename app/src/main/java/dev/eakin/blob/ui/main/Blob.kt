@@ -18,7 +18,12 @@ package dev.eakin.blob.ui.main
 import android.graphics.*
 import kotlin.random.Random
 
-open class Blob(private val startX: Float, private val startY: Float, var radius: Float, val numPoints: Int) {
+open class Blob(
+    private val startX: Float,
+    private val startY: Float,
+    var radius: Float,
+    val numPoints: Int
+) {
     init {
         if (radius <= 0.0f)
             throw Exception("Can't have a negative radius.")
@@ -119,9 +124,6 @@ open class Blob(private val startX: Float, private val startY: Float, var radius
         }
     }
 
-    private var eyes: Eye = Eye.OPEN
-    private var face: Face = Face.OPEN
-
     fun scale(scaleFactor: Float) {
         for (skin in skins)
             skin.scale(scaleFactor)
@@ -199,7 +201,12 @@ open class Blob(private val startX: Float, private val startY: Float, var radius
         middle.pos.add(deltaX, deltaY)
     }
 
+//    val view: BlobView by lazy { BlobView() }
+//    inner class BlobView {
+
     private val paint = Paint()
+    private var eyes: Eye = Eye.OPEN
+    private var face: Face = Face.OPEN
 
     init {
         paint.textSize = 20.0f
