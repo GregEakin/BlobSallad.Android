@@ -19,9 +19,11 @@ interface Environment {
     fun collision(curPos: Vector, prePos: Vector): Boolean
     fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int)
     // fun draw(canvas: Int, scaleFactor: Double)
+    var w : Float
+    var h : Float
 }
 
-class EnvironmentImpl(val x: Float, val y: Float, var w: Float, var h: Float) : Environment {
+class EnvironmentImpl(val x: Float, val y: Float, override var w: Float, override var h: Float) : Environment {
     init {
         if (w < 0.0f)
             throw Exception("Can't have negative width.")
@@ -56,8 +58,8 @@ class EnvironmentImpl(val x: Float, val y: Float, var w: Float, var h: Float) : 
         if (h < 0.0f)
             throw Exception("Can't have negative height.")
 
-        this.w = w.toFloat();
-        this.h = h.toFloat();
+        this.w = w.toFloat()
+        this.h = h.toFloat()
     }
 
 //    fun draw(canvas: Int, scaleFactor: Double) {}

@@ -23,21 +23,23 @@ import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import dev.eakin.blob.ui.main.*
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
-class MainView(context: Context) : View(context) {
+class MainView(context: Context) : View(context), KoinComponent {
 
     init {
         isFocusable = true
     }
 
-    private var env = EnvironmentImpl(0f, 0f, 700f, 700f)
+    private val environment: Environment by inject()
+    private val collective: BlobCollective by inject()
+
     private val gravity = Vector(0f, 9.8e-5f)
     fun setGravity(force: Vector) {
         gravity.setValue(force)
     }
 
-    private val repository = BlobRepositoryImpl(200f, 200f, 64)
-    private val collective = BlobCollectiveImpl(repository)
     private var last = SystemClock.uptimeMillis()
 
     init {
@@ -54,7 +56,8 @@ class MainView(context: Context) : View(context) {
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        env = EnvironmentImpl(0f, 0f, w.toFloat(), h.toFloat())
+        environment.w = w.toFloat()
+        environment.h = h.toFloat()
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -77,7 +80,7 @@ class MainView(context: Context) : View(context) {
 
         val step = delta.toFloat()
         collective.move(step)
-        collective.sc(env)
+        collective.sc(environment)
         collective.setForce(gravity)
         collective.draw(canvas)
 

@@ -6,22 +6,25 @@ import org.junit.Test
 class BlobCollectiveTests {
     @Test
     fun ctorTest() {
-        val collective = BlobCollective(71.0f, 67.0f, 4)
+        val blobRepository = BlobRepositoryImpl(1.0f, 1.0f, 4)
+        val collective = BlobCollectiveImpl(blobRepository)
 
-        assertEquals(4, collective.maxNum)
+        assertEquals(4, blobRepository.maxNum)
         assertEquals(1, collective.numActive)
     }
 
     @Test
     fun splitTest() {
-        val collective = BlobCollective(1.0f, 1.0f, 4)
+        val blobRepository = BlobRepositoryImpl(1.0f, 1.0f, 4)
+        val collective = BlobCollectiveImpl(blobRepository)
         collective.split()
         assertEquals(2, collective.numActive)
     }
 
     @Test
     fun joinTest() {
-        val collective = BlobCollective(1.0f, 1.0f, 4)
+        val blobRepository = BlobRepositoryImpl(1.0f, 1.0f, 4)
+        val collective = BlobCollectiveImpl(blobRepository)
         collective.split()
         collective.join()
         assertEquals(1, collective.numActive)
@@ -29,7 +32,8 @@ class BlobCollectiveTests {
 
     @Test
     fun findLargestTest() {
-        val collective = BlobCollective(1.0f, 1.0f, 4)
+        val blobRepository = BlobRepositoryImpl(1.0f, 1.0f, 4)
+        val collective = BlobCollectiveImpl(blobRepository)
         collective.split()
         collective.split()
 
@@ -39,7 +43,8 @@ class BlobCollectiveTests {
 
     @Test
     fun findSmallestTest() {
-        val collective = BlobCollective(1.0f, 1.0f, 4)
+        val blobRepository = BlobRepositoryImpl(1.0f, 1.0f, 4)
+        val collective = BlobCollectiveImpl(blobRepository)
         collective.split()
         collective.split()
 
@@ -59,9 +64,10 @@ class BlobCollectiveTests {
 
     @Test
     fun findClosestTest() {
-        val environment = Environment(0.2f, 0.2f, 2.6f, 1.6f)
+        val environment = EnvironmentImpl(0.2f, 0.2f, 2.6f, 1.6f)
 
-        val collective = BlobCollective(1.0f, 1.0f, 4)
+        val blobRepository = BlobRepositoryImpl(1.0f, 1.0f, 4)
+        val collective = BlobCollectiveImpl(blobRepository)
         collective.split()
         collective.split()
 
