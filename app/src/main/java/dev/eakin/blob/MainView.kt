@@ -21,13 +21,13 @@ import android.os.SystemClock
 import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
-import android.view.View
+import android.view.SurfaceView
 import dev.eakin.blob.ui.main.BlobCollective
 import dev.eakin.blob.ui.main.Environment
 import dev.eakin.blob.ui.main.Touch
 import dev.eakin.blob.ui.main.Vector
 
-class MainView(context: Context) : View(context) {
+class MainView(context: Context) : SurfaceView(context) {
 
     init {
         isFocusable = true

@@ -23,7 +23,7 @@ open class Blob(private val startX: Float, private val startY: Float, var radius
         if (radius <= 0.0f)
             throw Exception("Can't have a negative radius.")
 
-        if (numPoints < 0)
+        if (numPoints < 3)
             throw Exception("Need at least three points to draw a blob.")
     }
 
