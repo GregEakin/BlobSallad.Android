@@ -1,5 +1,6 @@
 # Blob Sallad for Android
-I found this little blob engine code, and converted it run on [Android](https://www.android.com/) with [Kotlin](https://kotlinlang.org/)
+I found this little blob engine code, and converted it run on [Android](https://www.android.com/) with [Kotlin](https://kotlinlang.org/).
+See the [WPF dot.Net](https://github.com/GregEakin/BlobSallad.Net) version.
 
 ## From the website: [Blob Sallad](https://blobsallad.se/)
 ![Blob Sallad](Blob.PNG)
