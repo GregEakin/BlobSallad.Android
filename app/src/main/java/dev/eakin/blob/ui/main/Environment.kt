@@ -23,7 +23,7 @@ interface Environment {
     var h : Float
 }
 
-class EnvironmentImpl(val x: Float, val y: Float, override var w: Float, override var h: Float) : Environment {
+class EnvironmentImpl(val minX: Float, val minY: Float, override var w: Float, override var h: Float) : Environment {
     init {
         if (w < 0.0f)
             throw Exception("Can't have negative width.")
@@ -33,19 +33,19 @@ class EnvironmentImpl(val x: Float, val y: Float, override var w: Float, overrid
 
     override fun collision(curPos: Vector, prePos: Vector): Boolean {
         var outOfBounds = false
-        if (curPos.x < x) {
-            curPos.x = x
+        if (curPos.x < minX) {
+            curPos.x = minX
             outOfBounds = true
-        } else if (curPos.x > x + w) {
-            curPos.x = x + w
+        } else if (curPos.x > minX + w) {
+            curPos.x = minX + w
             outOfBounds = true
         }
 
-        if (curPos.y < y) {
-            curPos.y = y
+        if (curPos.y < minY) {
+            curPos.y = minY
             outOfBounds = true
-        } else if (curPos.y > y + h) {
-            curPos.y = y + h
+        } else if (curPos.y > minY + h) {
+            curPos.y = minY + h
             outOfBounds = true
         }
 

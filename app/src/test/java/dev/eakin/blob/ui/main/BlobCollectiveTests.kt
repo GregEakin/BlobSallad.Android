@@ -1,9 +1,25 @@
 package dev.eakin.blob.ui.main
 
+import dev.eakin.blob.appModule
+import org.junit.After
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Test
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.test.KoinTest
 
-class BlobCollectiveTests {
+class BlobCollectiveTests : KoinTest {
+    @Before
+    fun setUp() {
+        startKoin { modules(appModule) }
+    }
+
+    @After
+    fun tearDown() {
+        stopKoin()
+    }
+
     @Test
     fun ctorTest() {
         val collective = BlobCollectiveImpl(4)
