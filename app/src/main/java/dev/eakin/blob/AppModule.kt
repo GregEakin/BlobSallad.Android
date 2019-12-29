@@ -12,7 +12,7 @@ val appModule = module {
 
     single<BlobCollective> { BlobCollectiveImpl(maxBlobs) }
 
-    factory { createBlobList(startX, startY) }
+    factory { createBlobList(200.0f, 200.0f) }
 
     factory { (mother: Blob) -> createBlob(mother) }
 
@@ -25,8 +25,6 @@ val appModule = module {
 
 val blobPointCount = 8
 val blobInitialRadius = 200.0f
-val startX = 200f
-val startY = 200f
 val maxBlobs = 64
 
 fun createBlobList(startX: Float, startY: Float): MutableList<Blob> {
