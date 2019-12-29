@@ -8,6 +8,7 @@ import org.junit.Test
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
+import org.koin.core.inject
 
 class BlobCollectiveTests : KoinTest {
     @Before
@@ -22,7 +23,7 @@ class BlobCollectiveTests : KoinTest {
 
     @Test
     fun ctorTest() {
-        val collective = BlobCollectiveImpl(4)
+        val collective: BlobCollective by inject()
 
         // assertEquals(4, blobRepository.maxNum)
         assertEquals(1, collective.numActive)
@@ -30,14 +31,14 @@ class BlobCollectiveTests : KoinTest {
 
     @Test
     fun splitTest() {
-        val collective = BlobCollectiveImpl(4)
+        val collective: BlobCollective by inject()
         collective.split()
         assertEquals(2, collective.numActive)
     }
 
     @Test
     fun joinTest() {
-        val collective = BlobCollectiveImpl(4)
+        val collective: BlobCollective by inject()
         collective.split()
         collective.join()
         assertEquals(1, collective.numActive)
@@ -45,7 +46,7 @@ class BlobCollectiveTests : KoinTest {
 
     @Test
     fun findLargestTest() {
-        val collective = BlobCollectiveImpl(4)
+        val collective: BlobCollective by inject()
         collective.split()
         collective.split()
 
@@ -55,7 +56,7 @@ class BlobCollectiveTests : KoinTest {
 
     @Test
     fun findSmallestTest() {
-        val collective = BlobCollectiveImpl(4)
+        val collective: BlobCollective by inject()
         collective.split()
         collective.split()
 
@@ -75,9 +76,8 @@ class BlobCollectiveTests : KoinTest {
 
     @Test
     fun findClosestTest() {
-        val environment = EnvironmentImpl(0.2f, 0.2f, 2.6f, 1.6f)
-
-        val collective = BlobCollectiveImpl(4)
+        val environment: Environment by inject()
+        val collective: BlobCollective by inject()
         collective.split()
         collective.split()
 
