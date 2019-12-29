@@ -11,16 +11,32 @@ val appModule = module {
 
     single<Environment> { EnvironmentImpl(0f, 0f, 700f, 700f) }
 
-    single<BlobRepository> { BlobRepositoryImpl(200f, 200f, 64) }
+    single<BlobCollective> { BlobCollectiveImpl(maxBlobs) }
 
-    single<BlobCollective> { BlobCollectiveImpl(get()) }
+    factory { createBlobList(startX, startY) }
 
-    // factory { Blob(0f, 0f, 10f, 3) }
-    // factory { (activity: Context) -> MainViewModel(activity) }
+    factory { (mother: Blob) -> createBlob(mother) }
 
     scope(named<MainActivity>()) {
         scoped { MainView(get()) }
     }
 
     viewModel { MainViewModel() }
+}
+
+val blobPointCount = 8
+val blobInitialRadius = 200.0f
+val startX = 200f
+val startY = 200f
+val maxBlobs = 64
+
+fun createBlobList(startX: Float, startY: Float): MutableList<Blob> {
+    val list = mutableListOf<Blob>()
+    val blob = Blob(startX, startY, blobInitialRadius, blobPointCount)
+    list.add(blob)
+    return list
+}
+
+fun createBlob(motherBlob: Blob): Blob {
+    return Blob(motherBlob)
 }

@@ -16,6 +16,9 @@
 package dev.eakin.blob.ui.main
 
 import android.graphics.Canvas
+import org.koin.core.KoinComponent
+import org.koin.core.inject
+import org.koin.core.parameter.parametersOf
 import kotlin.math.sqrt
 import kotlin.random.Random
 
@@ -34,20 +37,25 @@ interface BlobCollective {
     fun draw(canvas: Canvas)
 }
 
-class BlobCollectiveImpl(private val repo: BlobRepository) : BlobCollective {
+class BlobCollectiveImpl(val maxBlobs: Int) : BlobCollective, KoinComponent {
 
-    private val blobs = repo.createBlobs()
+    init {
+        if (maxBlobs < 1)
+            throw Exception("Need to allow at least one blob in the collective.")
+    }
+
+    private val blobs: MutableList<Blob> by inject()
 
     override val numActive: Int
         get() = blobs.size
 
     override fun split() {
-        if (numActive >= repo.maxNum)
+        if (numActive >= maxBlobs)
             return
 
         val motherBlob = findLargest(null) ?: return
         motherBlob.scale(0.75f)
-        val newBlob = repo.createBlob(motherBlob)
+        val newBlob : Blob by inject{ parametersOf(motherBlob) }
         for (blob in blobs) {
             blob.linkBlob(newBlob)
             newBlob.linkBlob(blob)

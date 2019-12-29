@@ -6,25 +6,22 @@ import org.junit.Test
 class BlobCollectiveTests {
     @Test
     fun ctorTest() {
-        val blobRepository = BlobRepositoryImpl(1.0f, 1.0f, 4)
-        val collective = BlobCollectiveImpl(blobRepository)
+        val collective = BlobCollectiveImpl(4)
 
-        assertEquals(4, blobRepository.maxNum)
+        // assertEquals(4, blobRepository.maxNum)
         assertEquals(1, collective.numActive)
     }
 
     @Test
     fun splitTest() {
-        val blobRepository = BlobRepositoryImpl(1.0f, 1.0f, 4)
-        val collective = BlobCollectiveImpl(blobRepository)
+        val collective = BlobCollectiveImpl(4)
         collective.split()
         assertEquals(2, collective.numActive)
     }
 
     @Test
     fun joinTest() {
-        val blobRepository = BlobRepositoryImpl(1.0f, 1.0f, 4)
-        val collective = BlobCollectiveImpl(blobRepository)
+        val collective = BlobCollectiveImpl(4)
         collective.split()
         collective.join()
         assertEquals(1, collective.numActive)
@@ -32,8 +29,7 @@ class BlobCollectiveTests {
 
     @Test
     fun findLargestTest() {
-        val blobRepository = BlobRepositoryImpl(1.0f, 1.0f, 4)
-        val collective = BlobCollectiveImpl(blobRepository)
+        val collective = BlobCollectiveImpl(4)
         collective.split()
         collective.split()
 
@@ -43,8 +39,7 @@ class BlobCollectiveTests {
 
     @Test
     fun findSmallestTest() {
-        val blobRepository = BlobRepositoryImpl(1.0f, 1.0f, 4)
-        val collective = BlobCollectiveImpl(blobRepository)
+        val collective = BlobCollectiveImpl(4)
         collective.split()
         collective.split()
 
@@ -66,8 +61,7 @@ class BlobCollectiveTests {
     fun findClosestTest() {
         val environment = EnvironmentImpl(0.2f, 0.2f, 2.6f, 1.6f)
 
-        val blobRepository = BlobRepositoryImpl(1.0f, 1.0f, 4)
-        val collective = BlobCollectiveImpl(blobRepository)
+        val collective = BlobCollectiveImpl(4)
         collective.split()
         collective.split()
 
