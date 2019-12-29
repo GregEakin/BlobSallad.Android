@@ -6,7 +6,7 @@ import org.junit.Test
 class BlobTests {
     @Test
     fun ctorTest() {
-        val blob = Blob(71.0f, 67.0f, 11.0f, 5)
+        val blob = BlobImpl(71.0f, 67.0f, 11.0f, 5)
         assertEquals(71.0f, blob.x, 0.001f)
         assertEquals(67.0f, blob.y, 0.001f)
         assertEquals(11.0f, blob.radius, 0.001f)
@@ -15,7 +15,7 @@ class BlobTests {
 
     @Test
     fun pointMass_test() {
-        val blob = Blob(71.0f, 67.0f, 11.0f, 5)
+        val blob = BlobImpl(71.0f, 67.0f, 11.0f, 5)
         for (i in 0..4) {
             val point = blob.points[i]
 
@@ -32,8 +32,8 @@ class BlobTests {
 
     @Test
     fun add_blob_test() {
-        val blob1 = Blob(17.0f, 19.0f, 11.0f, 3)
-        val blob2 = Blob(59.0f, 61.0f, 13.0f, 3)
+        val blob1 = BlobImpl(17.0f, 19.0f, 11.0f, 3)
+        val blob2 = BlobImpl(59.0f, 61.0f, 13.0f, 3)
         blob1.linkBlob(blob2)
 
         assertEquals(0, blob2.neighbors.size)
@@ -44,8 +44,8 @@ class BlobTests {
 
     @Test
     fun removeBlobTest() {
-        val blob1 = Blob(17.0f, 19.0f, 11.0f, 3)
-        val blob2 = Blob(59.0f, 61.0f, 13.0f, 3)
+        val blob1 = BlobImpl(17.0f, 19.0f, 11.0f, 3)
+        val blob2 = BlobImpl(59.0f, 61.0f, 13.0f, 3)
         blob1.linkBlob(blob2)
         blob1.unlinkBlob(blob2)
 
@@ -55,7 +55,7 @@ class BlobTests {
 
     @Test
     fun pointMassIndexTest() {
-        val blob1 = Blob(17.0f, 19.0f, 11.0f, 3)
+        val blob1 = BlobImpl(17.0f, 19.0f, 11.0f, 3)
         for (i in -5..5)
             for (j in 0..2)
                 assertEquals(j, blob1.pointMassIndex(i * 3 + j))

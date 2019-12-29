@@ -31,11 +31,11 @@ const val startYY = 200.0f
 
 fun createBlobList(startX: Float, startY: Float): MutableList<Blob> {
     val list = mutableListOf<Blob>()
-    val blob = Blob(startX, startY, blobInitialRadius, blobPointCount)
+    val blob = BlobImpl(startX, startY, blobInitialRadius, blobPointCount)
     list.add(blob)
     return list
 }
 
 fun createBlob(motherBlob: Blob): Blob {
-    return Blob(motherBlob)
+    return BlobImpl(motherBlob)
 }

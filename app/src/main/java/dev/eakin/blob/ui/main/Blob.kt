@@ -19,12 +19,33 @@ import android.graphics.*
 import kotlin.math.acos
 import kotlin.random.Random
 
-open class Blob(
+interface Blob {
+
+    val points: List<PointMass>
+    val numPoints: Int
+    var radius: Float
+    val middle: PointMass
+    var selected: Touch?
+    val x: Float
+    val y: Float
+
+    fun linkBlob(blob: Blob)
+    fun unlinkBlob(blob: Blob)
+    fun scale(scaleFactor: Float)
+    fun move(dt: Float)
+    fun sc(env: Environment)
+    fun setForce(value: Vector)
+    fun addForce(force: Vector)
+    fun moveTo(destX: Float, destY: Float)
+    fun draw(canvas: Canvas)
+}
+
+class BlobImpl(
     private val startX: Float,
     private val startY: Float,
-    var radius: Float,
-    val numPoints: Int
-) {
+    override var radius: Float,
+    override val numPoints: Int
+) : Blob {
     init {
         if (radius <= 0.0f)
             throw Exception("Can't have a negative radius.")
@@ -43,9 +64,9 @@ open class Blob(
         SMILE, OPEN, OOH
     }
 
-    val middle: PointMass = PointMass(startX, startY, 1.0f)
+    override val middle: PointMass = PointMass(startX, startY, 1.0f)
 
-    val points: List<PointMass> = pointsInit()
+    override val points: List<PointMass> = pointsInit()
     private fun pointsInit(): List<PointMass> {
         val list = mutableListOf<PointMass>()
         for (i in 0 until numPoints) {
@@ -93,11 +114,11 @@ open class Blob(
         return list
     }
 
-    var selected: Touch? = null
+    override var selected: Touch? = null
 
-    val x: Float
+    override val x: Float
         get() = middle.xPos
-    val y: Float
+    override val y: Float
         get() = middle.yPos
     val mass: Float
         get() = middle.mass
@@ -109,13 +130,13 @@ open class Blob(
 
     val neighbors: MutableList<Neighbor> = mutableListOf()
 
-    fun linkBlob(blob: Blob) {
+    override fun linkBlob(blob: Blob) {
         val distance = radius + blob.radius
         val neighbor = Neighbor(middle, blob.middle, distance * 0.95f)
         neighbors.add(neighbor)
     }
 
-    fun unlinkBlob(blob: Blob) {
+    override fun unlinkBlob(blob: Blob) {
         for (neighbor in neighbors) {
             if (neighbor.pointMassB != blob.middle)
                 continue
@@ -125,7 +146,7 @@ open class Blob(
         }
     }
 
-    fun scale(scaleFactor: Float) {
+    override fun scale(scaleFactor: Float) {
         for (skin in skins)
             skin.scale(scaleFactor)
 
@@ -138,9 +159,9 @@ open class Blob(
         radius *= scaleFactor
     }
 
-    fun move(dt: Float) {
+    override fun move(dt: Float) {
         val touch = selected
-        if (touch?.blob === this) {
+        if (touch?.blob == this) {
             moveTo(touch.x, touch.y)
         } else {
             for (point in points)
@@ -150,7 +171,7 @@ open class Blob(
         }
     }
 
-    fun sc(env: Environment) {
+    override fun sc(env: Environment) {
         for (j in 0 until 4) {
             for (point in points) {
                 val collision = env.collision(point.pos, point.prev)
@@ -168,13 +189,13 @@ open class Blob(
         }
     }
 
-    fun setForce(value: Vector) {
+    override fun setForce(value: Vector) {
         middle.force = value
         for (point in points)
             point.force = value
     }
 
-    fun addForce(force: Vector) {
+    override fun addForce(force: Vector) {
         middle.addForce(force)
         for (point in points)
             point.addForce(force)
@@ -187,7 +208,7 @@ open class Blob(
         pointMass.addForce(force)
     }
 
-    fun moveTo(destX: Float, destY: Float) {
+    override fun moveTo(destX: Float, destY: Float) {
         val deltaX = destX - middle.pos.x
         val deltaY = destY - middle.pos.y
 
@@ -357,7 +378,7 @@ open class Blob(
     }
 
     val up = Vector(0.0f, -1.0f)
-    fun draw(canvas: Canvas) {
+    override fun draw(canvas: Canvas) {
         updateFace()
         canvas.save()
         drawBody(canvas)
