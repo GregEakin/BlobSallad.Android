@@ -1,7 +1,6 @@
 package dev.eakin.blob
 
 import dev.eakin.blob.ui.main.*
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import java.util.*
@@ -21,7 +20,7 @@ val appModule = module {
         scoped { MainView(get()) }
     }
 
-    viewModel { MainViewModel() }
+    // viewModel { MainViewModel() }
 }
 
 val blobPointCount = 8
