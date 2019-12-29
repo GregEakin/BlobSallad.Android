@@ -5,16 +5,26 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import java.util.*
 
+const val blobPointCount = 8
+const val blobInitialRadius = 200.0f
+const val maxBlobs = 64
+const val startX = 200.0f
+const val startY = 200.0f
+const val envX = 0.0f
+const val envY = 0.0f
+const val envW = 700.0f
+const val envH = 700.0f
+
 val appModule = module {
     single<Random> { Random() }
 
-    single<Environment> { EnvironmentImpl(0f, 0f, 700f, 700f) }
+    single<Environment> { EnvironmentImpl(envX, envY, envW, envH) }
 
     single<BlobCollective> { BlobCollectiveImpl(maxBlobs) }
 
-    factory { createBlobList(startXX, startYY) }
+    factory { createBlobList() }
 
-    factory { (mother: Blob) -> createBlob(mother) }
+    factory { (mother: Blob) -> BlobImpl(mother) }
 
     scope(named<MainActivity>()) {
         scoped { MainView(get()) }
@@ -23,19 +33,9 @@ val appModule = module {
     // viewModel { MainViewModel() }
 }
 
-const val blobPointCount = 8
-const val blobInitialRadius = 200.0f
-const val maxBlobs = 64
-const val startXX = 200.0f
-const val startYY = 200.0f
-
-fun createBlobList(startX: Float, startY: Float): MutableList<Blob> {
+fun createBlobList(): MutableList<Blob> {
     val list = mutableListOf<Blob>()
     val blob = BlobImpl(startX, startY, blobInitialRadius, blobPointCount)
     list.add(blob)
     return list
-}
-
-fun createBlob(motherBlob: Blob): Blob {
-    return BlobImpl(motherBlob)
 }
