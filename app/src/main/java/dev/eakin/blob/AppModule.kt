@@ -24,7 +24,7 @@ val appModule = module {
 
     factory { createBlobList() }
 
-    factory { (mother: Blob) -> BlobImpl(mother) }
+    factory { (mother: Blob) -> splitBlob(mother) }
 
     scope(named<MainActivity>()) {
         scoped { MainView(get()) }
@@ -38,4 +38,8 @@ fun createBlobList(): MutableList<Blob> {
     val blob = BlobImpl(startX, startY, blobInitialRadius, blobPointCount)
     list.add(blob)
     return list
+}
+
+fun splitBlob(mother: Blob): Blob {
+    return BlobImpl(mother)
 }
